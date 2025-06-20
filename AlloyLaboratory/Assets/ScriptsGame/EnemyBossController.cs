@@ -13,11 +13,11 @@ public class EnemyBossController : MonoBehaviour
     //---------------------------自分関係------------------------------------------------------
     Rigidbody2D rb2d;
     bool isAttacking = false;
+    bool isMoving = false;
+    bool willMove = false;
     public float speed = 5f;//通常の移動速度
     public float dashAttackSpeed = 8f;//ダッシュ攻撃の速度
     public GameObject attackArea;
-    float attackCoolTime = 3f;
-    float attackReadyTime = 3f;
 
 
     //プレイヤーの位置に関するフラグ
@@ -49,15 +49,11 @@ public class EnemyBossController : MonoBehaviour
         //プレイヤーとの距離を取得
         playerDistance = playerPosition.magnitude;
 
-        attackReadyTime += Time.deltaTime;
-
-        if (!isAttacking)
-        Debug.Log(isAttacking);
 
         //プレイヤーの位置に応じてフラグを立てる
         if (playerDistance <= 2f) playerNear = true;
         else playerNear = false;
-        if (playerDistance >= 8f) playerFar = true;
+        if (playerDistance >= 5f) playerFar = true;
         else playerFar = false;
         if (playerPosition.y >= -1f && playerPosition.y <= 1f)
         {
@@ -82,14 +78,21 @@ public class EnemyBossController : MonoBehaviour
             if (playerNear)
             {
                 //プレイヤーと接近したら
-                
+
                 StartCoroutine(AttackSwing());
             }
             else if (playerFar)
             {
                 //プレイヤーから離れたら
-                //レーザー打つか、ミサイル飛ばすかする
-                //Instantiate(bullet, transform.position + new Vector3(2f, 0f, 0f), Quaternion.identity);
+                if (willMove)
+                {
+                    Move();
+                }
+                else
+                {
+                    //弾を撃つ
+                    StartCoroutine(AttackShoot());
+                }
             }
             else
             {
@@ -97,31 +100,39 @@ public class EnemyBossController : MonoBehaviour
                 else if (playerLeft) StartCoroutine(AttackDash(-1f, 0f));
                 else if (playerUp) StartCoroutine(AttackDash(0f, 1f));
                 else if (playerDown) StartCoroutine(AttackDash(0f, -1f));
-                else StartCoroutine(Move(1f, 1f));
+                else StartCoroutine(Move());
             }
-
             //障害となるブロックを破壊しながら進みたい
-            
         }
         
     }
 
     //通常の移動
-    IEnumerator Move(float x, float y)
+    IEnumerator Move()
     {
-        Debug.Log("1");
+        Vector2 direction = playerPosition.normalized;
         isAttacking = true;
+        isMoving = true;
         float time = 0f;
         transform.position = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
 
-        while(true)
+
+        while (true)
         {
             time += Time.deltaTime;
-            rb2d.linearVelocity = new Vector2(x * speed, y * speed);
+            rb2d.linearVelocity = new Vector2(direction.x * speed, direction.y * speed);
             yield return null;
-            if (time >= 0.2f)  break;
+            if (time >= 0.2f) break;
         }
-        isAttacking = true;
+        isAttacking = false;
+        //Debug.Log("移動終わり");
+        //速度をゼロに
+        rb2d.linearVelocity = Vector2.zero;
+        if (playerFar)
+        {
+            willMove = false;
+        }
+        isMoving = false;
         transform.position = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
     }
 
@@ -129,16 +140,24 @@ public class EnemyBossController : MonoBehaviour
     IEnumerator AttackSwing()
     {
         isAttacking = true;
-        attackReadyTime = 2f;
+        yield return new WaitForSeconds(0.5f);
+
         //攻撃判定を出してプレイヤーを攻撃する
         Instantiate(attackArea, transform.position, Quaternion.identity);
 
-        while (attackReadyTime <= attackCoolTime)
-        {
-            yield return null;
-        }
+        yield return new WaitForSeconds(0.5f);
 
         isAttacking = false;
+        //Debug.Log("攻撃終わり");
+    }
+
+    IEnumerator AttackShoot()
+    {
+        isAttacking = true;
+        Instantiate(bullet, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(1f);
+        isAttacking = false;
+        willMove = true;
     }
 
     //プレイヤーが飛車の移動範囲にいるとき、突撃攻撃
@@ -152,13 +171,14 @@ public class EnemyBossController : MonoBehaviour
         isAttacking = true;
         float attackTime = 0;
         float moveDistance = playerDistance;
+        
 
-        while(true)
+        while (true)
         {
             attackTime += Time.deltaTime;
 
             rb2d.linearVelocity = new Vector2(x * dashAttackSpeed, y * dashAttackSpeed);
-            
+
 
             if (attackTime >= moveDistance / dashAttackSpeed + 0.3f)
             {
@@ -174,6 +194,7 @@ public class EnemyBossController : MonoBehaviour
         //攻撃終わり
         isAttacking = false;
         attackTime = 0f;
+        //Debug.Log("攻撃終わり");
         //最後に格子点に移動
         transform.position = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
     }

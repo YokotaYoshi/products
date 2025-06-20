@@ -118,24 +118,29 @@ public class CameraController : MonoBehaviour
     }
     public IEnumerator CameraVib()
     {
+
         //被弾した時とかに呼び出す
         //X方向とY方向にわけて画面を振動させる
+
+        Vector2 startPosition = transform.position;
 
         float amptitude = 0.1f;//振動の振れ幅
         float displacement = 0f;
         float vivTime = 0.0f;
 
-        while(true)
+        while (true)
         {
             //減衰振動
-            displacement = 10f / 3f * (0.3f - vivTime) * amptitude * Mathf.Cos(20* vivTime * Mathf.PI);
+            displacement = 10f / 3f * (0.3f - vivTime) * amptitude * Mathf.Cos(20 * vivTime * Mathf.PI);
             transform.position = new Vector3(transform.position.x + displacement, transform.position.y, z);
             vivTime += Time.deltaTime;
             yield return null;
             if (vivTime >= 0.3f)
             {
+
                 break;
             }
         }
+        transform.position = new Vector3(startPosition.x, startPosition.y, -10f);
     }
 }

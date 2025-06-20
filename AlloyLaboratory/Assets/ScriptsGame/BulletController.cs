@@ -33,7 +33,7 @@ public class BulletController : MonoBehaviour
             player.transform.position.y - transform.position.y).normalized;
         }
         
-        if (time >= 5f)
+        if (time >= 3f)
         {
             Destroy(gameObject);
         }

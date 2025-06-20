@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     //-------------------------HP関連------------------------
     public int maxHp = 3;//最大hp
     public static int hp = 3;//hp
+    bool isInvincible = false;//くらい無敵
     //GameObject enemy;
 
     //------------------------カメラ関係-----------------------
@@ -261,6 +262,7 @@ public class PlayerController : MonoBehaviour
         //一瞬入力を受け付けない時間を設ける
         isMoving = true;
         isCoroutineWorking = true;
+        isInvincible = true;
 
         float time = 0;//吹っ飛ばされてからの時間
         float blownTime = 0.4f;//吹っ飛ばされる時間
@@ -268,7 +270,7 @@ public class PlayerController : MonoBehaviour
 
         //敵の方向と反対方向に1吹き飛ばす
         //吹っ飛ばす方向の正規ベクトル
-        Vector2 blownDirection = new Vector2((transform.position.x - collision.transform.position.x),(transform.position.y - collision.transform.position.y)).normalized;
+        Vector2 blownDirection = new Vector2((transform.position.x - collision.transform.position.x), (transform.position.y - collision.transform.position.y)).normalized;
         //吹っ飛ばされる先はもっとも近い格子点
         Vector2 blownGoal = new Vector2(Mathf.Round(transform.position.x + blownDirection.x), Mathf.Round(transform.position.y + blownDirection.y));
         //吹っ飛ばされる強さ
@@ -278,21 +280,22 @@ public class PlayerController : MonoBehaviour
         //Debug.Log(blownForce);
         //Debug.Log(blownDirection);
 
-        while(time <= blownTime)
+        while (time <= blownTime)
         {
             //吹っ飛ばされているときの速さを更新
-            blownSpeed = (blownTime - time)*blownForce;
+            blownSpeed = (blownTime - time) * blownForce;
             rb2d.linearVelocity = new Vector2((blownGoal.x - transform.position.x) * blownSpeed, (blownGoal.y - transform.position.y) * blownSpeed);
             time += Time.deltaTime;
             yield return null;
         }
-        
+
         //格子点に移動
         transform.position = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
 
         //最終的にまた入力を受け付け、移動できるようにする
         isMoving = false;
         isCoroutineWorking = false;
+        isInvincible = false;
     }
 
     //-------------------------------------------やられモーション---------------------------------------------
@@ -308,45 +311,50 @@ public class PlayerController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         //---------------------------------------------敵と接触----------------------------------------------------
-        if (collision.gameObject.tag == "Damage1")
+        if (!isInvincible)
         {
-            //敵に接触した時の処理
-            hp -= 1;
-            cameraCnt.Vib();
-            
-            
-            //体力が残っていたら敵と反対方向に弾き飛ばされる
-            if (hp > 0)
+            if (collision.gameObject.tag == "Damage1")
             {
-                StartCoroutine(HitByEnemy(collision));
+                //敵に接触した時の処理
+                hp -= 1;
+                cameraCnt.Vib();
+
+
+                //体力が残っていたら敵と反対方向に弾き飛ばされる
+                if (hp > 0)
+                {
+                    StartCoroutine(HitByEnemy(collision));
+                }
+                else
+                {
+                    StartCoroutine(Dead());
+                }
             }
-            else
+            if (collision.gameObject.tag == "Damage2")
             {
+                //敵に接触した時の処理
+                hp -= 2;
+                
+                //体力が残っていたら敵と反対方向に弾き飛ばされる
+                if (hp > 0)
+                {
+                    StartCoroutine(HitByEnemy(collision));
+                }
+                else
+                {
+                    StartCoroutine(Dead());
+                }
+            }
+            if (collision.gameObject.tag == "Damage3")
+            {
+                //即死
+                hp -= 3;
                 StartCoroutine(Dead());
+                
             }
         }
-        if (collision.gameObject.tag == "Damage2")
-        {
-            //敵に接触した時の処理
-            hp -= 2;
-            
-            //体力が残っていたら敵と反対方向に弾き飛ばされる
-            if (hp > 0)
-            {
-                StartCoroutine(HitByEnemy(collision));
-            }
-            else
-            {
-                StartCoroutine(Dead());
-            }
-        }
-        if (collision.gameObject.tag == "Damage3")
-        {
-            //即死
-            hp -= 3;
-            StartCoroutine(Dead());
-            
-        }
+
+        
     }
 
     

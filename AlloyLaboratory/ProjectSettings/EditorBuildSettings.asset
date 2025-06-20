@@ -21,7 +21,7 @@ EditorBuildSettings:
     path: Assets/ScenesGame/RinoHomeFront.unity
     guid: dd8a290306a1dcd4f84d5b489692b8db
   - enabled: 1
-    path: Assets/ScenesGame/Sample2.unity
+    path: Assets/ScenesGame/BossScene.unity
     guid: da5947b1284313a4682c0fccba57f11a
   - enabled: 1
     path: Assets/ScenesCanvas/GameOver.unity
