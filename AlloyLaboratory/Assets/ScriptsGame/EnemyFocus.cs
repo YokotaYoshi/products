@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyFocusCS : MonoBehaviour
 {
+    //プレイヤーが視界に入っているとき追いかける場合と無条件に追いかける場合で分けたい
     public GameObject enemy;//敵のゲームオブジェクト
     EnemyChaseController enemyChaseCnt;//敵のスクリプト
     Rigidbody2D enemyRb2d;//敵の物理挙動

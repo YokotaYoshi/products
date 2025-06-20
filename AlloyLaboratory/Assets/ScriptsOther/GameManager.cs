@@ -25,6 +25,9 @@ public class GameManager : MonoBehaviour
     public GameObject textPanel;//下端のテキストパネル
     bool isTextDisplaying;
     TextPanelManager textPanelManager;
+
+    //--------------Fungusテキストパネル-------------------------
+    public GameObject fungusTextPanel;
     
     //----------------------セーブデータパネル
     public GameObject saveDatasPanel;
@@ -98,9 +101,12 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 //何かを調べたとき
+                fungusTextPanel.SetActive(true);//テキストボックス表示
+                /*
                 textPanel.SetActive(true);//テキストボックス表示
                 textPanelManager.isTextDisplaying = true;
                 Time.timeScale = 0;
+                */
             }
             
             

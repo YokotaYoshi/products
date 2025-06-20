@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyChaseController : MonoBehaviour
 {
+    public bool chaseWhenSeePlayer;
+    EnemyGuardianController enemyGCnt;
     GameObject player;//プレイヤー
     //PlayerController playerCnt;//プレイヤーコントローラー
     public float speed = 3.0f;//追跡速度
@@ -17,7 +19,7 @@ public class EnemyChaseController : MonoBehaviour
     Vector2 moveDirection;//実際に動く方向
 
     //-------------何かに衝突した時に使う--------------
-    public float waitTime = 1.2f;//一時停止時間
+    public float waitTime = 0.5f;//一時停止時間
     bool breakCoroutine = false;//コルーチン脱出フラグ
     public bool isBlocked = false;//壁衝突フラグ。プレイヤーの方向にいけるかどうか
     
@@ -35,7 +37,11 @@ public class EnemyChaseController : MonoBehaviour
         //playerCnt = player.GetComponent<PlayerController>();//プレイヤーコントローラーを取得
         rb2d = GetComponent<Rigidbody2D>();//Rigidbody2Dを取得
         enemyCollider = GetComponent<CircleCollider2D>();//CircleCollider2Dを取得
-        
+
+        if (chaseWhenSeePlayer)
+        {
+            enemyGCnt = gameObject.GetComponent<EnemyGuardianController>();
+        }
     }
 
     // Update is called once per frame
@@ -88,23 +94,50 @@ public class EnemyChaseController : MonoBehaviour
     {
         if (player != null)
         {
-            if (breakCoroutine)
+            if (chaseWhenSeePlayer)
             {
-                return;
-            }
-            if (!isMoving)
-            {
-                //コルーチンが終了したら、コルーチンをスタートさせる
-                if (!isBlocked)
+                //プレイヤーが視界に入った時だけ追いかける
+                if (breakCoroutine)
                 {
-                    //プレイヤーの方向に障害物がないならプレイヤーの方向に
-                    StartCoroutine(Move(moveDirection));
-                    //Debug.Log(moveDirection);
+                    return;
                 }
-                else
+                if (!isMoving&&enemyGCnt.isChasing)
                 {
-                    //プレイヤーの方向に障害物があるならよけるように
-                    AvoidBlock(down, right, up, left);
+                    //コルーチンが終了したら、コルーチンをスタートさせる
+                    if (!isBlocked)
+                    {
+                        //プレイヤーの方向に障害物がないならプレイヤーの方向に
+                        StartCoroutine(Move(moveDirection));
+                        //Debug.Log(moveDirection);
+                    }
+                    else
+                    {
+                        //プレイヤーの方向に障害物があるならよけるように
+                        AvoidBlock(down, right, up, left);
+                    }
+                }
+            }
+            else
+            {
+                //プレイヤーを常に追いかける
+                if (breakCoroutine)
+                {
+                    return;
+                }
+                if (!isMoving)
+                {
+                    //コルーチンが終了したら、コルーチンをスタートさせる
+                    if (!isBlocked)
+                    {
+                        //プレイヤーの方向に障害物がないならプレイヤーの方向に
+                        StartCoroutine(Move(moveDirection));
+                        //Debug.Log(moveDirection);
+                    }
+                    else
+                    {
+                        //プレイヤーの方向に障害物があるならよけるように
+                        AvoidBlock(down, right, up, left);
+                    }
                 }
             }
             
