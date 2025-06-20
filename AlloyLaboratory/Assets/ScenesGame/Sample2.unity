@@ -280,6 +280,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dashAttackSpeed: 5
   attackArea: {fileID: 1714408111}
+  bullet: {fileID: 0}
 --- !u!61 &927541049
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -324,7 +325,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.95, y: 0.95}
   m_EdgeRadius: 0
 --- !u!50 &927541050
 Rigidbody2D:
@@ -5295,7 +5296,7 @@ GameObject:
   - component: {fileID: 1714408112}
   m_Layer: 0
   m_Name: Attack
-  m_TagString: Damage3
+  m_TagString: Damage1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5417,6 +5418,7 @@ GameObject:
   - component: {fileID: 2117753696}
   - component: {fileID: 2117753695}
   - component: {fileID: 2117753694}
+  - component: {fileID: 2117753697}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5498,6 +5500,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2117753697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117753693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d29bd0853790cfa4199f6e937a762302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isScrollX: 0
+  scrollX: 0
+  maxScrollX: 999
+  minScrollX: -999
+  isScrollY: 0
+  scrollY: 0
+  maxScrollY: 999
+  minScrollY: -999
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
