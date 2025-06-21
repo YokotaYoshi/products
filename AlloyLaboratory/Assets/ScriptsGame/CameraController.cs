@@ -107,8 +107,6 @@ public class CameraController : MonoBehaviour
 
             //カメラの座標を更新
             transform.position = new Vector3(x, y, z);
-
-            
         }
     }
 
@@ -137,7 +135,6 @@ public class CameraController : MonoBehaviour
             yield return null;
             if (vivTime >= 0.3f)
             {
-
                 break;
             }
         }

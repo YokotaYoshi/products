@@ -424,7 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 771c4dd25a2cd844492de20ad3bac419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 2
   dashAttackSpeed: 6
   attackArea: {fileID: 369632222667186492, guid: 9b804db37231f93419676e51856bd701, type: 3}
   bullet: {fileID: 2518454251173642639, guid: 3298a97f34f80e6479976e307ef628cd, type: 3}
