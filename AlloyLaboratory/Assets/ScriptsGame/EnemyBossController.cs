@@ -103,7 +103,7 @@ public class EnemyBossController : MonoBehaviour
             if (playerNear)
             {
                 //プレイヤーと接近したら
-                Debug.Log("スイング");
+                //Debug.Log("スイング");
                 StopAllCoroutines();
                 StartCoroutine(AttackSwing());
             }
@@ -116,12 +116,12 @@ public class EnemyBossController : MonoBehaviour
                     StopAllCoroutines();
                     StartCoroutine(Move());
                     
-                    Debug.Log("移動");
+                    //Debug.Log("移動");
                 }
                 else
                 {
                     //弾を撃つ
-                    Debug.Log("ショット");
+                    //Debug.Log("ショット");
                     StopAllCoroutines();
                     StartCoroutine(AttackShoot());
                 }
@@ -135,7 +135,7 @@ public class EnemyBossController : MonoBehaviour
                 else if (playerDown) StartCoroutine(AttackDash(0f, -1f));
                 else
                 {
-                    Debug.Log("移動");
+                    //Debug.Log("移動");
                     StartCoroutine(Move());
                 }
                     
@@ -149,6 +149,9 @@ public class EnemyBossController : MonoBehaviour
     IEnumerator Move()
     {
         Vector2 direction = playerDirection;
+
+        //direction.x ** 2 + direction.y ** 2 = 1;
+
         isAttacking = true;
         isMoving = true;
         float time = 0f;
@@ -159,9 +162,37 @@ public class EnemyBossController : MonoBehaviour
         while (true)
         {
             time += Time.deltaTime;
-            rb2d.linearVelocity = new Vector2(direction.x * speed, direction.y * speed);
+
+            //playerDirectionに応じて縦横に移動
+            if (direction.y >= direction.x)
+            {
+                if (direction.y >= -direction.x)
+                {
+                    //プレイヤーが上にいるとき
+                    rb2d.linearVelocity = new Vector2(0f, speed);
+                }
+                else
+                {
+                    //左
+                    rb2d.linearVelocity = new Vector2(-speed, 0f);
+                }
+            }
+            else
+            {
+                if (direction.y >= -direction.x)
+                {
+                    //プレイヤーが右にいるとき
+                    rb2d.linearVelocity = new Vector2(speed, 0f);
+                }
+                else
+                {
+                    //下
+                    rb2d.linearVelocity = new Vector2(0f, -speed);
+                }
+            }
+            
             yield return null;
-            if (time >= 0.5f) break;
+            if (time >= 0.6f) break;
         }
 
 
@@ -182,7 +213,7 @@ public class EnemyBossController : MonoBehaviour
     {
         isAttacking = true;
         Instantiate(bullet, transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.3f);
         willMove = true;//次は移動
         isAttacking = false;
     }
@@ -191,12 +222,12 @@ public class EnemyBossController : MonoBehaviour
     IEnumerator AttackSwing()
     {
         isAttacking = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
 
         //攻撃判定を出してプレイヤーを攻撃する
         Instantiate(attackArea, transform.position, Quaternion.identity);
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
 
         isAttacking = false;
         //Debug.Log("攻撃終わり");
@@ -208,7 +239,7 @@ public class EnemyBossController : MonoBehaviour
     //突撃開始時のプレイヤーの位置より少し行き過ぎる。
     IEnumerator AttackDash(float x, float y)
     {
-        Debug.Log("とつげき");
+        //Debug.Log("とつげき");
 
         //最初に格子点に移動
         transform.position = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));

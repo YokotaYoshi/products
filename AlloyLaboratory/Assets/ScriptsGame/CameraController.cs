@@ -120,7 +120,12 @@ public class CameraController : MonoBehaviour
         //被弾した時とかに呼び出す
         //X方向とY方向にわけて画面を振動させる
 
-        Vector2 startPosition = transform.position;
+        //強制スクロールかどうかで座標を設定
+
+        //Vector2 startPosition = transform.position;
+
+        float cameraPositionX = transform.position.x;
+        float cameraPositionY = transform.position.y;
 
         float amptitude = 0.1f;//振動の振れ幅
         float displacement = 0f;
@@ -138,6 +143,23 @@ public class CameraController : MonoBehaviour
                 break;
             }
         }
-        transform.position = new Vector3(startPosition.x, startPosition.y, -10f);
+
+        if (isScrollX)
+        {
+            cameraPositionX = cameraPositionX + scrollX * 0.3f;
+        }
+        else
+        {
+            cameraPositionX = player.transform.position.x - 1.7f;
+        }
+        if (isScrollY)
+        {
+            cameraPositionY = cameraPositionY + scrollY * 0.3f;
+        }
+        else
+        {
+            cameraPositionY = player.transform.position.y;
+        }
+        transform.position = new Vector3(cameraPositionX, cameraPositionY, -10f);
     }
 }

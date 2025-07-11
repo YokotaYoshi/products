@@ -4,8 +4,9 @@ public class BulletController : MonoBehaviour
 {
     //プレイヤーの方向に飛んでいく
     //レベルによってちょっとだけ追尾したりしても面白そう
-    GameObject player;
+    GameObject shootTarget;
     Vector2 targetDirection;
+    public string shootTargetName;
     public float speed;
 
     public float chaseLevel = 0f;//EnemyGuardianControllerからいじる
@@ -14,9 +15,9 @@ public class BulletController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        targetDirection = new Vector2(player.transform.position.x - transform.position.x,
-        player.transform.position.y - transform.position.y).normalized;
+        shootTarget = GameObject.FindGameObjectWithTag(shootTargetName);
+        targetDirection = new Vector2(shootTarget.transform.position.x - transform.position.x,
+        shootTarget.transform.position.y - transform.position.y).normalized;
     }
 
     // Update is called once per frame
@@ -29,8 +30,8 @@ public class BulletController : MonoBehaviour
         if (time + chaseLevel >= 3f)
         {
             //一定時間経過後追尾するように
-            targetDirection = new Vector2(player.transform.position.x - transform.position.x,
-            player.transform.position.y - transform.position.y).normalized;
+            targetDirection = new Vector2(shootTarget.transform.position.x - transform.position.x,
+            shootTarget.transform.position.y - transform.position.y).normalized;
         }
         
         if (time >= 3f)

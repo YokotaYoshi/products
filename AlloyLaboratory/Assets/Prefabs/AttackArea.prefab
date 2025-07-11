@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8634359482274263988}
   - component: {fileID: 4778758064089135593}
   - component: {fileID: 1276926202971262487}
+  - component: {fileID: 7811083315559956668}
   m_Layer: 0
   m_Name: AttackArea
   m_TagString: Damage1
@@ -119,7 +120,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -137,3 +138,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2515b12c4d6c54f88e4f39e0d2d911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &7811083315559956668
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369632222667186492}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7

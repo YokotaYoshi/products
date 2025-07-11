@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    //Fungusの切り替えとかに置き換えていく
     //UIを担当
     //主にパネルのONOFFを行う
     //ONにしたら、そのあとは個別に処理する
@@ -46,7 +47,11 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //最初は非表示のもの
-        saveDatasPanel.SetActive(false);
+        if (saveDatasPanel != null)
+        {
+            saveDatasPanel.SetActive(false);
+        }
+        
 
         if (PlayerFocus.eventOnStart)
         {
@@ -61,20 +66,23 @@ public class GameManager : MonoBehaviour
 
         textPanelManager = textPanel.GetComponent<TextPanelManager>();
 
-        if (isPanelOn)
+        if (informationPanel != null)
         {
-            informationPanel.SetActive(true);//情報パネル表示
-        }
-        else
-        {
-            informationPanel.SetActive(false);//情報パネル非表示
+            if (isPanelOn)
+            {
+                informationPanel.SetActive(true);//情報パネル表示
+            }
+            else
+            {
+                informationPanel.SetActive(false);//情報パネル非表示
+            }
         }
 
+        textPanel.SetActive(true);
+
         //eventProgressの値によって操作キャラの画像を帰る
-        if (eventProgress <= 100)
-        {
-            charaIcon.sprite = chara1;
-        }
+        //if (eventProgress <= 100) ;
+
 
         player = GameObject.FindGameObjectWithTag("Player");//プレイヤーを取得
         playerCnt = player.GetComponent<PlayerController>();//プレイヤーコントローラーを取得
@@ -94,14 +102,18 @@ public class GameManager : MonoBehaviour
             
         }
         */
-        isTextDisplaying = textPanelManager.isTextDisplaying;
+        if (textPanelManager != null)
+        {
+            isTextDisplaying = textPanelManager.isTextDisplaying;
+        }
+        
 
         if (playerFocusCS.eventFlag == true && isTextDisplaying == false)
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 //何かを調べたとき
-                fungusTextPanel.SetActive(true);//テキストボックス表示
+                //fungusTextPanel.SetActive(true);//テキストボックス表示
                 /*
                 textPanel.SetActive(true);//テキストボックス表示
                 textPanelManager.isTextDisplaying = true;
@@ -166,35 +178,39 @@ public class GameManager : MonoBehaviour
         */
 
         //--------------------------体力処理---------------------------
-        if (PlayerController.hp >= 3)
+        if (playerCnt != null && hp1 != null && hp2 != null && hp3 != null)
         {
-            hp1.gameObject.SetActive(true);
-            hp2.gameObject.SetActive(true);
-            hp3.gameObject.SetActive(true);
+            if (PlayerController.hp >= 3)
+            {
+                hp1.gameObject.SetActive(true);
+                hp2.gameObject.SetActive(true);
+                hp3.gameObject.SetActive(true);
+            }
+            else if (PlayerController.hp == 2)
+            {
+                hp1.gameObject.SetActive(true);
+                hp2.gameObject.SetActive(true);
+                hp3.gameObject.SetActive(false);
+            }
+            else if (PlayerController.hp == 1)
+            {
+                hp1.gameObject.SetActive(true);
+                hp2.gameObject.SetActive(false);
+                hp3.gameObject.SetActive(false);
+            }
+            else
+            {
+                //体力0=ゲームオーバー
+                debugTime += Time.deltaTime;
+                Debug.Log(debugTime);
+                hp1.gameObject.SetActive(false);
+                hp2.gameObject.SetActive(false);
+                hp3.gameObject.SetActive(false);
+                Invoke("GameOver", 1.0f);
+                gameState = "gameOver";
+            }
         }
-        else if (PlayerController.hp == 2)
-        {
-            hp1.gameObject.SetActive(true);
-            hp2.gameObject.SetActive(true);
-            hp3.gameObject.SetActive(false);
-        }
-        else if (PlayerController.hp == 1)
-        {
-            hp1.gameObject.SetActive(true);
-            hp2.gameObject.SetActive(false);
-            hp3.gameObject.SetActive(false);
-        }
-        else 
-        {
-            //体力0=ゲームオーバー
-            debugTime += Time.deltaTime;
-            Debug.Log(debugTime);
-            hp1.gameObject.SetActive(false);
-            hp2.gameObject.SetActive(false);
-            hp3.gameObject.SetActive(false);
-            Invoke("GameOver", 1.0f);
-            gameState = "gameOver";
-        }
+        
     }
 
     void FixedUpdate()

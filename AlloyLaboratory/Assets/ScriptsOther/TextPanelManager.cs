@@ -75,7 +75,11 @@ public class TextPanelManager : MonoBehaviour
             playerFocusCS = playerFocus.GetComponent<PlayerFocus>();//PlayerFocusスクリプト取得
         }
 
-        choicePanelManager = choicePanel.GetComponent<ChoicePanelManager>();
+        if (choicePanel != null)
+        {
+            choicePanelManager = choicePanel.GetComponent<ChoicePanelManager>();
+        }
+        
         
         if (isEventOnly)
         {
