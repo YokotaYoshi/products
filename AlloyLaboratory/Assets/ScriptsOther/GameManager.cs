@@ -21,15 +21,7 @@ public class GameManager : MonoBehaviour
     public Image hp1;
     public Image hp2;
     public Image hp3;
-    //----------------下端のテキストパネル---------------------
 
-    public GameObject textPanel;//下端のテキストパネル
-    bool isTextDisplaying;
-    TextPanelManager textPanelManager;
-
-    //--------------Fungusテキストパネル-------------------------
-    public GameObject fungusTextPanel;
-    
     //----------------------セーブデータパネル
     public GameObject saveDatasPanel;
     //--------------------その他-------------------------
@@ -41,31 +33,23 @@ public class GameManager : MonoBehaviour
     //イベントのフラグ
     public static int eventProgress = 0;//この数値を切り替えることでイベント進行
     float debugTime = 0f;
-    
+    public GameObject menuPanel;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //最初は非表示のもの
+        //--------------------最初は非表示のもの------------------------
         if (saveDatasPanel != null)
         {
             saveDatasPanel.SetActive(false);
         }
-        
-
-        if (PlayerFocus.eventOnStart)
+        if (menuPanel != null)
         {
-            //シーン開始直後にイベント
-            textPanel.SetActive(true);
-            Time.timeScale = 0;
-        }
-        else
-        {
-            textPanel.SetActive(false);
+            menuPanel.SetActive(false);
         }
 
-        textPanelManager = textPanel.GetComponent<TextPanelManager>();
-
+        //--------------------最初表示するか、表示しないか------------------------
         if (informationPanel != null)
         {
             if (isPanelOn)
@@ -78,12 +62,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        textPanel.SetActive(true);
-
-        //eventProgressの値によって操作キャラの画像を帰る
-        //if (eventProgress <= 100) ;
-
-
         player = GameObject.FindGameObjectWithTag("Player");//プレイヤーを取得
         playerCnt = player.GetComponent<PlayerController>();//プレイヤーコントローラーを取得
         playerFocus = GameObject.FindGameObjectWithTag("PlayerFocus");//プレイヤーの目線を取得
@@ -93,38 +71,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(eventProgress);
 
-        /*
-        if (playerCnt.onEvent == true)
-        {
-            textPanel.SetActive(true);//テキストボックス表示
-            
-        }
-        */
-        if (textPanelManager != null)
-        {
-            isTextDisplaying = textPanelManager.isTextDisplaying;
-        }
-        
-
-        if (playerFocusCS.eventFlag == true && isTextDisplaying == false)
-        {
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                //何かを調べたとき
-                //fungusTextPanel.SetActive(true);//テキストボックス表示
-                /*
-                textPanel.SetActive(true);//テキストボックス表示
-                textPanelManager.isTextDisplaying = true;
-                Time.timeScale = 0;
-                */
-            }
-            
-            
-        }
-
-        //アイテムを取得した時
 
         //----------------------------------セーブポイント-----------------------------------
         if (playerFocusCS.isSaveReady)
@@ -132,10 +79,8 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 Time.timeScale = 0;//ゲーム停止
-                textPanel.SetActive(true);//テキスト表示
+                
                 saveDatasPanel.SetActive(true);//セーブデータ表示
-                //nameText.GetComponent<Text>().text = "SAVEPOINT";
-                //chatText.GetComponent<Text>().text = "Save as...";
             }
         }
 
@@ -210,7 +155,7 @@ public class GameManager : MonoBehaviour
                 gameState = "gameOver";
             }
         }
-        
+
     }
 
     void FixedUpdate()
@@ -224,17 +169,17 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("GameOver");
     }
 
-    
+
 
     //セーブ画面を閉じる
     public void CloseSavePanel()
     {
         saveDatasPanel.SetActive(false);
         Time.timeScale = 1;
-        //nameText.GetComponent<Text>().text = null;
-        //chatText.GetComponent<Text>().text = null;
-        textPanel.SetActive(false);
     }
 
-    
+    public void ShowMenuPanel()
+    {
+        menuPanel.SetActive(true);
+    }
 }

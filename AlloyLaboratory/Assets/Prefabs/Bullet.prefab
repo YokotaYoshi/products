@@ -137,5 +137,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ce230ee3eb0eab44a0099cf8bbcaaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootTargetName: Player
   speed: 15
   chaseLevel: 0
