@@ -114,7 +114,7 @@ public class player2Controller : MonoBehaviour
             yield return null;
         }
         UpMoving = false;
-        rb2d.velocity = Vector2.zero;
+        rb2d.linearVelocity = Vector2.zero;
         transform.position = new Vector3(Mathf.Round(targetPosition.x),Mathf.Round(targetPosition.y),Mathf.Round(targetPosition.z));
     }
     private IEnumerator Down()
@@ -143,7 +143,7 @@ public class player2Controller : MonoBehaviour
             yield return null;
         }
         DownMoving = false;
-        rb2d.velocity = Vector2.zero;
+        rb2d.linearVelocity = Vector2.zero;
         transform.position = new Vector3(Mathf.Round(targetPosition.x),Mathf.Round(targetPosition.y),Mathf.Round(targetPosition.z));
     }
     private IEnumerator Right()
@@ -172,7 +172,7 @@ public class player2Controller : MonoBehaviour
             yield return null;
         }
         RightMoving = false;
-        rb2d.velocity = Vector2.zero;
+        rb2d.linearVelocity = Vector2.zero;
         transform.position = new Vector3(Mathf.Round(targetPosition.x),Mathf.Round(targetPosition.y),Mathf.Round(targetPosition.z));
     }
     private IEnumerator Left()
@@ -201,7 +201,7 @@ public class player2Controller : MonoBehaviour
             yield return null;
         }
         LeftMoving = false;
-        rb2d.velocity = Vector2.zero;
+        rb2d.linearVelocity = Vector2.zero;
         transform.position = new Vector3(Mathf.Round(targetPosition.x),Mathf.Round(targetPosition.y),Mathf.Round(targetPosition.z));
     }
 }

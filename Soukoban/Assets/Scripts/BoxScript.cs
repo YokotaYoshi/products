@@ -83,7 +83,7 @@ public class BoxScript : MonoBehaviour
         Vector3 startPosition = transform.position;
         Vector3 targetPosition = startPosition + playerdirection * Movedistance;
         float elapsedTime = 0.01f;
-        rb2d.velocity = playerdirection*speed;
+        rb2d.linearVelocity = playerdirection*speed;
         while (elapsedTime < Moveduration)
         {
             
@@ -93,18 +93,18 @@ public class BoxScript : MonoBehaviour
                 Vector3 location = transform.position - startPosition;
                 if (location.magnitude >= 0.3f)
                 {
-                    rb2d.velocity = playerdirection*speed;
+                    rb2d.linearVelocity = playerdirection*speed;
                 }
                 else
                 {
                     transform.position = new Vector3(Mathf.Round(startPosition.x),Mathf.Round(startPosition.y),transform.position.z);
-                    rb2d.velocity = new Vector3 (0,0,0);
+                    rb2d.linearVelocity = new Vector3 (0,0,0);
                     yield break;
                 }
             }
             yield return null;            
         }
-        rb2d.velocity = new Vector3 (0,0,0);
+        rb2d.linearVelocity = new Vector3 (0,0,0);
         transform.position = new Vector3(Mathf.Round(targetPosition.x),Mathf.Round(targetPosition.y),transform.position.z);      
     }
 

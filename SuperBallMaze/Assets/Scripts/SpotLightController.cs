@@ -40,9 +40,9 @@ public class SpotLightController : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             string name = hit.collider.gameObject.name;//衝突した相手の名前を取得
-            if (name != "Ground")
+            if (name == "Player")
             {
-                //Debug.Log(name);
+                Debug.Log(name);
             }
 
             if (!playerCnt.isGoal && name == "Player")

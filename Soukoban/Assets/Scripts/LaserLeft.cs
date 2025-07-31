@@ -19,7 +19,7 @@ public class LaserLeft : MonoBehaviour
     {
         if (laserGunScript != null)
         {
-            rb2d.velocity = new Vector2(-speed,0); 
+            rb2d.linearVelocity = new Vector2(-speed,0); 
         }
               
     }
