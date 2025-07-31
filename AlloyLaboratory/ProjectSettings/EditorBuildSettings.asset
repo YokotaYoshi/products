@@ -6,11 +6,47 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/ScenesGame/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/TitleScene.unity
+    path: Assets/ScenesCanvas/TitleScene.unity
     guid: 9a459ea490cb1af499825922d2599008
+  - enabled: 1
+    path: Assets/ScenesGame/RinoPast.unity
+    guid: e9534f26297c91246831646166ea48db
+  - enabled: 1
+    path: Assets/ScenesGame/RinoRoom.unity
+    guid: f4a1ef6b5b4270644aaa93f3ea6de126
+  - enabled: 1
+    path: Assets/ScenesGame/RinoHomeFront.unity
+    guid: dd8a290306a1dcd4f84d5b489692b8db
+  - enabled: 1
+    path: Assets/ScenesGame/BossScene.unity
+    guid: da5947b1284313a4682c0fccba57f11a
+  - enabled: 1
+    path: Assets/ScenesCanvas/GameOver.unity
+    guid: 04b84d2b5fdd54741ae8ce36da21d052
+  - enabled: 1
+    path: Assets/ScenesGame/Scene3.unity
+    guid: 24b7b0cd04610564f81ef7604a81b97e
+  - enabled: 1
+    path: Assets/ScenesCanvas/EventScene.unity
+    guid: aafe1460a35e965418cf90cdf3168477
+  - enabled: 1
+    path: Assets/ScenesCanvas/EventScene1.unity
+    guid: 9208420ac4f24f841aafc0d78095ab87
+  - enabled: 1
+    path: Assets/ScenesCanvas/EventScene2.unity
+    guid: 91b89911634a8834e9f62ef8f57237cb
+  - enabled: 1
+    path: Assets/ScenesCanvas/EventScene3.unity
+    guid: 35eb8a40a6c20c74884c3f97a803faee
+  - enabled: 1
+    path: Assets/ScenesCanvas/UesugiCipher.unity
+    guid: f9d97477b6abe664fa11803deb11ef6b
+  - enabled: 1
+    path: Assets/Scenes/InputScene.unity
+    guid: 93c9fb6f45d95c74c912c9aec66fb7f9
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   m_UseUCBPForAssetBundles: 0

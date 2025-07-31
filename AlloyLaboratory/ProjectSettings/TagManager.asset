@@ -10,6 +10,14 @@ TagManager:
   - Block
   - Damage2
   - Damage3
+  - Prevent
+  - Item
+  - LoadPoint
+  - SavePoint
+  - BlackCurtain
+  - Light
+  - Choice
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -17,8 +25,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Enemy
+  - ShortObject
   - 
   - 
   - 
