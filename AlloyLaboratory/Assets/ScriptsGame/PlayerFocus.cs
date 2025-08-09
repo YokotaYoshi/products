@@ -160,7 +160,7 @@ public class PlayerFocus : MonoBehaviour
         
         if (other.gameObject.tag == "LoadPoint")
         {
-            eventOnStart = other.GetComponent<LoadSceneManager>().eventOnStart;//シーン移動先でイベントから始まるかどうか
+            
             //Debug.Log(eventOnStart);
         }
     }
@@ -169,59 +169,15 @@ public class PlayerFocus : MonoBehaviour
     {
         if (other.gameObject.tag == "Event")
         {
-            //プレイヤーがイベント相手を見ていたら
-            //イベントに入れる状態である
-            eventFlag = true;
-            //対象のイベントコントローラーを取得
-            eventCnt = other.GetComponent<EventController>();
-            //選択肢の個数を取得
-            choiceNum = eventCnt.choices.Length;
-            //何個目のテキストで選択肢が表示されるか
-            choiceChatNum = eventCnt.choiceChatNum;
-            choices = new string[choiceNum];
-            if (choiceChatNum > 0)
-            {
-                for (int i = 0; i < choiceNum; i++)
-                {
-                    choices[i] = eventCnt.choices[i];
-                }
-            }
             
-            //テキスト数を取得
-                textNum = eventCnt.textNum;
-            //texts配列を初期化
-            texts = new string[textNum];
-            //eventProgressChangeを取得
-            eventProgressGetPoint = eventCnt.eventProgressGetPoint;
-            //Debug.Log(eventProgressGetPoint);
-            //テキスト情報を配列に収納
-            for (int i = 0; i < textNum; i++)
-            {
-                texts[i] = eventCnt.texts[i];
-                //Debug.Log(texts[i]);
-            }
-            //people配列を初期化
-            people = new string[textNum];
-            //テキスト情報を配列に収納
-            for (int i = 0; i < textNum; i++)
-            {
-                people[i] = eventCnt.people[i];
-                //Debug.Log(texts[i]);
-            }
         }
-        
-        
+
+
+
 
         if (other.gameObject.tag == "SavePoint")
         {
-            //プレイヤーがセーブポイントを見ていたら
-            //セーブができる状態である
-            isSaveReady = true;
 
-            savePosX = other.GetComponent<SavePointManager>().savePosX;
-            savePosY = other.GetComponent<SavePointManager>().savePosY;
-            saveSceneNum = other.GetComponent<SavePointManager>().saveSceneNum;
-            savePoint = 100 * savePosX + 10 * savePosY + saveSceneNum;
         }
 
         if (other.gameObject.tag == "Prevent")
@@ -262,18 +218,6 @@ public class PlayerFocus : MonoBehaviour
     }
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Event")
-        {
-            //プレイヤーがイベント相手から目をそらしたら
-            //イベントに入れない状態にする
-            eventFlag = false;
-            eventProgressGetPoint = 0;//eventProgressが動かないように
-        }
-        if (other.gameObject.tag == "SavePoint")
-        {
-            isSaveReady = false;//セーブできない状態
-        }
-        //取得したイベントコントローラーを捨てる
-        eventCnt = null;
+       
     }
 }

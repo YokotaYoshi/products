@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6027569667955850588}
   - component: {fileID: 243376287889744591}
   - component: {fileID: 4943746111211744566}
+  - component: {fileID: 8233579855152220873}
   m_Layer: 0
   m_Name: EventMaker
   m_TagString: Event
@@ -101,22 +102,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ad1ff89eb7ce2442b5658560ec40e80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textNum: 1
-  person0: "\u3088\u3053\u305F"
-  text0: "\u3053\u3093\u306B\u3061\u306F"
-  person1: 
-  text1: 
-  person2: 
-  text2: 
-  person3: 
-  text3: 
-  person4: 
-  text4: 
-  person5: 
-  text5: 
-  people: []
-  texts: []
-  eventPoint: 0
+  canRotate: 0
+  downImage: {fileID: 0}
+  rightImage: {fileID: 0}
+  upImage: {fileID: 0}
+  leftImage: {fileID: 0}
 --- !u!61 &4943746111211744566
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -163,3 +153,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8233579855152220873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491720009289861157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8297797f1b50fe34fb78664b3a73b399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flowchart: {fileID: 0}
+  blockName: NewBlock1
+  executeOnClick: 1

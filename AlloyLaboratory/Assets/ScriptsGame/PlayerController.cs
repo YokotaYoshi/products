@@ -5,9 +5,16 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     //操作キャラクターの動きに関する部分を主に担当する
+    public Sprite downImage;
+    public Sprite upImage;
+    public Sprite rightImage;
+    public Sprite leftImage;
 
+    SpriteRenderer spriteRenderer;
     private Rigidbody2D rb2d;
-    public float speed = 5.0f;//歩きスピード
+    public float walkSpeed = 5.0f;//歩きスピード
+    public float dashSpeed = 10.0f;//ダッシュスピード
+    public float speed;//移動速度
     float axisH = 0.0f;//左右入力離散値
     float axisV = 0.0f;//上下入力離散値
     Vector2 inputVector;//入力方向
@@ -44,7 +51,8 @@ public class PlayerController : MonoBehaviour
         hp = maxHp;
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         cameraCnt = mainCamera.GetComponent<CameraController>();
-
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        speed = walkSpeed;
     }
 
     // Update is called once per frame
@@ -64,12 +72,12 @@ public class PlayerController : MonoBehaviour
         //左シフトでダッシュ状態
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            speed = 10.0f;
+            speed = dashSpeed;
         }
         //ダッシュ解除
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            speed = 5.0f;
+            speed = walkSpeed;
         }
 
         //ベクトル(axisH, axisV)は(0,0),(+-1,0),(0,+-1)のいずれかである
@@ -82,6 +90,25 @@ public class PlayerController : MonoBehaviour
             axisV = Input.GetAxisRaw("Vertical");
         }
         inputVector = new Vector2(axisH, axisV);//入力ベクトル
+        //スプライト、アニメーションの切り替え
+        if (axisV < -0.5f)
+        {
+            //下向き＝正面向きが最優先
+            spriteRenderer.sprite = downImage;
+        }
+        else if (axisV > 0.5f)
+        {
+            spriteRenderer.sprite = upImage;
+        }
+        else if (axisH > 0.5f)
+        {
+            spriteRenderer.sprite = rightImage;
+        }
+        else if (axisH < -0.5f)
+        {
+            spriteRenderer.sprite = leftImage;
+        }
+        
         //Debug.Log(inputVector);
 
         //入力が1,-1から変更されたらコルーチン開始フラグオン
@@ -155,12 +182,12 @@ public class PlayerController : MonoBehaviour
         }
         else if (isUp)
         {
-            //左移動フラグオンなら
+            //上移動フラグオンなら
             StartCoroutine(Move(0.0f, 1.0f));
         }
         else if (isDown)
         {
-            //左移動フラグオンなら
+            //下移動フラグオンなら
             StartCoroutine(Move(0.0f, -1.0f));
         }
 

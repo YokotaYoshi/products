@@ -14,9 +14,7 @@ public class GameManager : MonoBehaviour
     public string gameState = "playing";
     //------------------左端の情報パネル----------------------
     public GameObject informationPanel;//左端の情報パネル
-    public Image charaIcon;//操作キャラクターのアイコン
-    public Sprite chara1;//誰かのアイコン画像
-    public bool isPanelOn = true;//パネルを表示するかどうか
+    
     //hp処理
     public Image hp1;
     public Image hp2;
@@ -49,18 +47,7 @@ public class GameManager : MonoBehaviour
             menuPanel.SetActive(false);
         }
 
-        //--------------------最初表示するか、表示しないか------------------------
-        if (informationPanel != null)
-        {
-            if (isPanelOn)
-            {
-                informationPanel.SetActive(true);//情報パネル表示
-            }
-            else
-            {
-                informationPanel.SetActive(false);//情報パネル非表示
-            }
-        }
+        
 
         player = GameObject.FindGameObjectWithTag("Player");//プレイヤーを取得
         playerCnt = player.GetComponent<PlayerController>();//プレイヤーコントローラーを取得
@@ -71,7 +58,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            MenuPanelButton();
+        }
 
         //----------------------------------セーブポイント-----------------------------------
         if (playerFocusCS.isSaveReady)
@@ -79,48 +69,10 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 Time.timeScale = 0;//ゲーム停止
-                
+
                 saveDatasPanel.SetActive(true);//セーブデータ表示
             }
         }
-
-        //------------------まだ先に進めないところに行こうとしたときに引き留める----------------------
-        /*
-        if (playerFocusCS.isPrevented)
-        {
-            Time.timeScale = 0;//ゲームストップ
-            textPanel.SetActive(true);//テキストボックス表示
-            ///nameText.GetComponent<Text>().text = playerFocusCS.people[0];//配列の1番目の名前を表示
-            //debugTime += Time.deltaTime;
-
-            //StartCoroutine(TextFlow(playerFocusCS.texts[0]));
-            
-            
-            if (!isTextDisplaying && !isTextComposing)
-            {
-                //テキスト非表示かつ
-                //テキスト生成が進んでいなかったら
-
-                //StartCoroutine(TextFlow(playerFocusCS.texts[0]));
-            }
-            
-            
-
-            if(isTextDisplaying && !isTextComposing && Input.GetKeyDown(KeyCode.Return))
-            {
-                //テキスト表示中で
-                //テキストの生成は終わった状態で
-                //Enterキーを押すと
-                
-                Time.timeScale = 1;//ゲーム再開
-                //nameText.GetComponent<Text>().text = null;//名前をなにもなしに
-                //chatText.GetComponent<Text>().text = null;//テキストをなにもなしに
-                textPanel.SetActive(false);//テキストボックス非表示
-                isTextDisplaying = false;//テキストが非表示になった
-                playerFocusCS.isPrevented = false;//動かせる状態に
-            }
-        }
-        */
 
         //--------------------------体力処理---------------------------
         if (playerCnt != null && hp1 != null && hp2 != null && hp3 != null)
@@ -168,9 +120,6 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("GameOver");
     }
-
-
-
     //セーブ画面を閉じる
     public void CloseSavePanel()
     {
@@ -178,8 +127,16 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    public void ShowMenuPanel()
+    public void MenuPanelButton()
     {
-        menuPanel.SetActive(true);
+        //メニューのオンオフ切り替え
+        if (!menuPanel.activeSelf)
+        {
+            menuPanel.SetActive(true);
+        }
+        else
+        {
+            menuPanel.SetActive(false);
+        }
     }
 }

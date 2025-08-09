@@ -1,8 +1,9 @@
 using UnityEngine;
 
-public class ItemData : MonoBehaviour
+public class currentData : MonoBehaviour
 {
     public static string[] itemData;
+    public static string[] charaData;
 
     //ここに所持アイテムを保存して、このスクリプトを参照する
 
