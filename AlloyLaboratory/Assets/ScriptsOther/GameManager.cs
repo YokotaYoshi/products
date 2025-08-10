@@ -133,10 +133,12 @@ public class GameManager : MonoBehaviour
         if (!menuPanel.activeSelf)
         {
             menuPanel.SetActive(true);
+            Time.timeScale = 0f;
         }
         else
         {
             menuPanel.SetActive(false);
+            Time.timeScale = 1f;
         }
     }
 }
