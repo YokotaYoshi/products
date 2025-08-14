@@ -1,30 +1,32 @@
 using UnityEngine;
 
-public class Data : MonoBehaviour
+public static class Data
 {
-    public static string[] itemData;
-    string item0 = "a";
-    string item1 = "b";
-    string item2 = "c";
-    string item3 = "d";
-    public static string[] charaData;
-    public string chara0 = "A";
-    public string chara1 = "B";
-    public string chara2 = "C";
-    public string chara3 = "D";
-
     //ここに所持アイテムを保存して、このスクリプトを参照する
+    public static string[] itemData;
+    public static string item0 = "a";
+    public static string item1 = "b";
+    public static string item2 = "c";
+    public static string item3 = "d";
+    
+    public static string[] charaData;
+    public static string chara0 = "charaImage1";
+    public static string chara1 = "charaImage_m_1";
+    public static string chara2 = "machu";
+    public static Sprite charaImage0;
+    public static Sprite charaImage1;
+    public static Sprite charaImage2;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    static Data()
     {
-        string[] itemData = { item0, item1, item2, item3 }; 
-        string[] charaData = {chara0, chara1, chara2, chara3};
+        itemData = new string[] { item0, item1, item2, item3 };
+        charaData = new string[] { chara0, chara1, chara2};
     }
 
-    // Update is called once per frame
-    void Update()
+    public static void LoadSprites()
     {
-        
+        charaImage0 = Resources.Load<Sprite>(charaData[0]);
+        charaImage1 = Resources.Load<Sprite>(charaData[1]);
+        charaImage2 = Resources.Load<Sprite>(charaData[2]);
     }
 }

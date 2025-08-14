@@ -1135,7 +1135,6 @@ GameObject:
   - component: {fileID: 558676073}
   - component: {fileID: 558676072}
   - component: {fileID: 558676075}
-  - component: {fileID: 558676077}
   - component: {fileID: 558676076}
   - component: {fileID: 558676074}
   - component: {fileID: 558676079}
@@ -1437,7 +1436,7 @@ MonoBehaviour:
   itemId: 96
   blockName: Start
   description: 
-  eventHandler: {fileID: 558676077}
+  eventHandler: {fileID: 0}
   commandList:
   - {fileID: 558676076}
   - {fileID: 558676074}
@@ -1469,21 +1468,6 @@ MonoBehaviour:
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 0}
---- !u!114 &558676077
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 558675967}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2f6487d21a03404cb21b245f0242e79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentBlock: {fileID: 558676075}
-  suppressBlockAutoSelect: 0
-  waitForFrames: 1
 --- !u!114 &558676078
 MonoBehaviour:
   m_ObjectHideFlags: 2
