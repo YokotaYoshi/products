@@ -4,6 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+public enum GameState
+{
+    Start,
+    Playing,
+    Pause,
+    GameOver,
+}
+
+public enum InputType
+{
+    Null,
+    Action,
+    Back,
+}
 public class GameManager : MonoBehaviour
 {
     //Fungusの切り替えとかに置き換えていく
@@ -11,10 +25,13 @@ public class GameManager : MonoBehaviour
     //主にパネルのONOFFを行う
     //ONにしたら、そのあとは個別に処理する
     //float debugTime = 0;//デバッグ用のタイマー
-    public string gameState = "playing";
+
+    GameState gameState = GameState.Playing;
+    public static InputType inputType = InputType.Null;
+
     //------------------左端の情報パネル----------------------
     public GameObject informationPanel;//左端の情報パネル
-    
+
     //hp処理
     public Image hp1;
     public Image hp2;
@@ -34,6 +51,8 @@ public class GameManager : MonoBehaviour
     public GameObject menuPanel;
 
 
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -47,7 +66,7 @@ public class GameManager : MonoBehaviour
             menuPanel.SetActive(false);
         }
 
-        
+
 
         player = GameObject.FindGameObjectWithTag("Player");//プレイヤーを取得
         playerCnt = player.GetComponent<PlayerController>();//プレイヤーコントローラーを取得
@@ -58,7 +77,28 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        
+
+        switch (gameState)
+        {
+            case GameState.Start:
+                //Debug.Log("スタート画面");
+                break;
+            case GameState.Playing:
+                //Debug.Log("プレイ中");
+                break;
+            case GameState.Pause:
+                //Debug.Log("ポーズ中");
+                break;
+            case GameState.GameOver:
+                //Debug.Log("ゲームオーバー");
+                break;
+        }
+
+        //入力があれば状態変化
+        InputTypeManagement();
+
+        if (inputType == InputType.Back)
         {
             MenuPanelButton();
         }
@@ -104,10 +144,15 @@ public class GameManager : MonoBehaviour
                 hp2.gameObject.SetActive(false);
                 hp3.gameObject.SetActive(false);
                 Invoke("GameOver", 1.0f);
-                gameState = "gameOver";
+                gameState = GameState.GameOver;
             }
         }
 
+        if (inputType != InputType.Null)
+        {
+            //Debug.Log(inputType);
+        }
+        
     }
 
     void FixedUpdate()
@@ -115,21 +160,41 @@ public class GameManager : MonoBehaviour
         //Debug.Log(Time.deltaTime);
     }
 
-    //ゲームオーバーメソッド
+    //------------------------入力切替メソッド-----------------------
+    public void InputTypeManagement()
+    {
+        //入力を変数に変更
+        //決定:左クリック、Z、Enter
+        //戻る:右クリック、X、Space
+        //ダッシュ:左右Shift
+        //最初に入力をニュートラルに戻す
+        inputType = InputType.Null;
+
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Z) || Input.GetMouseButtonDown(0))
+        {
+            inputType = InputType.Action;
+        }
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.X) || Input.GetMouseButtonDown(1))
+        {
+            inputType = InputType.Back;
+        }
+    }
+
+    //-----------------------ゲームオーバーメソッド--------------------
     void GameOver()
     {
         SceneManager.LoadScene("GameOver");
     }
-    //セーブ画面を閉じる
+    //-------------------セーブ画面を閉じる--------------------------
     public void CloseSavePanel()
     {
         saveDatasPanel.SetActive(false);
         Time.timeScale = 1;
     }
-
+    //-------------------メニューのオンオフ切り替え--------------------
     public void MenuPanelButton()
     {
-        //メニューのオンオフ切り替え
+        
         if (!menuPanel.activeSelf)
         {
             menuPanel.SetActive(true);

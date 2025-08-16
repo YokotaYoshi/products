@@ -117,11 +117,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 32
         width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -130,6 +130,28 @@ TextureImporter:
       bones: []
       spriteID: 9cd904ff80af1bbf0800000000000000
       internalID: -310191982762746423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: charaImage_m_1_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b488d65f59fdf3d4b9986c1758b23d82
+      internalID: -1126879248
       vertices: []
       indices: 
       edges: []
@@ -149,6 +171,7 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       charaImage_m_1_0: -310191982762746423
+      charaImage_m_1_1: -1126879248
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

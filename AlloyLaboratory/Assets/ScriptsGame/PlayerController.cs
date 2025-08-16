@@ -70,12 +70,12 @@ public class PlayerController : MonoBehaviour
         }
 
         //左シフトでダッシュ状態
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
             speed = dashSpeed;
         }
         //ダッシュ解除
-        if (Input.GetKeyUp(KeyCode.LeftShift))
+        if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
         {
             speed = walkSpeed;
         }
@@ -90,6 +90,7 @@ public class PlayerController : MonoBehaviour
             axisV = Input.GetAxisRaw("Vertical");
         }
         inputVector = new Vector2(axisH, axisV);//入力ベクトル
+        
         //スプライト、アニメーションの切り替え
         if (axisV < -0.5f)
         {

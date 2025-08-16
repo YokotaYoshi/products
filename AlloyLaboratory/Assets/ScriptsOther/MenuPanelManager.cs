@@ -8,16 +8,29 @@ public class MenuPanelManager : MonoBehaviour
     GameObject buttonFocused;//カーソルあってるボタン
     GameObject buttonUnFocused;//カーソル外れたボタン
 
+    //-------------------アイテムタブ--------------------
+
     GameObject[] buttonsItem;
+    GameObject[] buttonsItemText;
+    
     public GameObject buttonItem0;
     public GameObject buttonItem1;
+    public GameObject buttonItem1Text;
     public GameObject buttonItem2;
+    public GameObject buttonItem2Text;
     public GameObject buttonItem3;
+    public GameObject buttonItem3Text;
 
     public GameObject buttonItem4;
+    public GameObject buttonItem4Text;
     public GameObject buttonItem5;
+    public GameObject buttonItem5Text;
     public GameObject buttonItem6;
+    public GameObject buttonItem6Text;
+
+    //-------------------操作方法タブ----------------------------
     public GameObject buttonHowToPlay;
+    //--------------------オプションタブ------------------------
 
     GameObject[] buttonsOption;
 
@@ -25,20 +38,23 @@ public class MenuPanelManager : MonoBehaviour
     public GameObject buttonOption1;
     public GameObject buttonOption2;
     public GameObject buttonOption3;
+    //-----------------------ゲームをやめるタブ---------------------
 
     public GameObject buttonExit;
     public GameObject buttonExitConfirm;
 
+    //-----------------------未振り分け-----------------------------
+
     public GameObject[] buttons;
     public GameObject panelItem;
+    public GameObject panelItemInfo;
+    public Text itemNameText;
+    public Text itemInfoText;
     public GameObject panelHowToPlay;
     public GameObject panelOption;
     public GameObject panelExit;
     public GameObject[] panels;
 
-
-
-    public int items = 6;
     public int options = 3;
 
     Color focusColor;
@@ -55,24 +71,39 @@ public class MenuPanelManager : MonoBehaviour
         focusColor = new Color(0.7f, 0.7f, 1f);//フォーカスされたボタンの色
         unfocusColor = new Color(1f, 1f, 1f);//その他のボタンの色
 
+
         buttons = new GameObject[] { buttonItem0, buttonHowToPlay, buttonOption0, buttonExit };
         buttonsItem = new GameObject[] { buttonItem0, buttonItem1, buttonItem2, buttonItem3, buttonItem4, buttonItem5, buttonItem6 };
-        buttonsOption = new GameObject[] { buttonOption0, buttonOption1, buttonOption2, buttonOption3};
+        buttonsItemText = new GameObject[] { buttonItem1Text, buttonItem2Text, buttonItem3Text, buttonItem4Text, buttonItem5Text, buttonItem6Text };
+        buttonsOption = new GameObject[] { buttonOption0, buttonOption1, buttonOption2, buttonOption3 };
         panels = new GameObject[] { panelItem, panelHowToPlay, panelOption, panelExit };
 
+        panelItemInfo.SetActive(false);
         panelHowToPlay.SetActive(false);
         panelOption.SetActive(false);
         panelExit.SetActive(false);
 
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(buttonNum);
+        //Debug.Log(buttonNum);
+        for (int i = 0; i < Data.items; ++i)
+        {
+            buttonsItem[i + 1].SetActive(true);
+
+            //ボタンの表示名を変更
+            buttonsItemText[i].GetComponent<Text>().text = Data.itemData[i][0];
+        }
+        for (int i = Data.items; i < 6; ++i)
+        {
+            buttonsItem[i + 1].SetActive(false);
+        }
+
         SwitchButtonNum();
         FocusButton();
-
         PushButton();
     }
 
@@ -107,7 +138,15 @@ public class MenuPanelManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
             {
                 //↓
-                buttonNum += 10;
+                if (Data.items == 0 && buttonNum == 0)
+                {
+                    return;
+                }
+                else
+                {
+                    buttonNum += 10;
+                }
+                
             }
         }
         else
@@ -140,8 +179,9 @@ public class MenuPanelManager : MonoBehaviour
                     //←
                     buttonNum -= 5;
                 }
-                
-                if (buttonNum > 5 + items * 5) buttonNum = 5 + items * 5;
+
+                if (buttonNum == 5) buttonNum = 0;
+                if (buttonNum > 5 + Data.items * 5) buttonNum = 5 + Data.items * 5;
             }
             else if (buttonNum % 10 == 1)
             {
@@ -171,15 +211,20 @@ public class MenuPanelManager : MonoBehaviour
         //数値が切り替わった時だけ呼び出したい
         if (num == 0)
         {
-            //アイテムボタン
+            //アイテムタブボタン
             buttonUnFocused = buttonFocused;
             buttonFocused = buttonsItem[0];
+            panelItemInfo.SetActive(false);
         }
         else if (num % 5 == 0)
         {
             //アイテムボタン
             buttonUnFocused = buttonFocused;
-            buttonFocused = buttonsItem[(num-5) / 5];
+            buttonFocused = buttonsItem[(num - 5) / 5];
+            //アイテム情報にデータから取得したテキストを入れる
+            panelItemInfo.SetActive(true);
+            itemNameText.text = Data.itemData[(num - 10) / 5][0];
+            itemInfoText.text = Data.itemData[(num - 10) / 5][1];
         }
         else if (num == 1)
         {
@@ -216,6 +261,7 @@ public class MenuPanelManager : MonoBehaviour
     //--------------決定ボタンが押された時の処理------------------
     void PushButton()
     {
+        //パネルを切り替える
         for (int i = 0; i < 4; i++)
         {
             panels[i].SetActive(false);
@@ -238,42 +284,11 @@ public class MenuPanelManager : MonoBehaviour
         }
     }
 
-    //-------------------各ボタンクリック時の処理---------------
-    public void ShowItems()
+    //-------------------ボタンクリック時の処理---------------
+    public void ShowPanel(int num)
     {
         preButtonNum = buttonNum;
-        buttonNum = 0;
-
-        if (buttonNum != preButtonNum)
-        {
-            SwitchButtonFocused(buttonNum);
-        }
-    }
-
-    public void ShowHowToPlay()
-    {
-        preButtonNum = buttonNum;
-        buttonNum = 1;
-
-        if (buttonNum != preButtonNum)
-        {
-            SwitchButtonFocused(buttonNum);
-        }
-    }
-    public void ShowOptions()
-    {
-        preButtonNum = buttonNum;
-        buttonNum = 2;
-
-        if (buttonNum != preButtonNum)
-        {
-            SwitchButtonFocused(buttonNum);
-        }
-    }
-    public void ShowExitGame()
-    {
-        preButtonNum = buttonNum;
-        buttonNum = 3;
+        buttonNum = num;
 
         if (buttonNum != preButtonNum)
         {

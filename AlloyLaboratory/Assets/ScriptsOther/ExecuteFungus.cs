@@ -4,8 +4,11 @@ using Fungus;//これが大事
 public class ExecuteFungus : MonoBehaviour
 {
     public Flowchart flowchart;//InspectorからFlowchartを割り当てる
+
     public string blockName = "NewBlock1";//実行したいブロック名
     public bool executeOnClick = true;//決定で実行するか、触れただけで実行するか
+    public bool willDelete = false;
+    bool isExecutable = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -16,21 +19,33 @@ public class ExecuteFungus : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (GameManager.inputType != InputType.Null)
+        {
+            Debug.Log(GameManager.inputType);
+        }
+        if (isExecutable && GameManager.inputType == InputType.Action)
+        {
+            flowchart.ExecuteBlock(blockName);//引数はblockの名前
+            if (willDelete)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 
-    void OnTriggerStay2D(UnityEngine.Collider2D other)//UnityEngineをつけないとFungusのと間違える
+    void OnTriggerEnter2D(UnityEngine.Collider2D other)//UnityEngineをつけないとFungusのと間違える
     {
         if (other.gameObject.tag == "PlayerFocus" && executeOnClick)
         {
-            //Debug.Log("イベントに入れる");
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                //fungusの何かしらのブロックを起動する
-                flowchart.ExecuteBlock(blockName);//引数はblockの名前
+            isExecutable = true;
+        }
+    }
 
-            }
-
+    void OnTriggerExit2D(UnityEngine.Collider2D other)//UnityEngineをつけないとFungusのと間違える
+    {
+        if (other.gameObject.tag == "PlayerFocus" && executeOnClick)
+        {
+            isExecutable = false;
         }
     }
     

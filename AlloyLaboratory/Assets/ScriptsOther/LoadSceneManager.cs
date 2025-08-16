@@ -11,8 +11,8 @@ public class LoadSceneManager : MonoBehaviour
     GameObject playerFocus;
     PlayerFocus playerFocusCS;
 
-    
-    
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,14 +21,14 @@ public class LoadSceneManager : MonoBehaviour
         {
             playerFocusCS = playerFocus.GetComponent<PlayerFocus>();
         }
-        
+
         //暗転用のスクリプトを取得
         blackCurtain = GameObject.FindGameObjectWithTag("BlackCurtain");
         if (blackCurtain != null)
         {
             blackCurtainManager = blackCurtain.GetComponent<BlackCurtainManager>();
         }
-        
+
 
     }
 
@@ -49,6 +49,11 @@ public class LoadSceneManager : MonoBehaviour
     }
 
     public void LoadScene()
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+    
+    public void LoadSceneFromFungus(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }

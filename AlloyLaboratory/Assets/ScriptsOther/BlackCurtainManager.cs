@@ -81,7 +81,7 @@ public class BlackCurtainManager : MonoBehaviour
         while (true)
         {
             time += Time.deltaTime;
-            image.color += new Color(0, 0, 0, 1 * Time.deltaTime);
+            image.color += new Color(0, 0, 0, 3 * Time.deltaTime);
             yield return null;
 
             if (time >= 1f)

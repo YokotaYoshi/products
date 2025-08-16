@@ -82,10 +82,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62952a85b97d9594b87490fb2bd885fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventProgressGetPoint: 0
   eventFlag: 0
+  choiceNum: 0
+  choices: []
+  choiceChatNum: 0
   textNum: 0
   texts: []
   people: []
+  textsProtect: 0
+  isSaveReady: 0
+  savePoint: 0
+  isPrevented: 0
 --- !u!212 &2005271539226458843
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -221,8 +229,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0, g: 0, b: 1, a: 1}
+  m_Sprite: {fileID: -7127183229904908337, guid: 2488983417ee4414bbbc3e083d6608d6, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -244,12 +252,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 040f19feff2ed0c419ee3378a1d78de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  downImage: {fileID: -7127183229904908337, guid: 2488983417ee4414bbbc3e083d6608d6, type: 3}
+  upImage: {fileID: -1863436029972793218, guid: 2488983417ee4414bbbc3e083d6608d6, type: 3}
+  rightImage: {fileID: -1783808350427418317, guid: 2488983417ee4414bbbc3e083d6608d6, type: 3}
+  leftImage: {fileID: -1783808350427418317, guid: 2488983417ee4414bbbc3e083d6608d6, type: 3}
+  walkSpeed: 5
+  dashSpeed: 10
   speed: 5
   isMoving: 0
   isCoroutineWorking: 0
-  onEvent: 0
   maxHp: 3
-  mainCamera: {fileID: 0}
 --- !u!50 &6253403614249941832
 Rigidbody2D:
   serializedVersion: 5
