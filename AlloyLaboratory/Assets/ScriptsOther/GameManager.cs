@@ -3,21 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Fungus;
 
-public enum GameState
-{
-    Start,
-    Playing,
-    Pause,
-    GameOver,
-}
 
-public enum InputType
-{
-    Null,
-    Action,
-    Back,
-}
 public class GameManager : MonoBehaviour
 {
     //Fungusの切り替えとかに置き換えていく
@@ -26,11 +14,11 @@ public class GameManager : MonoBehaviour
     //ONにしたら、そのあとは個別に処理する
     //float debugTime = 0;//デバッグ用のタイマー
 
-    GameState gameState = GameState.Playing;
-    public static InputType inputType = InputType.Null;
+    public static GameState gameState;
+    //public static InputType inputType = InputType.Null;
 
     //------------------左端の情報パネル----------------------
-    public GameObject informationPanel;//左端の情報パネル
+    //public GameObject informationPanel;//左端の情報パネル
 
     //hp処理
     public Image hp1;
@@ -38,7 +26,7 @@ public class GameManager : MonoBehaviour
     public Image hp3;
 
     //----------------------セーブデータパネル
-    public GameObject saveDatasPanel;
+    //public GameObject saveDatasPanel;
     //--------------------その他-------------------------
 
     GameObject player;//プレイヤー
@@ -46,26 +34,35 @@ public class GameManager : MonoBehaviour
     GameObject playerFocus;//プレイヤーの目線
     PlayerFocus playerFocusCS;//PlayerFocusスクリプト
     //イベントのフラグ
-    public static int eventProgress = 0;//この数値を切り替えることでイベント進行
+    //public static int eventProgress = 0;//この数値を切り替えることでイベント進行
     float debugTime = 0f;
     public GameObject menuPanel;
-
-
+    public GameObject enemy;
+    bool isGameOverStarting = false;
+    public GameObject gameOverPanel;
+    public GameObject choicesPanel;
+    //--------------Fungus------------------------------
+    public Flowchart flowchart;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         //--------------------最初は非表示のもの------------------------
-        if (saveDatasPanel != null)
-        {
-            saveDatasPanel.SetActive(false);
-        }
+        
         if (menuPanel != null)
         {
             menuPanel.SetActive(false);
         }
 
+        if (gameState == GameState.Run)
+        {
+            //敵出現コルーチン
+            StartCoroutine(AppearEnemy());
+        }
+
+        choicesPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
 
 
         player = GameObject.FindGameObjectWithTag("Player");//プレイヤーを取得
@@ -77,8 +74,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
 
+        //ゲームステート切り替え
         switch (gameState)
         {
             case GameState.Start:
@@ -95,24 +92,12 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        //入力があれば状態変化
-        InputTypeManagement();
 
-        if (inputType == InputType.Back)
-        {
-            MenuPanelButton();
-        }
-
-        //----------------------------------セーブポイント-----------------------------------
-        if (playerFocusCS.isSaveReady)
-        {
-            if (Input.GetKeyDown(KeyCode.Return))
+        if (InputManager.inputType == InputType.Back)
             {
-                Time.timeScale = 0;//ゲーム停止
-
-                saveDatasPanel.SetActive(true);//セーブデータ表示
+                MenuPanelButton();
             }
-        }
+
 
         //--------------------------体力処理---------------------------
         if (playerCnt != null && hp1 != null && hp2 != null && hp3 != null)
@@ -139,62 +124,41 @@ public class GameManager : MonoBehaviour
             {
                 //体力0=ゲームオーバー
                 debugTime += Time.deltaTime;
-                Debug.Log(debugTime);
+                //Debug.Log(debugTime);
                 hp1.gameObject.SetActive(false);
                 hp2.gameObject.SetActive(false);
                 hp3.gameObject.SetActive(false);
-                Invoke("GameOver", 1.0f);
+
+                StartCoroutine(GameOver());
                 gameState = GameState.GameOver;
             }
         }
 
-        if (inputType != InputType.Null)
-        {
-            //Debug.Log(inputType);
-        }
-        
     }
 
-    void FixedUpdate()
-    {
-        //Debug.Log(Time.deltaTime);
-    }
-
-    //------------------------入力切替メソッド-----------------------
-    public void InputTypeManagement()
-    {
-        //入力を変数に変更
-        //決定:左クリック、Z、Enter
-        //戻る:右クリック、X、Space
-        //ダッシュ:左右Shift
-        //最初に入力をニュートラルに戻す
-        inputType = InputType.Null;
-
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Z) || Input.GetMouseButtonDown(0))
-        {
-            inputType = InputType.Action;
-        }
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.X) || Input.GetMouseButtonDown(1))
-        {
-            inputType = InputType.Back;
-        }
-    }
+    
 
     //-----------------------ゲームオーバーメソッド--------------------
-    void GameOver()
+    IEnumerator GameOver()
     {
-        SceneManager.LoadScene("GameOver");
+        //時間ゆっくりにしたりしたい
+        if (isGameOverStarting) yield break;
+        else isGameOverStarting = true;
+
+        yield return new WaitForSeconds(1f);
+        gameOverPanel.SetActive(true);
+        Time.timeScale = 0f;
     }
     //-------------------セーブ画面を閉じる--------------------------
     public void CloseSavePanel()
     {
-        saveDatasPanel.SetActive(false);
+        //saveDatasPanel.SetActive(false);
         Time.timeScale = 1;
     }
     //-------------------メニューのオンオフ切り替え--------------------
     public void MenuPanelButton()
     {
-        
+
         if (!menuPanel.activeSelf)
         {
             menuPanel.SetActive(true);
@@ -205,5 +169,25 @@ public class GameManager : MonoBehaviour
             menuPanel.SetActive(false);
             Time.timeScale = 1f;
         }
+    }
+
+    //-----------------選択肢表示---------------------
+    public void ShowChoices()
+    {
+        choicesPanel.SetActive(true);
+    }
+
+    //ロードした時に時間差で敵を出現させる
+    IEnumerator AppearEnemy()
+    {
+        float time = 0f;
+        while (true)
+        {
+            yield return null;
+            if (gameState != GameState.Pause) time += Time.deltaTime;
+            if (time > Data.timeWaitEnemy) break;
+        }
+        Vector2 appearPos = new Vector2(Data.loadPosX, Data.loadPosY);
+        Instantiate(enemy, appearPos, Quaternion.identity);
     }
 }

@@ -6,89 +6,81 @@ using System.Collections.Generic;
 public class BlackCurtainManager : MonoBehaviour
 {
     //public bool isActiveOnStart;
-    public float blackTime = 1f;//暗闇が完全に晴れるまでの時間
-    bool isFadingOut;
-    float fadeOutTime = 1f;
+    float fadeInTime = 0.2f;//暗闇が完全に晴れるまでの時間
+    bool fadeIn = false;
+    float fadeOutTime = 0.3f;
+    bool fadeOut = false;
     Image image;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         image = GetComponent<Image>();
-        /*
-        if (!isActiveOnStart)
-        {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            gameObject.SetActive(true);
-        }
-        */
+        //StartCoroutine(FadeIn());
+        StartFadeIn();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Time.deltaTime > 0f)
-        {
-            blackTime -= Time.deltaTime;
-        }
-        else
-        {
-            blackTime -= Time.unscaledDeltaTime;
-        }
 
-        
-
-        if (blackTime > 0f && blackTime < fadeOutTime)
-        {
-            //時間になったら1秒かけて透明に
-            isFadingOut = true;
-        }
-        else if (blackTime >= -0.5f && blackTime <= 0f)
-        {
-            image.color = new Color(0f, 0f, 0f, 0f);//確実に完全に透明に
-            isFadingOut = false;
-        }
-
-        if (isFadingOut)
-        {
-            FadeOut();
-        }
     }
 
-    void FadeOut()
+    public void StartFadeIn()
     {
-        //Debug.Log(image.color);
-        if (image.color.a >= 0)
+        if (!fadeIn)
         {
-            //1秒で透明になる
-            if (Time.deltaTime > 0f)
-            {
-                image.color -= new Color(0, 0, 0, 1 * Time.deltaTime);
-            }
-            else
-            {
-                image.color -= new Color(0, 0, 0, 1 * Time.unscaledDeltaTime);
-            }
+            StartCoroutine(FadeIn());
         }
     }
 
-    public IEnumerator FadeIn()
+    IEnumerator FadeIn()
     {
         float time = 0f;
-        //1秒で暗くなる
+        fadeIn = true;
+        //明るくなる
+
         while (true)
         {
             time += Time.deltaTime;
-            image.color += new Color(0, 0, 0, 3 * Time.deltaTime);
+            image.color -= new Color(0f, 0f, 0f, 5f * Time.deltaTime);
+
+            if (time >= fadeInTime)
+            {
+                image.color = new Color(0, 0, 0, 0f);
+                break;
+            }
+
+            yield return null;
+        }
+        fadeOut = false;
+    }
+
+    public void StartFadeOut()
+    {
+        if (!fadeOut)
+        {
+            StartCoroutine(FadeOut());
+        }
+    }
+
+    public IEnumerator FadeOut()
+    {
+        float time = 0f;
+        fadeOut = true;
+        //暗くなる
+
+        while (true)
+        {
+            time += Time.deltaTime;
+            image.color += new Color(0, 0, 0, 4f * Time.deltaTime);
             yield return null;
 
-            if (time >= 1f)
+            if (time >= fadeOutTime)
             {
                 image.color = new Color(0f, 0f, 0f, 1f);
-                yield break;
+                break;
             }
         }
+        fadeIn = true;
     }
 }

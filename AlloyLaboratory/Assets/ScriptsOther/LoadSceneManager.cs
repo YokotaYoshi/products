@@ -8,19 +8,32 @@ public class LoadSceneManager : MonoBehaviour
     GameObject blackCurtain;
     BlackCurtainManager blackCurtainManager;
     public string sceneName;//移動先のシーン名
+    public float loadPosX;//ロード先のX座標
+    public float loadPosY;//ロード先のY座標
+    public StartPos startPos;//ロード先の追従者
+    GameObject player;
+    PlayerController playerCnt;
     GameObject playerFocus;
     PlayerFocus playerFocusCS;
-
+    GameObject enemy;
+    
 
 
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            playerCnt = player.GetComponent<PlayerController>();
+        }
         playerFocus = GameObject.FindGameObjectWithTag("PlayerFocus");
         if (playerFocus != null)
         {
             playerFocusCS = playerFocus.GetComponent<PlayerFocus>();
         }
+
+        enemy = GameObject.FindGameObjectWithTag("Enemy");
 
         //暗転用のスクリプトを取得
         blackCurtain = GameObject.FindGameObjectWithTag("BlackCurtain");
@@ -43,19 +56,34 @@ public class LoadSceneManager : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            StartCoroutine(blackCurtainManager.FadeIn());
-            Invoke("LoadScene", 1f);
+            StartCoroutine(blackCurtainManager.FadeOut());
+            Invoke("LoadScene", 0.3f);
         }
     }
 
     public void LoadScene()
     {
+
+        Data.loadPosX = loadPosX;
+        Data.loadPosY = loadPosY;
+
+        PlayerController.startPos = startPos;
+
+        if (enemy != null)
+        {
+            //敵がいたら敵からの距離に応じて移動先で敵が現れるまでの時間を計測
+            GameManager.gameState = GameState.Run;
+            Data.timeWaitEnemy = new Vector2(transform.position.x - enemy.transform.position.x, transform.position.y - enemy.transform.position.y).magnitude / 3f;
+        }
+        
         SceneManager.LoadScene(sceneName);
     }
-    
+
     public void LoadSceneFromFungus(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+        Data.loadPosX = loadPosX;
+        Data.loadPosY = loadPosY;
     }
 }
 

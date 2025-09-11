@@ -6,16 +6,15 @@ public class DataEdit : MonoBehaviour
     public DataType dataType;
     public CharaName charaName;
     public ItemName itemName;
+    public int eventProgressSet;
     bool isEditable = false;
-    public bool executeOnStart = false;
+
+    //public bool executeOnStart = false;//シーン読み込み時点でデータをいじるか
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (executeOnStart)
-        {
-            EditData();
-        }
+
     }
 
     // Update is called once per frame
@@ -55,5 +54,14 @@ public class DataEdit : MonoBehaviour
         {
             Data.ItemAdd(itemName);
         }
+        else if (dataType == DataType.EventProgress)
+        {
+            Data.eventProgress = eventProgressSet;
+        }
+    }
+
+    public void EditGameState()
+    {
+        GameManager.gameState = GameState.Run;
     }
 }

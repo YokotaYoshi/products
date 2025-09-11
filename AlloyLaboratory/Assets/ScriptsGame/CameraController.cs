@@ -54,18 +54,18 @@ public class CameraController : MonoBehaviour
             else
             {
                 //カメラのx座標の移動範囲を制限する
-                if (player.transform.position.x -1.7f >= maxScrollX)
+                if (player.transform.position.x  >= maxScrollX)
                 {
                     x = maxScrollX;
                 }
-                else if (player.transform.position.x - 1.7f <= minScrollX)
+                else if (player.transform.position.x <= minScrollX)
                 {
                     x = minScrollX;
                 }
                 else
                 {
                     //プレイヤーの位置に合わせる
-                    x = player.transform.position.x - 1.7f;
+                    x = player.transform.position.x;
                 }
             }
 
@@ -150,7 +150,7 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            cameraPositionX = player.transform.position.x - 1.7f;
+            cameraPositionX = player.transform.position.x ;
         }
         if (isScrollY)
         {

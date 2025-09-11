@@ -4,7 +4,6 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Event
   - PlayerFocus
   - Damage1
   - Block
@@ -16,8 +15,9 @@ TagManager:
   - SavePoint
   - BlackCurtain
   - Light
-  - Choice
   - Boss
+  - Enemy
+  - PlayerCollider
   layers:
   - Default
   - TransparentFX

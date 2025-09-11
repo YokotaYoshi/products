@@ -12,8 +12,8 @@ public class FollowerController : MonoBehaviour
     PlayerController playerCnt;//プレイヤーコントローラー
     Vector2 playerPosition;//キャラから見たプレイヤーの位置
 
-    bool isMoving = true;//動いているかどうか
-    bool startMoving = false;
+    bool isMoving = false;//動いているかどうか
+    bool isCoroutineWorking = false;//コルーチン中かどうか
     Vector2 targetDirection;//自動移動時のゴールの方向
     Vector2 targetPosition;//移動先
     float distance;//プレイヤーとの距離
@@ -21,7 +21,9 @@ public class FollowerController : MonoBehaviour
     float speed = 5.0f;//移動速度
     float gap = 1.0f;//ゴールまでの距離
     Vector2 nearestGrid;
-
+    public bool startPosSet = false;
+    public float startPosX;
+    public float startPosY;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,6 +37,11 @@ public class FollowerController : MonoBehaviour
         //Rigidbody2Dを取得
         rb2d = GetComponent<Rigidbody2D>();
 
+        if (startPosSet) transform.position = new Vector2(startPosX, startPosY);
+        else transform.position = new Vector2(Data.loadPosX, Data.loadPosY);
+        
+
+        //プレイヤーと離れていた場合について
     }
 
     // Update is called once per frame
@@ -44,40 +51,34 @@ public class FollowerController : MonoBehaviour
 
         speed = playerCnt.speed;//スピードはプレイヤーと常に一致させる
 
+        isMoving = playerCnt.isMoving;//プレイヤーが移動しているなら移動している
+
+        /*
+        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        {
+            isMoving = true;
+        }
+        */
+
         //最も近い格子点
         nearestGrid = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
 
-        if (player != null)
+        //Debug.Log(playerCnt.isMoving);
+        if (!isMoving)
         {
-            if (playerRb2d.linearVelocity.magnitude < 1f)
-            {
-                //プレイヤーが止まっていたらこちらも格子点で静止
-                isMoving = false;
-
-                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow))
-                {
-                    startMoving = true;
-                }
-            }
-
-            
+            transform.position = nearestGrid;
+            //Debug.Log("位置補正");
         }
+            
+
+        
     }
 
     void FixedUpdate()
     {
-        if (!isMoving)
+        if (playerCnt.isMoving && !isCoroutineWorking)
         {
-            //格子点で静止
-            transform.position = nearestGrid;
-            rb2d.linearVelocity = Vector2.zero;
-
-
-        }
-        //プレイヤーを取得出来たら
-        if (startMoving)
-        {
-            Debug.Log("スタート");
+            //コルーチン開始していなかったら開始
             StartCoroutine(Move());
         }
     }
@@ -90,57 +91,26 @@ public class FollowerController : MonoBehaviour
         player.transform.position.y - transform.position.y).magnitude;
     }
 
-    //距離を調べてポジションをリセットする
-    void CheckPosition()
-    {
-        if (distance < 0.1f)
-        {
-            ResetPosition();
-        }
-    }
-    //ポジションをリセットする
-    void ResetPosition()
-    {
-        transform.position = nearestGrid;
-    }
-
     IEnumerator Move()
     {
         //動いているフラグ立て
-        startMoving = false;
-        isMoving = true;
-        float time = 0.0f;
+        isCoroutineWorking = true;
+
+        
         float isGoal = 0.1f;//ゴールまでの距離がこれ以下だったらゴールとする
 
         //ゴールはプレイヤーの座標に最も近い格子点
         targetPosition = new Vector2(Mathf.Round(player.transform.position.x), Mathf.Round(player.transform.position.y));
         //ゴールの方向の正規ベクトル
         targetDirection = new Vector2(targetPosition.x - transform.position.x, targetPosition.y - transform.position.y).normalized;
-        //速度を設定
-        rb2d.linearVelocity = new Vector2(targetDirection.x * speed, targetDirection.y * speed);
 
         //まず格子点に
-        transform.position = nearestGrid;
+        //transform.position = nearestGrid;
 
         while (true)
         {
             //ゴールまでの距離が一定以下なら以下の処理を毎フレーム行う
 
-            time += Time.deltaTime;
-
-            if (playerRb2d.linearVelocity.magnitude < 0.1f)
-            {
-                //プレイヤーが止まっていたら
-                //Debug.Log("プレイヤー停止");
-                //動いているフラグおろし
-                isMoving = false;
-                //速度をゼロに
-                rb2d.linearVelocity = Vector2.zero;
-                //座標を格子点に
-                transform.position = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
-                //コルーチン停止
-                yield break;
-            }
 
             //ゴールの方向の正規ベクトルを更新
             targetDirection = new Vector2(targetPosition.x - transform.position.x, targetPosition.y - transform.position.y).normalized;
@@ -155,13 +125,32 @@ public class FollowerController : MonoBehaviour
                 break;
             }
 
+            if (playerCnt.isMoving == false)
+            {
+                //プレイヤーが止まっていたら
+                Debug.Log("プレイヤー停止");
+                //動いているフラグおろし
+                isCoroutineWorking = false;
+                
+                //速度をゼロに
+                rb2d.linearVelocity = Vector2.zero;
+                //座標を格子点に
+                transform.position = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
+                //コルーチン停止
+                yield break;
+            }
+
+            isGoal = 0.01f * speed;
+
             yield return null;
         }
 
-        //Debug.Log(time);
         //動いているフラグおろし
-        isMoving = false;
+        isCoroutineWorking = false;
+        
+        //速度をゼロに
+        //rb2d.linearVelocity = Vector2.zero;
         //座標を格子点に
-        //transform.position = new Vector2(Mathf.Round(transform.position.x),Mathf.Round(transform.position.y));
+        //transform.position = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
     }
 }

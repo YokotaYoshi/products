@@ -4,18 +4,57 @@ public enum DataType
 {
     Member,
     Item,
+    EventProgress,
 }
 
 public enum ItemName
 {
     Smaho,
     Watch,
+    Extinguisher,
 }
 
 public enum CharaName
 {
     Rino,
     Mikoru,
+}
+
+public enum Difficulty
+{
+    VeryHard,
+    Hard,
+    Normal,
+    Easy,
+}
+
+public enum GameState
+{
+    Start,
+    Playing,
+    Run,
+    Pause,
+    GameOver,
+}
+
+
+
+public enum MoveDirection
+{
+    Up,
+    Down,
+    Right,
+    Left,
+    N,
+}
+
+public enum StartPos
+{
+    Right,
+    Left,
+    Up,
+    Down,
+    Other,
 }
 
 public static class Data
@@ -30,6 +69,7 @@ public static class Data
 
     public static string[] itemSmaho = { "スマホ", "命の次に大事" };
     public static string[] itemWatch = { "腕時計", "最近はスマホで時間を確認するから使う機会がない" };
+    public static string[] itemExtinguisher = { "消火器", "Fire Extinguisher" };
     public static string[][] itemDataAll;
 
 
@@ -47,15 +87,24 @@ public static class Data
     public static Sprite charaImage0;
     public static Sprite charaImage1;
     public static Sprite charaImage2;
+    //---------------ロード先の座標を保存---------------
+    public static float loadPosX;
+    public static float loadPosY;
+    //---------------敵に追いかけられているとき-----------
+    public static float timeWaitEnemy;
+
+    //--------------イベントの進捗に関するデータ---------------
+    public static int eventProgress;
+
     //public static GameObject itemButton0;
 
     static Data()
     {
         itemData = new string[][] { null, null, null, null, null, null };
 
-        itemDataAll = new string[][] { itemSmaho, itemWatch };
+        itemDataAll = new string[][] { itemSmaho, itemWatch, itemExtinguisher };
 
-        charaData = new string[][] { charaRino, charaNull, charaNull};
+        charaData = new string[][] { charaRino, charaNull, charaNull };
 
         charaDataAll = new string[][] { charaRino, charaMikoru };
 
