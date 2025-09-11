@@ -9,12 +9,13 @@ public class ExecuteFungus : MonoBehaviour
     public bool executeOnClick = true;//決定で実行するか、触れただけで実行するか
     public bool willDelete = false;//話しかけたら消える
     //-------------選択肢-----------------
-    public int choicesNum;
+    public int choicesNum = 0;
     public string choice0;
     public string choice1;
     public string choice2;
     public string choice3;
     public string[] choices;
+    public string choiceBlockName;
     bool isExecutable = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -42,14 +43,18 @@ public class ExecuteFungus : MonoBehaviour
             if (GameManager.gameState == GameState.Pause) return;
             flowchart.SetBooleanVariable("event", true);
             flowchart.ExecuteBlock(blockName);//引数はblockの名前
+
             if (willDelete)
             {
                 Destroy(gameObject);
             }
         }
-
+        if (choicesNum >= 1)
+        {
+            flowchart.SetStringVariable("blockName", choiceBlockName);
+        }
         //fungusのeventProgressをDataクラスのeventProgressと同期させる
-        flowchart.SetIntegerVariable("eventProgress", Data.eventProgress);
+            flowchart.SetIntegerVariable("eventProgress", Data.eventProgress);
     }
 
     void OnTriggerEnter2D(UnityEngine.Collider2D other)//UnityEngineをつけないとFungusのと間違える
@@ -72,15 +77,6 @@ public class ExecuteFungus : MonoBehaviour
         if (other.gameObject.tag == "PlayerFocus" && executeOnClick)
         {
             isExecutable = false;
-        }
-    }
-
-    void OnCollisionEnter2D(UnityEngine.Collision2D collision)//UnityEngineをつけないとFungusのと間違える
-    {
-        if (collision.gameObject.tag == "Player" && !executeOnClick)
-        {
-            //fungusの何かしらのブロックを起動する
-            flowchart.ExecuteBlock(blockName);//引数はblockの名前
         }
     }
 

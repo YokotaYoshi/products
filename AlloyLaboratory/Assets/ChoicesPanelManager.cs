@@ -11,6 +11,7 @@ public class ChoicesPanelManager : MonoBehaviour
     public GameObject choice1;
     public GameObject choice2;
     public GameObject choice3;
+    public string blockName;
     GameObject[] choices;
     Color focusColor;
     Color unfocusColor;
@@ -39,11 +40,14 @@ public class ChoicesPanelManager : MonoBehaviour
             else choices[i].GetComponent<Image>().color = unfocusColor;
         }
 
+        blockName = flowchart.GetStringVariable("blockName");
     }
 
     public void SetChoiceNum(int num)
     {
+        //ボタンを押したときの処理
         flowchart.SetIntegerVariable("choiceNum", num);
-        flowchart.ExecuteBlock("Choice");
+        flowchart.ExecuteBlock(blockName);
+        gameObject.SetActive(false);
     }
 }

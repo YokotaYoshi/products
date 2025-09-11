@@ -512,6 +512,7 @@ MonoBehaviour:
   choice2: 
   choice3: 
   choices: []
+  choiceBlockName: 
 --- !u!1 &344014202
 GameObject:
   m_ObjectHideFlags: 0
@@ -1257,7 +1258,6 @@ GameObject:
   - component: {fileID: 558676075}
   - component: {fileID: 558676076}
   - component: {fileID: 558676074}
-  - component: {fileID: 558676078}
   - component: {fileID: 558676080}
   - component: {fileID: 558676082}
   - component: {fileID: 558676089}
@@ -1275,6 +1275,7 @@ GameObject:
   - component: {fileID: 558676098}
   - component: {fileID: 558676097}
   - component: {fileID: 558676096}
+  - component: {fileID: 558676101}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -1309,12 +1310,12 @@ MonoBehaviour:
   selectedBlocks:
   - {fileID: 558676075}
   selectedCommands:
-  - {fileID: 558676074}
+  - {fileID: 558676094}
   variables:
-  - {fileID: 558676078}
   - {fileID: 558676080}
   - {fileID: 558676091}
   - {fileID: 558676095}
+  - {fileID: 558676101}
   description: 
   stepPause: 0
   colorCommands: 1
@@ -3123,8 +3124,8 @@ MonoBehaviour:
   eventHandler: {fileID: 0}
   commandList:
   - {fileID: 558676076}
-  - {fileID: 558676094}
   - {fileID: 558676074}
+  - {fileID: 558676094}
   suppressAllAutoSelections: 0
 --- !u!114 &558676076
 MonoBehaviour:
@@ -3153,21 +3154,6 @@ MonoBehaviour:
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 0}
---- !u!114 &558676078
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 558675967}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4580f28dd8581476b810b38eea2f1316, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scope: 1
-  key: sceneName
-  value: LaboFront
 --- !u!114 &558676080
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -3968,6 +3954,21 @@ MonoBehaviour:
   - {fileID: 558676098}
   - {fileID: 558676097}
   suppressAllAutoSelections: 0
+--- !u!114 &558676101
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558675967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4580f28dd8581476b810b38eea2f1316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scope: 1
+  key: blockName
+  value: 
 --- !u!1 &578546699
 GameObject:
   m_ObjectHideFlags: 0
@@ -11121,6 +11122,7 @@ MonoBehaviour:
   choice2: 
   choice3: 
   choices: []
+  choiceBlockName: 
 --- !u!1 &1369229996 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 491720009289861157, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
@@ -11169,12 +11171,13 @@ MonoBehaviour:
   blockName: Mikoru
   executeOnClick: 1
   willDelete: 0
-  choicesNum: 0
+  choicesNum: 2
   choice0: 
   choice1: 
   choice2: 
   choice3: 
   choices: []
+  choiceBlockName: Choice
 --- !u!4 &1369230003 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6940826776056657247, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
