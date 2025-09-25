@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb2d;
     public float walkSpeed = 5.0f;//歩きスピード
     public float dashSpeed = 10.0f;//ダッシュスピード
-    public float speed;//移動速度
+    public static float speed;//移動速度
     float axisH = 0.0f;//左右入力離散値
     float axisV = 0.0f;//上下入力離散値
     Vector2 inputVector;//入力方向
@@ -27,10 +27,10 @@ public class PlayerController : MonoBehaviour
 
     public bool isMoving = false;//移動中かどうか
     public bool isCoroutineWorking = false;//コルーチン中かどうか
-    public MoveDirection moveDirection = MoveDirection.N;
+    public Direction moveDirection = Direction.N;
 
     //--------------------ロード後の座標関係--------------------
-    public static StartPos startPos = StartPos.Other;//ロード先の座標
+    public static Direction startPos = Direction.N;//ロード先の座標
     public float startPosX = 0f;//手動で設定する場合のX座標
     public float startPosY = 0f;//手動で設定する場合のY座標
     
@@ -62,27 +62,28 @@ public class PlayerController : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();//Rigidbody2Dの取得
         //enemy = GameObject.FindGameObjectWithTag("Damage1");
-        hp = maxHp;
+        
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         cameraCnt = mainCamera.GetComponent<CameraController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        speed = walkSpeed;
+
+        
 
         switch (startPos)
         {
-            case StartPos.Right:
+            case Direction.Right:
                 transform.position = new Vector2(Data.loadPosX + 1.0f, Data.loadPosY);
                 break;
-            case StartPos.Left:
+            case Direction.Left:
                 transform.position = new Vector2(Data.loadPosX - 1.0f, Data.loadPosY);
                 break;
-            case StartPos.Up:
+            case Direction.Up:
                 transform.position = new Vector2(Data.loadPosX, Data.loadPosY + 1.0f);
                 break;
-            case StartPos.Down:
+            case Direction.Down:
                 transform.position = new Vector2(Data.loadPosX, Data.loadPosY - 1.0f);
                 break;
-            case StartPos.Other:
+            case Direction.N:
                 transform.position = new Vector2(startPosX, startPosY);
                 break;
         }
@@ -93,6 +94,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //if (rb2d.linearVelocity.x < 5.0f) Debug.Log(rb2d.linearVelocity.x);
+        
 
         nearestGrid = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
 
@@ -105,18 +107,54 @@ public class PlayerController : MonoBehaviour
         }
 
         if (GameManager.gameState == GameState.Pause) return;
-        
 
+        switch (Data.difficulty)//難易度に応じて速度変更
+        {
+            case Difficulty.VeryHard:
+                dashSpeed = 10.0f;
+                walkSpeed = 5.0f;
+                break;
+            case Difficulty.Hard:
+                dashSpeed = 8.0f;
+                walkSpeed = 5.0f;
+                break;
+            case Difficulty.Normal:
+                dashSpeed = 8.0f;
+                walkSpeed = 5.0f;
+                break;
+            case Difficulty.Easy:
+                dashSpeed = 7.0f;
+                walkSpeed = 4.0f;
+                break;
+        }
+
+        //if (Input.GetAxisRaw("Vertical") != 0f) Debug.Log("あ");
+        //if (Input.GetKey(KeyCode.LeftShift)) Debug.Log("い");
         //シフトでダッシュ状態
+        //シーン移動時に長押しでダッシュ状態が維持できない
+        if (Data.dashWhilePush)
+        {
             if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
             {
                 speed = dashSpeed;
             }
-        //ダッシュ解除
-        if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
-        {
-            speed = walkSpeed;
+            else
+            {
+                speed = walkSpeed;
+            }
         }
+        else
+        {
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+            {
+                speed = walkSpeed;
+            }
+            else
+            {
+                speed = dashSpeed;
+            }
+        }
+
 
         //ベクトル(axisH, axisV)は(0,0),(+-1,0),(0,+-1)のいずれかである
         if (axisV == 0)
@@ -155,11 +193,11 @@ public class PlayerController : MonoBehaviour
             }
             else if (preAxisH > 0.5f)
             {
-                moveDirection = MoveDirection.Right;
+                moveDirection = Direction.Right;
             }
             else if (preAxisH < -0.5f)
             {
-                moveDirection = MoveDirection.Left;
+                moveDirection = Direction.Left;
             }
             preAxisH = axisH;
             preAxisV = axisV;
@@ -176,11 +214,11 @@ public class PlayerController : MonoBehaviour
             }
             else if (preAxisV > 0.5f)
             {
-                moveDirection = MoveDirection.Up;
+                moveDirection = Direction.Up;
             }
             else if (preAxisV < -0.5f)
             {
-                moveDirection = MoveDirection.Down;
+                moveDirection = Direction.Down;
             }
             preAxisH = axisH;
             preAxisV = axisV;
@@ -211,7 +249,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (moveDirection != MoveDirection.N)
+        if (moveDirection != Direction.N)
         {
             //Debug.Log("コルーチン開始");
             StartCoroutine(Move(moveDirection));
@@ -246,12 +284,12 @@ public class PlayerController : MonoBehaviour
     }
 
     //--------------上下左右の入力終了後の自動運転--------------------
-    private IEnumerator Move(MoveDirection direction)
+    private IEnumerator Move(Direction direction)
     {
         isCoroutineWorking = true;//コルーチン始動フラグ
 
         //すでに移動開始したので、コルーチンが重複しないよう方向フラグoff
-        moveDirection = MoveDirection.N;
+        moveDirection = Direction.N;
 
         float distance = 1.0f;//プレイヤーの現在位置から格子点までの距離
         float isGoal = 0.1f;//ゴールまでの距離がこれ以下だったらゴールとする
@@ -279,19 +317,19 @@ public class PlayerController : MonoBehaviour
 
             switch (direction)
             {
-                case MoveDirection.Right:
+                case Direction.Right:
                     distance = Mathf.Ceil(transform.position.x) - transform.position.x;
                     rb2d.linearVelocity = new Vector2(speed, 0f);
                     break;
-                case MoveDirection.Left:
+                case Direction.Left:
                     distance = transform.position.x - Mathf.Floor(transform.position.x);
                     rb2d.linearVelocity = new Vector2(-speed, 0f);
                     break;
-                case MoveDirection.Up:
+                case Direction.Up:
                     distance = Mathf.Ceil(transform.position.y) - transform.position.y;
                     rb2d.linearVelocity = new Vector2(0f, speed);
                     break;
-                case MoveDirection.Down:
+                case Direction.Down:
                     distance = transform.position.y - Mathf.Floor(transform.position.y);
                     rb2d.linearVelocity = new Vector2(0f, -speed);
                     break;
@@ -364,8 +402,15 @@ public class PlayerController : MonoBehaviour
         //アニメーションを流す
         //血を飛び散らせる
         //入力を拒否する
+        float time = 0.0f;
         rb2d.linearVelocity = Vector2.zero;//いったんその場で停止
-        yield return null;
+        while (true)
+        {
+            time += Time.deltaTime;
+            yield return null;
+            if (time >= 1.0f) break;
+        }
+        
     }
 
     

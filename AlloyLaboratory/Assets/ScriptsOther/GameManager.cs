@@ -74,7 +74,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //DataクラスのeventProgressをfungusのeventProgressと同期させる
+        Data.eventProgressMain = flowchart.GetIntegerVariable("eventProgressMain");
+        Data.eventProgressSub = flowchart.GetIntegerVariable("eventProgressSub");
+        
         //ゲームステート切り替え
         switch (gameState)
         {
@@ -88,18 +91,27 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("ポーズ中");
                 break;
             case GameState.GameOver:
-                //Debug.Log("ゲームオーバー");
+                Debug.Log("ゲームオーバー");
+                //ゲームオーバーシーンをロード？
                 break;
+        }
+        if (flowchart.GetBooleanVariable("event") == true)
+        {
+            gameState = GameState.Pause;
+        }
+        else
+        {
+            gameState = GameState.Playing;
         }
 
 
         if (InputManager.inputType == InputType.Back)
-            {
-                MenuPanelButton();
-            }
+        {
+            MenuPanelButton();
+        }
 
 
-        //--------------------------体力処理---------------------------
+        //----------------------体力処理---------------------------
         if (playerCnt != null && hp1 != null && hp2 != null && hp3 != null)
         {
             if (PlayerController.hp >= 3)

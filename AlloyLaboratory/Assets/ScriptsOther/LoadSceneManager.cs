@@ -10,7 +10,7 @@ public class LoadSceneManager : MonoBehaviour
     public string sceneName;//移動先のシーン名
     public float loadPosX;//ロード先のX座標
     public float loadPosY;//ロード先のY座標
-    public StartPos startPos;//ロード先の追従者
+    public Direction startPos;//ロード先の追従者
     GameObject player;
     PlayerController playerCnt;
     GameObject playerFocus;
@@ -56,7 +56,7 @@ public class LoadSceneManager : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            StartCoroutine(blackCurtainManager.FadeOut());
+            blackCurtainManager.FadeOut();
             Invoke("LoadScene", 0.3f);
         }
     }
@@ -66,7 +66,6 @@ public class LoadSceneManager : MonoBehaviour
 
         Data.loadPosX = loadPosX;
         Data.loadPosY = loadPosY;
-
         PlayerController.startPos = startPos;
 
         if (enemy != null)

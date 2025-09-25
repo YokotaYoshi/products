@@ -69,8 +69,9 @@ public class TitleManager : MonoBehaviour
 
     public void GameStart()
     {
-        Data.eventProgress = 0;
-        PlayerController.startPos = StartPos.Other;
+        Data.eventProgressMain = 0;
+        Data.eventProgressSub = 0;
+        PlayerController.startPos = Direction.N;
         SceneManager.LoadScene("HomeStart");
     }
 

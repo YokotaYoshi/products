@@ -30,6 +30,7 @@ public class PlayerFocus : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.gameState == GameState.Pause) return;
         //--------------------------位置についての記述-------------------------------
         //ベクトル(axisH, axisV)は(0,0),(+-1,0),(0,+-1)のいずれか
         if (axisV == 0)

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class MenuPanelManager : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class MenuPanelManager : MonoBehaviour
 
     GameObject[] buttonsItem;
     GameObject[] buttonsItemText;
-    
+
     public GameObject buttonItem0;
     public GameObject buttonItem1;
     public GameObject buttonItem1Text;
@@ -35,8 +36,8 @@ public class MenuPanelManager : MonoBehaviour
     GameObject[] buttonsOption;
 
     public GameObject buttonOption0;
-    public GameObject buttonOption1;
-    public GameObject buttonOption2;
+    public GameObject buttonOption1;//難易度切り替え
+    public GameObject buttonOption2;//ダッシュ切り替え
     public GameObject buttonOption3;
     //-----------------------ゲームをやめるタブ---------------------
 
@@ -83,13 +84,14 @@ public class MenuPanelManager : MonoBehaviour
         panelOption.SetActive(false);
         panelExit.SetActive(false);
 
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
         //Debug.Log(buttonNum);
+        //----------------所持アイテムを表示する--------------
         for (int i = 0; i < Data.items; ++i)
         {
             buttonsItem[i + 1].SetActive(true);
@@ -101,6 +103,43 @@ public class MenuPanelManager : MonoBehaviour
         {
             buttonsItem[i + 1].SetActive(false);
         }
+        //-----------------オプションで今の状態を表示する-----------
+        //オプションの説明にデータから取得したテキストを入れる
+        if (InputManager.inputType == InputType.Action)
+        {
+            Debug.Log("オプション操作");
+            //決定ボタンを押されたとき関数を呼ぶ
+            if (buttonNum == 12) OptionDifficulty();
+            if (buttonNum == 22) OptionDash();
+        }
+
+        switch (Data.currentDifficulty)
+        {
+            case Difficulty.Auto://オート
+                buttonOption1.GetComponentInChildren<Text>().text = "難易度：オート";
+                break;
+            case Difficulty.VeryHard://とても難しい
+                buttonOption1.GetComponentInChildren<Text>().text = "難易度：とても難しい";
+                break;
+            case Difficulty.Hard://難しい
+                buttonOption1.GetComponentInChildren<Text>().text = "難易度：難しい";
+                break;
+            case Difficulty.Normal://普通
+                buttonOption1.GetComponentInChildren<Text>().text = "難易度：普通";
+                break;
+            case Difficulty.Easy://簡単
+                buttonOption1.GetComponentInChildren<Text>().text = "難易度：簡単";
+                break;
+        }
+        if (Data.dashWhilePush)
+        {
+            buttonOption2.GetComponentInChildren<Text>().text = "シフトを押しているときダッシュする";
+        }
+        else
+        {
+            buttonOption2.GetComponentInChildren<Text>().text = "シフトを押しているとき歩く";
+        }
+        
 
         SwitchButtonNum();
         FocusButton();
@@ -146,7 +185,7 @@ public class MenuPanelManager : MonoBehaviour
                 {
                     buttonNum += 10;
                 }
-                
+
             }
         }
         else
@@ -167,8 +206,6 @@ public class MenuPanelManager : MonoBehaviour
             {
                 //アイテム欄
                 //数値の上限
-
-
                 if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
                 {
                     //→
@@ -237,6 +274,8 @@ public class MenuPanelManager : MonoBehaviour
             //オプションボタン
             buttonUnFocused = buttonFocused;
             buttonFocused = buttonsOption[(num - 2) / 10];
+            
+            
         }
         else if (num == 3)
         {
@@ -294,5 +333,58 @@ public class MenuPanelManager : MonoBehaviour
         {
             SwitchButtonFocused(buttonNum);
         }
+    }
+
+    //-------------------オプション操作--------------------
+    public void OptionDifficulty()
+    {
+        switch (Data.currentDifficulty)
+        {
+            case Difficulty.Auto://オート→とても難しい
+                Data.difficulty = Difficulty.VeryHard;
+                Data.currentDifficulty = Difficulty.VeryHard;
+                break;
+            case Difficulty.Easy://簡単→オート
+                Data.difficulty = Difficulty.Auto;
+                Data.currentDifficulty = Difficulty.Auto;
+                break;
+            case Difficulty.Normal://普通→簡単
+                Data.difficulty = Difficulty.Easy;
+                Data.currentDifficulty = Difficulty.Easy;
+                break;
+            case Difficulty.Hard://難しい→普通
+                Data.difficulty = Difficulty.Normal;
+                Data.currentDifficulty = Difficulty.Normal;
+                break;
+            case Difficulty.VeryHard://とても難しい→難しい
+                Data.difficulty = Difficulty.Hard;
+                Data.currentDifficulty = Difficulty.Hard;
+                break;
+            
+        }
+    }
+    public void OptionDash()
+    {
+        //デフォルトをダッシュにするか
+        //モードを反転
+        Data.dashWhilePush = !Data.dashWhilePush;
+        /*
+        if (Data.dashWhilePush)
+        {
+            buttonOption2.GetComponentInChildren<Text>().text = Data.optionDash[1];
+            Data.dashWhilePush = false;
+        }
+        else
+        {
+            buttonOption2.GetComponentInChildren<Text>().text = Data.optionDash[0];
+            Data.dashWhilePush = true;
+        }
+        */
+    }
+
+    //--------------------ゲーム終了----------------------
+    public void Exit()
+    {
+        SceneManager.LoadScene("TitleScene");
     }
 }

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4060100894819119206}
   m_Layer: 0
   m_Name: box
-  m_TagString: Untagged
+  m_TagString: Carry
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -177,7 +177,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMoving: 0
-  isCoroutineWorking: 0
 --- !u!114 &4060100894819119206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,3 +193,9 @@ MonoBehaviour:
   down: 1
   right: 1
   left: 1
+  sprite0: {fileID: 0}
+  sprite1: {fileID: 0}
+  eventProgressMainBase: 0
+  eventProgressSubBase: 0
+  willDestroy: 0
+  animateTime: 0.3

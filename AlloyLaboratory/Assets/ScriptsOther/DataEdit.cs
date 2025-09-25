@@ -6,7 +6,7 @@ public class DataEdit : MonoBehaviour
     public DataType dataType;
     public CharaName charaName;
     public ItemName itemName;
-    public int eventProgressSet;
+
     bool isEditable = false;
 
     //public bool executeOnStart = false;//シーン読み込み時点でデータをいじるか
@@ -54,9 +54,13 @@ public class DataEdit : MonoBehaviour
         {
             Data.ItemAdd(itemName);
         }
-        else if (dataType == DataType.EventProgress)
+    }
+
+    public void SubData()
+    {
+        if (dataType == DataType.Member)
         {
-            Data.eventProgress = eventProgressSet;
+            Data.MemberSub(charaName);
         }
     }
 

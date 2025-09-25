@@ -46,23 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: RinoHomeFront
-  eventOnStart: 0
-  isEventOnly: 0
-  textNum: 0
-  person0: 
-  text0: 
-  person1: 
-  text1: 
-  person2: 
-  text2: 
-  person3: 
-  text3: 
-  person4: 
-  text4: 
-  person5: 
-  text5: 
-  person6: 
-  text6: 
+  loadPosX: 0
+  loadPosY: 0
+  startPos: 0
 --- !u!61 &1370956879912458583
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -107,5 +93,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0

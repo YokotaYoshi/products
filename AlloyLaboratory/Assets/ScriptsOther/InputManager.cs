@@ -9,11 +9,16 @@ public enum InputType
 public class InputManager : MonoBehaviour
 {
     public static InputType inputType = InputType.Null;
+    public GameObject InputPanel;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        if (InputPanel != null)
+        {
+            InputPanel.SetActive(false);
+        }
+        
     }
 
     // Update is called once per frame
@@ -41,5 +46,16 @@ public class InputManager : MonoBehaviour
         {
             inputType = InputType.Back;
         }
+    }
+
+    //----------------謎解きの答えを入力したりする入力パネル------------
+    public void OpenInputPanel()
+    {
+        GameManager.gameState = GameState.Pause;
+        InputPanel.SetActive(true);
+    }
+    public void CloseInputPanel()
+    {
+        InputPanel.SetActive(false);
     }
 }

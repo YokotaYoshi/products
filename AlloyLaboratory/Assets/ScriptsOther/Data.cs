@@ -12,16 +12,19 @@ public enum ItemName
     Smaho,
     Watch,
     Extinguisher,
+    Camera,
+    Null,
 }
 
 public enum CharaName
 {
     Rino,
-    Mikoru,
+    Kurumi,
 }
 
 public enum Difficulty
 {
+    Auto,
     VeryHard,
     Hard,
     Normal,
@@ -39,7 +42,7 @@ public enum GameState
 
 
 
-public enum MoveDirection
+public enum Direction
 {
     Up,
     Down,
@@ -48,14 +51,7 @@ public enum MoveDirection
     N,
 }
 
-public enum StartPos
-{
-    Right,
-    Left,
-    Up,
-    Down,
-    Other,
-}
+
 
 public static class Data
 {
@@ -70,6 +66,7 @@ public static class Data
     public static string[] itemSmaho = { "スマホ", "命の次に大事" };
     public static string[] itemWatch = { "腕時計", "最近はスマホで時間を確認するから使う機会がない" };
     public static string[] itemExtinguisher = { "消火器", "Fire Extinguisher" };
+    public static string[] itemCamera = { "カメラ", "これでタイムトラベルの証拠を撮るのだ" };
     public static string[][] itemDataAll;
 
 
@@ -77,11 +74,8 @@ public static class Data
     public static int charas = 1;
 
     public static string[][] charaData;
-    public static string chara0 = "charaImageRino1";
-    public static string chara1 = "charaImageMikoru1";
-    public static string chara2 = "machu";
     public static string[] charaRino = { "リノ", "charaImageRino1" };
-    public static string[] charaMikoru = { "ミコル", "charaImageMikoru1" };
+    public static string[] charaKurumi = { "クルミ", "charaImageMikoru1" };
     public static string[] charaNull = { null, null };
     public static string[][] charaDataAll;
     public static Sprite charaImage0;
@@ -94,7 +88,16 @@ public static class Data
     public static float timeWaitEnemy;
 
     //--------------イベントの進捗に関するデータ---------------
-    public static int eventProgress;
+    public static int eventProgressMain;
+    public static int eventProgressSub;
+    //----------------------入力-------------------------
+    public static string inputString;
+    //------------------オプション関係のデータ----------------
+
+    public static Difficulty difficulty = Difficulty.Hard;//実施の難易度
+    public static Difficulty currentDifficulty = Difficulty.Auto;//設定上の難易度
+    public static int playerLevel = 0;
+    public static bool dashWhilePush;
 
     //public static GameObject itemButton0;
 
@@ -102,11 +105,11 @@ public static class Data
     {
         itemData = new string[][] { null, null, null, null, null, null };
 
-        itemDataAll = new string[][] { itemSmaho, itemWatch, itemExtinguisher };
+        itemDataAll = new string[][] { itemSmaho, itemWatch, itemExtinguisher, itemCamera };
 
         charaData = new string[][] { charaRino, charaNull, charaNull };
 
-        charaDataAll = new string[][] { charaRino, charaMikoru };
+        charaDataAll = new string[][] { charaRino, charaKurumi };
 
     }
 
@@ -153,9 +156,23 @@ public static class Data
         charas += 1;
         LoadMember();
     }
-    public static void MemberSub(int i)
+    public static void MemberSub(CharaName charaName)
     {
-
+        for (int i = 0; i < 3; ++i)
+        {
+            if (charaDataAll[(int)charaName] == charaData[i])
+            {
+                //最後は空白に
+                if (i == 2) charaData[i] = charaNull;
+                else
+                {
+                    charaData[i] = charaData[i + 1];
+                    charaData[2] = charaNull;
+                }
+                charas -= 1;
+            }
+        }
+        LoadMember();
     }
 
     public static void LoadMember()
@@ -163,6 +180,18 @@ public static class Data
         charaImage0 = Resources.Load<Sprite>(charaData[0][1]);
         charaImage1 = Resources.Load<Sprite>(charaData[1][1]);
         charaImage2 = Resources.Load<Sprite>(charaData[2][1]);
+    }
+
+    //-----------------難易度関係------------------------
+    public static void LoadDifficulty()
+    {
+        if (currentDifficulty == Difficulty.Auto)
+        {
+            //自動で難易度変更
+            if (playerLevel == 0) difficulty = Difficulty.Hard;
+            else if (playerLevel <= 3) difficulty = Difficulty.Normal;
+            else difficulty = Difficulty.Easy;
+        }
     }
 }
    

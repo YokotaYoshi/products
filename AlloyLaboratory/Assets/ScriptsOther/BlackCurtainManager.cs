@@ -6,43 +6,45 @@ using System.Collections.Generic;
 public class BlackCurtainManager : MonoBehaviour
 {
     //public bool isActiveOnStart;
-    float fadeInTime = 0.2f;//暗闇が完全に晴れるまでの時間
-    bool fadeIn = false;
-    float fadeOutTime = 0.3f;
-    bool fadeOut = false;
+    public bool isBrightStart = true;//スタート時に明るくするかどうか
+    public float fadeInTime = 0.2f;//暗闇が完全に晴れるまでの時間
+    bool isBright = false;
+    public float fadeOutTime = 0.3f;//暗転時間
+    bool isDark = true;
     Image image;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         image = GetComponent<Image>();
         //StartCoroutine(FadeIn());
-        StartFadeIn();
+        if (isBrightStart) FadeIn();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (!isBright && !isDark) return;//フェードイン中かアウト中
     }
 
-    public void StartFadeIn()
+    public void FadeIn()
     {
-        if (!fadeIn)
+        if (isDark)
         {
-            StartCoroutine(FadeIn());
+            StartCoroutine(FadeInCoroutine());
         }
     }
 
-    IEnumerator FadeIn()
+    IEnumerator FadeInCoroutine()
     {
         float time = 0f;
-        fadeIn = true;
+        isDark = false;
+        isBright = false;
         //明るくなる
 
         while (true)
         {
             time += Time.deltaTime;
-            image.color -= new Color(0f, 0f, 0f, 5f * Time.deltaTime);
+            image.color = new Color(0f, 0f, 0f, 1f - time / fadeInTime);
 
             if (time >= fadeInTime)
             {
@@ -52,27 +54,28 @@ public class BlackCurtainManager : MonoBehaviour
 
             yield return null;
         }
-        fadeOut = false;
+        isBright = true;
     }
 
-    public void StartFadeOut()
+    public void FadeOut()
     {
-        if (!fadeOut)
+        if (isBright)
         {
-            StartCoroutine(FadeOut());
+            StartCoroutine(FadeOutCoroutine());
         }
     }
 
-    public IEnumerator FadeOut()
+    public IEnumerator FadeOutCoroutine()
     {
         float time = 0f;
-        fadeOut = true;
+        isBright = false;
+        isDark = false;
         //暗くなる
 
         while (true)
         {
             time += Time.deltaTime;
-            image.color += new Color(0, 0, 0, 4f * Time.deltaTime);
+            image.color = new Color(0, 0, 0, time / fadeOutTime);
             yield return null;
 
             if (time >= fadeOutTime)
@@ -81,6 +84,6 @@ public class BlackCurtainManager : MonoBehaviour
                 break;
             }
         }
-        fadeIn = true;
+        isDark = true;
     }
 }

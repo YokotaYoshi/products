@@ -11,7 +11,8 @@ public class EnemyChaseController : MonoBehaviour
     EnemyGuardianController enemyGCnt;
     GameObject player;//プレイヤー
     //PlayerController playerCnt;//プレイヤーコントローラー
-    public float speed = 3.0f;//追跡速度
+    public float baseSpeed;//基準となる追跡速度
+    float speed;//追跡速度
     Rigidbody2D rb2d;//Rigidbody2D;
     CircleCollider2D enemyCollider;//CircleCollider2D;
     
@@ -19,7 +20,7 @@ public class EnemyChaseController : MonoBehaviour
     public float playerDirectionDegree;//自分から見たプレイヤーの角度
    
     
-    MoveDirection moveDirectionEnum;
+    Direction moveDirectionEnum;
     float distance = 1f;
 
     //-------------何かに衝突した時に使う--------------
@@ -57,19 +58,37 @@ public class EnemyChaseController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        
+        //難易度におうじて速度変更
+        switch (Data.difficulty)
+        {
+            case (Difficulty.VeryHard):
+                speed = baseSpeed + 3.0f;
+                break;
+            case (Difficulty.Hard):
+                speed = baseSpeed + 1.0f;
+                break;
+            case (Difficulty.Normal):
+                speed = baseSpeed;
+                break;
+            case (Difficulty.Easy):
+                speed = baseSpeed - 2.0f;
+                break;
+        }
 
         SetMoveDirection();
 
 
         nearestGrid = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
 
-        gridMove.speed = speed;
-        //gridMove.targetGrid = nearestGrid + moveDirection;
-        //Debug.Log(distance);
-        //Debug.Log(moveDirectionEnum);
-        //Debug.Log(isBlocked);
+
+        if (GameManager.gameState == GameState.Pause)
+        {
+            gridMove.speed = 0.0f;
+        }
+        else
+        {
+            gridMove.speed = speed;
+        }
 
         if (!isWaiting)
         {
@@ -104,22 +123,22 @@ public class EnemyChaseController : MonoBehaviour
             if (playerDirectionDegree >= -50 && playerDirectionDegree < 50)
             {
                 //プレイヤーが右のほうにいる
-                moveDirectionEnum = MoveDirection.Right;
+                moveDirectionEnum = Direction.Right;
             }
             else if (playerDirectionDegree >= 50 && playerDirectionDegree < 130)
             {
                 //プレイヤーが上のほうにいる
-                moveDirectionEnum = MoveDirection.Up;
+                moveDirectionEnum = Direction.Up;
             }
             else if (playerDirectionDegree >= -130 && playerDirectionDegree < -50)
             {
                 //プレイヤーが下のほうにいる
-                moveDirectionEnum = MoveDirection.Down;
+                moveDirectionEnum = Direction.Down;
             }
             else
             {
                 //プレイヤーが左のほうにいる
-                moveDirectionEnum = MoveDirection.Left;
+                moveDirectionEnum = Direction.Left;
             }
         }
         else
@@ -131,7 +150,7 @@ public class EnemyChaseController : MonoBehaviour
             {
                 //プレイヤーが右のほうにいる
                 //右に移動
-                moveDirectionEnum = MoveDirection.Right;
+                moveDirectionEnum = Direction.Right;
                 distance = right;
             }
             else if ((playerDirectionDegree >= 130 && playerDirectionDegree <= 180) ||
@@ -141,7 +160,7 @@ public class EnemyChaseController : MonoBehaviour
                 //上に移動
                 //Debug.Log("上");
 
-                moveDirectionEnum = MoveDirection.Up;
+                moveDirectionEnum = Direction.Up;
                 distance = up;
             }
             else if ((playerDirectionDegree >= -50 && playerDirectionDegree < 0) ||
@@ -150,14 +169,14 @@ public class EnemyChaseController : MonoBehaviour
                 //プレイヤーが下のほうにいる
                 //下に移動
 
-                moveDirectionEnum = MoveDirection.Down;
+                moveDirectionEnum = Direction.Down;
                 distance = down;
             }
             else
             {
                 //プレイヤーが左のほうにいる
 
-                moveDirectionEnum = MoveDirection.Left;
+                moveDirectionEnum = Direction.Left;
                 distance = left;
             }
         }
@@ -165,7 +184,7 @@ public class EnemyChaseController : MonoBehaviour
         if (PlayerController.hp <= 0)
         {
             //プレイヤーが死んだら動かない
-            moveDirectionEnum = MoveDirection.N;
+            moveDirectionEnum = Direction.N;
             distance = 0f;
         }
     }
@@ -196,16 +215,16 @@ public class EnemyChaseController : MonoBehaviour
         //動いていた方向と反対方向に少しのけぞる
         switch (moveDirectionEnum)
         {
-            case MoveDirection.Right:
+            case Direction.Right:
                 targetGrid = new Vector2(Mathf.Round(transform.position.x - 0.2f), Mathf.Round(transform.position.y));
                 break;
-            case MoveDirection.Left:
+            case Direction.Left:
                 targetGrid = new Vector2(Mathf.Round(transform.position.x + 0.2f), Mathf.Round(transform.position.y));
                 break;
-            case MoveDirection.Up:
+            case Direction.Up:
                 targetGrid = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y - 0.2f));
                 break;
-            case MoveDirection.Down:
+            case Direction.Down:
                 targetGrid = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y + 0.2f));
                 break;
         }

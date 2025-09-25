@@ -8,7 +8,7 @@ public class EnemyFocusCS : MonoBehaviour
     public GameObject enemy;//敵のゲームオブジェクト
     EnemyChaseController enemyChaseCnt;//敵のスクリプト
     public float offset = 0.5f;//敵の中心からの距離
-
+    BlockScript blockScript;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -51,14 +51,26 @@ public class EnemyFocusCS : MonoBehaviour
     void OnTriggerStay2D(Collider2D other)
     {
         //Debug.Log(other.gameObject.tag);
-        if (other.gameObject.tag == "Block")
+        if (other.gameObject.tag == "Untagged")
         {
             enemyChaseCnt.isBlocked = true;//プレイヤー以外のオブジェクトが目の前にあることを通知
-           
-            enemyChaseCnt.right = other.GetComponent<BlockScript>().right;
-            enemyChaseCnt.left = other.GetComponent<BlockScript>().left;
-            enemyChaseCnt.up = other.GetComponent<BlockScript>().up;
-            enemyChaseCnt.down = other.GetComponent<BlockScript>().down;
+
+            blockScript = other.GetComponent<BlockScript>();
+            if (blockScript != null)
+            {
+                enemyChaseCnt.right = blockScript.right;
+                enemyChaseCnt.left = blockScript.left;
+                enemyChaseCnt.up = blockScript.up;
+                enemyChaseCnt.down = blockScript.down;
+            }
+            else
+            {
+                enemyChaseCnt.right = 1f;
+                enemyChaseCnt.left = 1f;
+                enemyChaseCnt.up = 1f;
+                enemyChaseCnt.down = 1f;
+            }
+            
         }
     }
     void OnTriggerExit2D(Collider2D other)
