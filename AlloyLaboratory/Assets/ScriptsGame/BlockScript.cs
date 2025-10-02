@@ -14,7 +14,7 @@ public class BlockScript : MonoBehaviour
     //スプライト切り替えや生成破壊も担当  
 
     //eventProgressの値に応じてスプライトを切り替える
-    
+
     SpriteRenderer spriteRenderer;
     public Sprite sprite0;
 
@@ -30,10 +30,13 @@ public class BlockScript : MonoBehaviour
     void Start()
     {
         if (eventProgressMainBase == 0 && eventProgressSubBase == 0) return;
-        
+
         spriteRenderer = GetComponent<SpriteRenderer>();
+        Debug.Log("あ");
+
         if (Data.eventProgressMain < eventProgressMainBase)
         {
+            //イベント進行していない
             if (willDestroy) return;
             else spriteRenderer.sprite = sprite0;
         }
@@ -47,6 +50,19 @@ public class BlockScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (eventProgressMainBase == 0 && eventProgressSubBase == 0) return;
+        if (Data.eventProgressMain < eventProgressMainBase)
+        {
+            //イベント進行していない
+            if (willDestroy) return;
+
+            else if (sprite0 != null) spriteRenderer.sprite = sprite0;
+        }
+        else
+        {
+            if (willDestroy) Destroy(gameObject);
+            else if (sprite1 != null) spriteRenderer.sprite = sprite1;
+        }
     }
 
     IEnumerator ChangeTemporarily()
@@ -79,6 +95,7 @@ public class BlockScript : MonoBehaviour
         {
             spriteRenderer.sprite = sprite1;
         }
-        
     }
+
+    
 }

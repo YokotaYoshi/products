@@ -97,7 +97,7 @@ public class MenuPanelManager : MonoBehaviour
             buttonsItem[i + 1].SetActive(true);
 
             //ボタンの表示名を変更
-            buttonsItemText[i].GetComponent<Text>().text = Data.itemData[i][0];
+            buttonsItemText[i].GetComponent<Text>().text = Data.itemDataAll[Data.itemDataNum[i]][0];
         }
         for (int i = Data.items; i < 6; ++i)
         {
@@ -110,6 +110,7 @@ public class MenuPanelManager : MonoBehaviour
             Debug.Log("オプション操作");
             //決定ボタンを押されたとき関数を呼ぶ
             if (buttonNum == 12) OptionDifficulty();
+            if (buttonNum == 13) Exit();
             if (buttonNum == 22) OptionDash();
         }
 
@@ -260,8 +261,8 @@ public class MenuPanelManager : MonoBehaviour
             buttonFocused = buttonsItem[(num - 5) / 5];
             //アイテム情報にデータから取得したテキストを入れる
             panelItemInfo.SetActive(true);
-            itemNameText.text = Data.itemData[(num - 10) / 5][0];
-            itemInfoText.text = Data.itemData[(num - 10) / 5][1];
+            itemNameText.text = Data.itemDataAll[Data.itemDataNum[(num - 10) / 5]][0];
+            itemInfoText.text = Data.itemDataAll[Data.itemDataNum[(num - 10) / 5]][1];
         }
         else if (num == 1)
         {
@@ -274,8 +275,8 @@ public class MenuPanelManager : MonoBehaviour
             //オプションボタン
             buttonUnFocused = buttonFocused;
             buttonFocused = buttonsOption[(num - 2) / 10];
-            
-            
+
+
         }
         else if (num == 3)
         {
@@ -368,23 +369,12 @@ public class MenuPanelManager : MonoBehaviour
         //デフォルトをダッシュにするか
         //モードを反転
         Data.dashWhilePush = !Data.dashWhilePush;
-        /*
-        if (Data.dashWhilePush)
-        {
-            buttonOption2.GetComponentInChildren<Text>().text = Data.optionDash[1];
-            Data.dashWhilePush = false;
-        }
-        else
-        {
-            buttonOption2.GetComponentInChildren<Text>().text = Data.optionDash[0];
-            Data.dashWhilePush = true;
-        }
-        */
     }
 
     //--------------------ゲーム終了----------------------
     public void Exit()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("TitleScene");
     }
 }

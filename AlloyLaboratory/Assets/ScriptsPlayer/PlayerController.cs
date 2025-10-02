@@ -7,12 +7,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     //操作キャラクターの動きに関する部分を主に担当する
-    public Sprite downImage;
-    public Sprite upImage;
-    public Sprite rightImage;
-    public Sprite leftImage;
-
-    SpriteRenderer spriteRenderer;
+    
 
     //----------------通常の動き関係----------------
     private Rigidbody2D rb2d;
@@ -54,9 +49,12 @@ public class PlayerController : MonoBehaviour
     public bool isAttacked = false;//攻撃された！
     public Vector2 blownDirection;//吹っ飛ばされる方向
     Vector2 nearestGrid;
-    
-    
 
+
+    void Awake()
+    {
+        if (hp <= 1) hp = 1;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -65,7 +63,6 @@ public class PlayerController : MonoBehaviour
         
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         cameraCnt = mainCamera.GetComponent<CameraController>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
 
         
 
@@ -400,7 +397,6 @@ public class PlayerController : MonoBehaviour
     IEnumerator Dead()
     {
         //アニメーションを流す
-        //血を飛び散らせる
         //入力を拒否する
         float time = 0.0f;
         rb2d.linearVelocity = Vector2.zero;//いったんその場で停止

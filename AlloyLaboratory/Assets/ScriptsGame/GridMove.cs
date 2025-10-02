@@ -10,7 +10,7 @@ public class GridMove : MonoBehaviour
 
     public Vector2 targetGrid;//外部からいじる
     public float speed;//外部からいじる
-    public Direction moveDirection;//外部からいじる
+    public Direction moveDirection = Direction.N;//外部からいじる
     public bool isCoroutineWorking;
     Vector2 targetDirection;
     Vector2 nearestGrid;

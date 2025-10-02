@@ -12,6 +12,7 @@ public class AnimationManager : MonoBehaviour
     public Direction moveDirection = Direction.Down;
     public Direction directionReference = Direction.N;
     bool isMoving;
+    bool isMovingReference;
     
     Rigidbody2D rb2d;
     Animator[] animators;
@@ -29,10 +30,10 @@ public class AnimationManager : MonoBehaviour
     void Update()
     {
         //Debug.Log(animators.Length);
-        if (rb2d.linearVelocity.magnitude > 0f) isMoving = true;
+        if (rb2d.linearVelocity.magnitude > 1f) isMoving = true;
         else isMoving = false;
 
-        Debug.Log(isMoving);
+        //Debug.Log(isMoving);
 
         if (GameManager.gameState == GameState.Pause) return;
 
@@ -43,12 +44,14 @@ public class AnimationManager : MonoBehaviour
         {
             Animation();
         }
-        else if (moveDirection != directionReference)
+        else if (moveDirection != directionReference || isMovingReference != isMoving)
         {
             Animation();
+            //Debug.Log("アニメ切り替え");
         }
 
         directionReference = moveDirection;
+        isMovingReference = isMoving;
     }
 
     void MoveDirection()
@@ -56,7 +59,7 @@ public class AnimationManager : MonoBehaviour
         if (isPlayer)
         {
             //プレイヤーの場合
-            
+
             if (rb2d.linearVelocity.y < 0f)
             {
                 moveDirection = Direction.Down;
@@ -87,23 +90,28 @@ public class AnimationManager : MonoBehaviour
         }
         else
         {
+            //NPCとか
             //Debug.Log(rb2d.linearVelocity);
-            
-            if (rb2d.linearVelocity.y < 0f)
+
+            if (rb2d.linearVelocity.y < -1f)
             {
                 moveDirection = Direction.Down;
             }
-            else if (rb2d.linearVelocity.y > 0f)
+            else if (rb2d.linearVelocity.y > 1f)
             {
                 moveDirection = Direction.Up;
             }
-            else if (rb2d.linearVelocity.x > 0f)
+            else if (rb2d.linearVelocity.x > 1f)
             {
                 moveDirection = Direction.Right;
             }
-            else if (rb2d.linearVelocity.x < 0f)
+            else if (rb2d.linearVelocity.x < -1f)
             {
                 moveDirection = Direction.Left;
+            }
+            else
+            {
+                //moveDirection = Direction.N;
             }
         }
     }

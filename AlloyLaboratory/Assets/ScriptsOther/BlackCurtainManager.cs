@@ -3,32 +3,45 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
+public enum Brightness
+{
+    Dark,
+    Middle,
+    Bright
+}
+
 public class BlackCurtainManager : MonoBehaviour
 {
     //public bool isActiveOnStart;
+    public Brightness brightness = Brightness.Dark;
     public bool isBrightStart = true;//スタート時に明るくするかどうか
     public float fadeInTime = 0.2f;//暗闇が完全に晴れるまでの時間
-    bool isBright = false;
+    
     public float fadeOutTime = 0.3f;//暗転時間
-    bool isDark = true;
+    
     Image image;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         image = GetComponent<Image>();
         //StartCoroutine(FadeIn());
-        if (isBrightStart) FadeIn();
+        if (isBrightStart)
+        {
+            FadeIn();
+            
+        }
+            
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isBright && !isDark) return;//フェードイン中かアウト中
+        if (brightness == Brightness.Middle) return;//フェードイン中かアウト中
     }
 
     public void FadeIn()
     {
-        if (isDark)
+        if (brightness == Brightness.Dark)
         {
             StartCoroutine(FadeInCoroutine());
         }
@@ -37,8 +50,7 @@ public class BlackCurtainManager : MonoBehaviour
     IEnumerator FadeInCoroutine()
     {
         float time = 0f;
-        isDark = false;
-        isBright = false;
+        brightness = Brightness.Middle;
         //明るくなる
 
         while (true)
@@ -54,12 +66,13 @@ public class BlackCurtainManager : MonoBehaviour
 
             yield return null;
         }
-        isBright = true;
+        image.color = new Color(0, 0, 0, 0f);
+        brightness = Brightness.Bright;
     }
 
     public void FadeOut()
     {
-        if (isBright)
+        if (brightness == Brightness.Bright)
         {
             StartCoroutine(FadeOutCoroutine());
         }
@@ -68,8 +81,7 @@ public class BlackCurtainManager : MonoBehaviour
     public IEnumerator FadeOutCoroutine()
     {
         float time = 0f;
-        isBright = false;
-        isDark = false;
+        brightness = Brightness.Middle;
         //暗くなる
 
         while (true)
@@ -84,6 +96,6 @@ public class BlackCurtainManager : MonoBehaviour
                 break;
             }
         }
-        isDark = true;
+        brightness = Brightness.Dark;
     }
 }

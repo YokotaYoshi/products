@@ -22,7 +22,7 @@ public class BoxScript : MonoBehaviour
     Vector2 nearestGrid;
 
     Direction moveDirection = Direction.N;
-    
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -116,7 +116,7 @@ public class BoxScript : MonoBehaviour
             isMoving = true;
         }
 
-        if (!isMoving) 
+        if (!isMoving)
         {
             transform.position = nearestGrid;
             //Debug.Log("位置リセット");
@@ -196,5 +196,19 @@ public class BoxScript : MonoBehaviour
         isMoving = false;
         isCoroutineWorking = false;
         Debug.Log(nearestGrid);
+    }
+    
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        //ロードする場所をふさぐことがないように
+        if (other.gameObject.tag == "LoadPoint")
+        {
+            Destroy(gameObject);
+        }
+
+        if (other.gameObject.tag == "")
+        {
+            //ゴールについたらイベント？
+        }
     }
 }

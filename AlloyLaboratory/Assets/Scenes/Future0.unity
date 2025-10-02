@@ -210,6 +210,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8989079292625201773, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
+      propertyPath: sprite0
+      value: 
+      objectReference: {fileID: 6810289884213664739, guid: d861d08e3ed047c43aa2c12f50c13269, type: 3}
+    - target: {fileID: -8989079292625201773, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
+      propertyPath: sprite1
+      value: 
+      objectReference: {fileID: 1539064689, guid: d861d08e3ed047c43aa2c12f50c13269, type: 3}
+    - target: {fileID: -8989079292625201773, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
+      propertyPath: eventProgressMainBase
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 491720009289861157, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
       propertyPath: m_Name
       value: box
@@ -281,9 +293,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 491720009289861157, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
       insertIndex: 2
-      addedObject: {fileID: 166769228}
-    - targetCorrespondingSourceObject: {fileID: 491720009289861157, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
-      insertIndex: 3
       addedObject: {fileID: 166769222}
     - targetCorrespondingSourceObject: {fileID: 491720009289861157, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
       insertIndex: -1
@@ -336,25 +345,12 @@ MonoBehaviour:
   flowchart: {fileID: 5128167487383370804}
   blockName: box
   executeOnClick: 1
-  willDelete: 0
   choices: []
   question: "\u6697\u8A3C\u756A\u53F7\u3092\u5165\u529B"
   ans: 4649
   reward: 3
   eventProgressMainSet: 1
   eventProgressSubSet: 0
---- !u!114 &166769228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 166769220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f41050fb7de49541a939e61bba7deda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &221606744
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -581,7 +577,6 @@ MonoBehaviour:
   flowchart: {fileID: 5128167487383370804}
   blockName: HowToPlay
   executeOnClick: 1
-  willDelete: 0
   choices: []
   question: 
   ans: 
@@ -1299,7 +1294,6 @@ MonoBehaviour:
   flowchart: {fileID: 5128167487383370804}
   blockName: number
   executeOnClick: 1
-  willDelete: 0
   choices: []
   question: 
   ans: 
@@ -16243,9 +16237,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 491720009289861157, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1346755501}
-    - targetCorrespondingSourceObject: {fileID: 491720009289861157, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1346755508}
   m_SourcePrefab: {fileID: 100100000, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
 --- !u!1 &1346755500 stripped
 GameObject:
@@ -16294,25 +16285,12 @@ MonoBehaviour:
   flowchart: {fileID: 5128167487383370804}
   blockName: door
   executeOnClick: 0
-  willDelete: 0
   choices: []
   question: 
   ans: 
   reward: 0
   eventProgressMainSet: 0
   eventProgressSubSet: 0
---- !u!114 &1346755508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1346755500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f41050fb7de49541a939e61bba7deda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1462350796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16733,7 +16711,6 @@ MonoBehaviour:
   flowchart: {fileID: 5128167487383370804}
   blockName: TimeMachine
   executeOnClick: 0
-  willDelete: 0
   choices: []
   question: 
   ans: 
@@ -16958,7 +16935,7 @@ MonoBehaviour:
     width: 1114
     height: 859
   selectedBlocks:
-  - {fileID: 5128167487383370815}
+  - {fileID: 1178785212}
   selectedCommands: []
   variables:
   - {fileID: 470528181653962044}
@@ -17841,7 +17818,7 @@ MonoBehaviour:
   indentLevel: 0
   anyOrAllConditions: 0
   conditions:
-  - compareOperator: 3
+  - compareOperator: 5
     anyVar:
       variable: {fileID: 470528181653962044}
       data:
@@ -17874,7 +17851,7 @@ MonoBehaviour:
           gameObjectVal: {fileID: 0}
         integerData:
           integerRef: {fileID: 0}
-          integerVal: 0
+          integerVal: 1
         materialData:
           materialRef: {fileID: 0}
           materialVal: {fileID: 0}

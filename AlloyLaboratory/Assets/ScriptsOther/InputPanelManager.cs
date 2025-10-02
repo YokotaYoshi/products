@@ -39,7 +39,7 @@ public class InputPanelManager : MonoBehaviour
         //ひらがなに対応させることできないかな？
         textDis.text = text.ToUpper();
         //Debug.Log(text.Length);
-        if (text == ans) Debug.Log("あってる");
+        //if (text == ans) Debug.Log("あってる");
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
             Debug.Log("一文字削除");

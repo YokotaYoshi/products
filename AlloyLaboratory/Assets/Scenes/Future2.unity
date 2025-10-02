@@ -8870,6 +8870,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -33665617, guid: 023f6f9e6e4ffb14ba3c2f83d9e6721b, type: 3}
+    - target: {fileID: 6027569667955850588, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6940826776056657247, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1

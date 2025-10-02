@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
     //float debugTime = 0;//デバッグ用のタイマー
 
     public static GameState gameState;
-    //public static InputType inputType = InputType.Null;
 
     //------------------左端の情報パネル----------------------
     //public GameObject informationPanel;//左端の情報パネル
@@ -33,13 +32,10 @@ public class GameManager : MonoBehaviour
     PlayerController playerCnt;//プレイヤーコントローラー
     GameObject playerFocus;//プレイヤーの目線
     PlayerFocus playerFocusCS;//PlayerFocusスクリプト
-    //イベントのフラグ
-    //public static int eventProgress = 0;//この数値を切り替えることでイベント進行
-    float debugTime = 0f;
+    
     public GameObject menuPanel;
     public GameObject enemy;
     bool isGameOverStarting = false;
-    public GameObject gameOverPanel;
     public GameObject choicesPanel;
     //--------------Fungus------------------------------
     public Flowchart flowchart;
@@ -62,7 +58,6 @@ public class GameManager : MonoBehaviour
         }
 
         choicesPanel.SetActive(false);
-        gameOverPanel.SetActive(false);
 
 
         player = GameObject.FindGameObjectWithTag("Player");//プレイヤーを取得
@@ -77,6 +72,7 @@ public class GameManager : MonoBehaviour
         //DataクラスのeventProgressをfungusのeventProgressと同期させる
         Data.eventProgressMain = flowchart.GetIntegerVariable("eventProgressMain");
         Data.eventProgressSub = flowchart.GetIntegerVariable("eventProgressSub");
+
         
         //ゲームステート切り替え
         switch (gameState)
@@ -86,21 +82,29 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.Playing:
                 //Debug.Log("プレイ中");
+                //通常のプレイ中
+                break;
+            case GameState.Run:
+                //Debug.Log("逃げ中");
+                //逃げ中。このとき会話とかできなくしたい
                 break;
             case GameState.Pause:
                 //Debug.Log("ポーズ中");
+                //イベント中。いろいろ動かない
                 break;
             case GameState.GameOver:
                 Debug.Log("ゲームオーバー");
-                //ゲームオーバーシーンをロード？
+                //ゲームオーバーシーンをロード
                 break;
         }
+        //ゲームステート切り替え
         if (flowchart.GetBooleanVariable("event") == true)
         {
             gameState = GameState.Pause;
         }
-        else
+        else if (gameState == GameState.Pause)
         {
+            //敵がいなかったらplaying
             gameState = GameState.Playing;
         }
 
@@ -135,14 +139,12 @@ public class GameManager : MonoBehaviour
             else
             {
                 //体力0=ゲームオーバー
-                debugTime += Time.deltaTime;
-                //Debug.Log(debugTime);
                 hp1.gameObject.SetActive(false);
                 hp2.gameObject.SetActive(false);
                 hp3.gameObject.SetActive(false);
 
                 StartCoroutine(GameOver());
-                gameState = GameState.GameOver;
+                
             }
         }
 
@@ -153,13 +155,22 @@ public class GameManager : MonoBehaviour
     //-----------------------ゲームオーバーメソッド--------------------
     IEnumerator GameOver()
     {
+        if (gameState == GameState.GameOver) yield break;
         //時間ゆっくりにしたりしたい
-        if (isGameOverStarting) yield break;
-        else isGameOverStarting = true;
-
-        yield return new WaitForSeconds(1f);
-        gameOverPanel.SetActive(true);
-        Time.timeScale = 0f;
+        
+        float unscaledTime = 0f;
+        while (true)
+        {
+            unscaledTime += Time.unscaledDeltaTime;
+            
+            Time.timeScale = Mathf.Max(1f - unscaledTime, 0f);
+            yield return null;
+            if (unscaledTime >= 1.0f) break;
+        }
+        Time.timeScale = 1f;
+        gameState = GameState.GameOver;
+        SceneManager.LoadScene("GameOver");
+        
     }
     //-------------------セーブ画面を閉じる--------------------------
     public void CloseSavePanel()
@@ -170,7 +181,8 @@ public class GameManager : MonoBehaviour
     //-------------------メニューのオンオフ切り替え--------------------
     public void MenuPanelButton()
     {
-
+        if (menuPanel == null) return;
+        if (gameState == GameState.Pause) return;//会話中はメニューを開けない
         if (!menuPanel.activeSelf)
         {
             menuPanel.SetActive(true);
@@ -196,7 +208,8 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             yield return null;
-            if (gameState != GameState.Pause) time += Time.deltaTime;
+            if (gameState == GameState.Pause) yield break;
+            else time += Time.deltaTime;
             if (time > Data.timeWaitEnemy) break;
         }
         Vector2 appearPos = new Vector2(Data.loadPosX, Data.loadPosY);

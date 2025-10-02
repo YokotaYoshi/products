@@ -50,7 +50,7 @@ public class FollowerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Data.charaData[1][0] == null) Destroy(gameObject);
+        if (Data.charaDataNum[1] == 0) Destroy(gameObject);
 
         CheckPlayerPosition();
 
@@ -185,7 +185,7 @@ public class FollowerController : MonoBehaviour
             if (playerCnt.isMoving == false)
             {
                 //プレイヤーが止まっていたら
-                Debug.Log("プレイヤー停止");
+                //Debug.Log("プレイヤー停止");
                 //動いているフラグおろし
                 isCoroutineWorking = false;
 

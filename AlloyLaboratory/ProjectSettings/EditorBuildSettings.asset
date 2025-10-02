@@ -13,23 +13,26 @@ EditorBuildSettings:
     guid: da5947b1284313a4682c0fccba57f11a
   - enabled: 1
     path: Assets/Scenes/GameOver.unity
-    guid: 7f67b7a48e9aacd49a6208626b9bbcf3
+    guid: 809de0d794ebe3045899ea53ecfbdcc9
   - enabled: 1
-    path: Assets/Scenes/HomeLDK.unity
+    path: Assets/Scenes/Home0.unity
+    guid: d68719c95b0d5114f8e7a1d1fe76b942
+  - enabled: 1
+    path: Assets/Scenes/HomeStart.unity
     guid: 733227ce4d2c1714ca55aad62d61035f
   - enabled: 0
     path: Assets/ScenesGame/Future1.unity
     guid: 9f1dcd81a554e3a42a8eab80a45c7cce
   - enabled: 1
-    path: Assets/Scenes/Sub/HomeStart.unity
+    path: Assets/Scenes/Home2.unity
     guid: b47cfae93139dac478900deb128b1369
   - enabled: 1
-    path: Assets/Scenes/Sub/HomeHallWay.unity
+    path: Assets/Scenes/Home1.unity
     guid: 6484309dbee0aba4f8462e50267ff521
   - enabled: 1
     path: Assets/Scenes/Labo.unity
     guid: a7d0676c806aecc41a51d2948098b868
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/FutureRun.unity
     guid: eba6170e1b744e7489f46c9c4585ddf0
   - enabled: 1
@@ -53,6 +56,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/2-2.unity
     guid: fc9a72636d54fd1408523edd924e70e6
+  - enabled: 1
+    path: Assets/Scenes/2-4.unity
+    guid: 41bb554e1ba68714ab5792d6cb632b09
+  - enabled: 1
+    path: Assets/Scenes/2-3.unity
+    guid: 5a620c8ebd620ea42a330ae89e44c9e8
+  - enabled: 1
+    path: Assets/Scenes/3-1.unity
+    guid: 6b9355c59b1f2db42bdeeae47560d799
   m_configObjects:
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
+    com.unity.input.settings: {fileID: 11400000, guid: bb0597bfde9776e49ac690b99ac64464, type: 2}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 5771e0f031dd9c44b829977c1b4a34ca, type: 3}
   m_UseUCBPForAssetBundles: 0

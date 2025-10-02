@@ -76,18 +76,17 @@ public class EnemyChaseController : MonoBehaviour
         }
 
         SetMoveDirection();
-
-
         nearestGrid = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
 
-
+        //gameState切り替え
         if (GameManager.gameState == GameState.Pause)
         {
             gridMove.speed = 0.0f;
         }
-        else
+        else if (GameManager.gameState != GameState.GameOver)
         {
             gridMove.speed = speed;
+            GameManager.gameState = GameState.Run;
         }
 
         if (!isWaiting)

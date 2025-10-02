@@ -9,7 +9,7 @@ public class ExecuteFungus : MonoBehaviour
 
     public string blockName;//実行したいブロック名
     public bool executeOnClick = true;//決定で実行するか、触れただけで実行するか
-    public bool willDelete = false;//話しかけたら消える
+    
     //-------------選択肢-----------------
     
     public string[] choices;
@@ -61,10 +61,6 @@ public class ExecuteFungus : MonoBehaviour
                 SetQandA();
             }
 
-            if (willDelete)
-                {
-                    Destroy(gameObject);
-                }
         }
         
         
@@ -96,7 +92,7 @@ public class ExecuteFungus : MonoBehaviour
 
     public void SetItem()
     {
-        flowchart.SetStringVariable("", Data.itemData[0][0]);
+        //flowchart.SetStringVariable("", Data.itemDataNum[0]);
     }
 
     public void SetChoices()

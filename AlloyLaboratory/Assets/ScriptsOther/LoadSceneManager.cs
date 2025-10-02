@@ -71,8 +71,7 @@ public class LoadSceneManager : MonoBehaviour
         if (enemy != null)
         {
             //敵がいたら敵からの距離に応じて移動先で敵が現れるまでの時間を計測
-            GameManager.gameState = GameState.Run;
-            Data.timeWaitEnemy = new Vector2(transform.position.x - enemy.transform.position.x, transform.position.y - enemy.transform.position.y).magnitude / 3f;
+            Data.timeWaitEnemy = new Vector2(transform.position.x - enemy.transform.position.x, transform.position.y - enemy.transform.position.y).magnitude / 3f + 0.1f;
         }
         
         SceneManager.LoadScene(sceneName);
