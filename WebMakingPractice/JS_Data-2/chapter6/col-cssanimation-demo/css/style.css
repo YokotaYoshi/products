@@ -1,0 +1,12 @@
+body {
+    text-align: center;
+    padding: 2rem;
+}
+.animation-css {
+    animation: zoom 2s linear infinite;
+}
+@keyframes zoom {
+    0% { scale: 1; }
+    50% { scale: 2; }
+    100% { scale: 1; }
+}

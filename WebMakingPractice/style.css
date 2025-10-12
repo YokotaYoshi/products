@@ -1,0 +1,128 @@
+@charset "UtF-8";
+body 
+{
+    background-color: #f5f2e5;
+    background-image: url(images/view.jpg);
+    background-repeat: no-repeat;
+    background-size:contain;
+    background-position: center top;
+}
+/*コメント！*/
+
+h1
+{
+    color: #0bd;
+    font-size:300%;
+
+    font-family: "M PLUS Rounded 1c", serif;
+    font-weight: 700;
+    font-style: normal;
+
+}
+h2
+{
+
+    font-size:2rem;
+    font-family: "游ゴシック体", "Yu Gothic", YuGothic, sans-serif;
+}
+p
+{
+    font-size:20px;
+    color: red;
+    font-family: "ヒラギノ丸ゴ", "Hiragino Maru Gothic Pro", sans-serif;
+}
+.blue
+{
+    color: #0bd;
+}
+#orange
+{
+    color: orange;
+}
+article p
+{
+    font-weight:lighter;
+    line-height:1;
+}
+article
+{
+    background-color: #70a2dc;
+    width: 500px;
+    height: 200px;
+}
+aside p
+{
+    font-weight:bolder;
+    line-height:1.5;
+}
+footer
+{
+    background-color: rgba(0,255,0,.5);
+    margin-left: 30px;
+    margin-top: 100px;
+    padding-top:10px;
+}
+footer p
+{
+    font-weight:bold;
+    line-height:2;
+    text-align:center;
+}
+section h2
+{
+    font-size:30px;
+    
+    color:blue;
+}
+main p
+{
+    font-weight:bold;
+    font-size:25px;
+    color:green;
+    border-width: 1px 4px 8px 12px;
+    border-style: solid;
+    border-color: #fff;
+}
+div p
+{
+    font-size:25px;
+    font-weight:bolder;
+    border-width: thick;
+    border-style: double dotted ridge inset;
+    border-color:#000;
+}
+.item
+{
+    background: #0bd;
+    color: #fff;
+    margin: 10px;
+    padding: 10px;
+}
+.container
+{
+    display:flex;
+    /*flex-direction: row-reverse;*/
+    justify-content: space-around;
+    height: 60vh;
+    align-items: stretch;
+}
+.item2
+{
+    background: #0bd;
+    color: #fff;
+    padding: 10px;
+}
+.container2
+{
+    display:grid;
+    grid-template-columns: 200px 200px 200px;
+    gap:10px;
+}
+ul
+{
+    list-style-type: disc;
+}
+ol
+{
+    list-style-type: decimal;
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>配列を操作するメソッド</title>
+</head>
+<body>
+    <script>
+        // 配列の最後の要素を削除する
+        const items1 = ['コーヒー', '紅茶', 'ジュース'];
+        items1.pop();
+        console.log(items1);
+
+        // 配列の最後に要素を追加する
+        const items2 = ['コーヒー', '紅茶', 'ジュース'];
+        items2.push('水');
+        console.log(items2);
+
+        // 配列の最初の要素を削除する
+        const items3 = ['コーヒー', '紅茶', 'ジュース'];
+        items3.shift();
+        console.log(items3);
+
+        // 配列の最初に要素を追加する
+        const items4 = ['コーヒー', '紅茶', 'ジュース'];
+        items4.unshift('水');
+        console.log(items4);
+
+        // 配列の順序を逆にする
+        const items5 = ['コーヒー', '紅茶', 'ジュース'];
+        console.log(items5.reverse());
+
+        // 配列の要素を結合し、文字列として返す
+        const items6 = ['コーヒー', '紅茶', 'ジュース'];
+        console.log(items6.join('と'));
+
+        // 文字列から指定した区切り文字で区切った配列を生成する
+        console.log('ジュースと紅茶とコーヒー'.split('と'));
+    </script>
+</body>
+</html>
