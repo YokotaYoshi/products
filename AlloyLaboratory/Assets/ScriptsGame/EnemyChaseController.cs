@@ -11,7 +11,7 @@ public class EnemyChaseController : MonoBehaviour
     EnemyGuardianController enemyGCnt;
     GameObject player;//プレイヤー
     //PlayerController playerCnt;//プレイヤーコントローラー
-    public float baseSpeed;//基準となる追跡速度
+    float baseSpeed = 6.0f;//基準となる追跡速度
     float speed;//追跡速度
     Rigidbody2D rb2d;//Rigidbody2D;
     CircleCollider2D enemyCollider;//CircleCollider2D;
@@ -62,16 +62,16 @@ public class EnemyChaseController : MonoBehaviour
         switch (Data.difficulty)
         {
             case (Difficulty.VeryHard):
-                speed = baseSpeed + 3.0f;
+                speed = baseSpeed + 4.0f;//10
                 break;
             case (Difficulty.Hard):
-                speed = baseSpeed + 1.0f;
+                speed = baseSpeed + 2.0f;//8
                 break;
             case (Difficulty.Normal):
-                speed = baseSpeed;
+                speed = baseSpeed;//6
                 break;
             case (Difficulty.Easy):
-                speed = baseSpeed - 2.0f;
+                speed = baseSpeed - 2.0f;//4
                 break;
         }
 

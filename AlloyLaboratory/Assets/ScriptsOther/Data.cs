@@ -74,7 +74,6 @@ public static class Data
     //----------------------キャラクター関係のデータ----------------------
     public static int charas = 1;
 
-    public static string[][] charaData;
     public static int[] charaDataNum = new int[3];
     public static string[] charaRino = { "リノ", "charaImageRino1" };//0
     public static string[] charaKurumi = { "クルミ", "charaImageMikoru1" };//1
@@ -113,7 +112,6 @@ public static class Data
 
         itemDataAll = new string[][] { itemSmaho, itemWatch, itemExtinguisher, itemCamera };
 
-        charaData = new string[][] { charaRino, charaNull, charaNull };
 
         charaDataAll = new string[][] { charaRino, charaKurumi, charaRinoF, charaNull};
 
@@ -182,18 +180,19 @@ public static class Data
     {
         for (int i = 0; i < 3; ++i)
         {
-            if (charaDataAll[(int)charaName] == charaData[i])
+            if ((int)charaName == charaDataNum[i])
             {
                 //最後は空白に
-                if (i == 2) charaData[i] = charaNull;
+                if (i == 2) charaDataNum[i] = 0;
                 else
                 {
-                    charaData[i] = charaData[i + 1];
-                    charaData[2] = charaNull;
+                    charaDataNum[i] = charaDataNum[i + 1];
+                    charaDataNum[2] = 0;
                 }
                 charas -= 1;
             }
         }
+        Debug.Log(charas);
         LoadMember();
     }
 
@@ -203,10 +202,13 @@ public static class Data
         {
             case 1:
                 charaImage0 = Resources.Load<Sprite>(charaDataAll[charaDataNum[0]][1]);
+                charaImage1 = null;
+                charaImage2 = null;
                 break;
             case 2:
                 charaImage0 = Resources.Load<Sprite>(charaDataAll[charaDataNum[0]][1]);
                 charaImage1 = Resources.Load<Sprite>(charaDataAll[charaDataNum[1]][1]);
+                charaImage2 = null;
                 break;
             case 3:
                 charaImage0 = Resources.Load<Sprite>(charaDataAll[charaDataNum[0]][1]);

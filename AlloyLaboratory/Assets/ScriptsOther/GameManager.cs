@@ -35,20 +35,27 @@ public class GameManager : MonoBehaviour
     
     public GameObject menuPanel;
     public GameObject enemy;
-    bool isGameOverStarting = false;
     public GameObject choicesPanel;
+    public GameObject imagePanel;
+    public GameObject imagePanelImage;
+    public static Sprite sprite;//imagePanelに表示する画像
     //--------------Fungus------------------------------
     public Flowchart flowchart;
+    InputManager inputManager;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         //--------------------最初は非表示のもの------------------------
-        
+
         if (menuPanel != null)
         {
             menuPanel.SetActive(false);
+        }
+        if (imagePanel != null)
+        {
+            imagePanel.SetActive(false);
         }
 
         if (gameState == GameState.Run)
@@ -64,6 +71,10 @@ public class GameManager : MonoBehaviour
         playerCnt = player.GetComponent<PlayerController>();//プレイヤーコントローラーを取得
         playerFocus = GameObject.FindGameObjectWithTag("PlayerFocus");//プレイヤーの目線を取得
         playerFocusCS = playerFocus.GetComponent<PlayerFocus>();//PlayerFocusスクリプト取得
+
+        inputManager = GetComponent<InputManager>();
+
+        Debug.Log(Data.difficulty);//現在の難易度確認
     }
 
     // Update is called once per frame
@@ -73,30 +84,54 @@ public class GameManager : MonoBehaviour
         Data.eventProgressMain = flowchart.GetIntegerVariable("eventProgressMain");
         Data.eventProgressSub = flowchart.GetIntegerVariable("eventProgressSub");
 
-        
-        //ゲームステート切り替え
-        switch (gameState)
+        //難易度切り替え
+        if (Data.currentDifficulty == Difficulty.Auto)
         {
-            case GameState.Start:
-                //Debug.Log("スタート画面");
-                break;
-            case GameState.Playing:
-                //Debug.Log("プレイ中");
-                //通常のプレイ中
-                break;
-            case GameState.Run:
-                //Debug.Log("逃げ中");
-                //逃げ中。このとき会話とかできなくしたい
-                break;
-            case GameState.Pause:
-                //Debug.Log("ポーズ中");
-                //イベント中。いろいろ動かない
-                break;
-            case GameState.GameOver:
-                Debug.Log("ゲームオーバー");
-                //ゲームオーバーシーンをロード
-                break;
+            //Data.playerLevelに応じて切り替え
+            //デスでplayerLevel+1
+            //クリアで-2
+            if (Data.playerLevel <= -4)
+            {
+                //全ボスを一発クリア
+                Data.difficulty = Difficulty.VeryHard;
+            }
+            else if (Data.playerLevel <= -1)
+            {
+                Data.difficulty = Difficulty.Hard;
+            }
+            else if (Data.playerLevel <= 2)
+            {
+                Data.difficulty = Difficulty.Normal;
+            }
+            else
+            {
+                Data.difficulty = Difficulty.Easy;
+            }
         }
+
+        //ゲームステート切り替え
+            switch (gameState)
+            {
+                case GameState.Start:
+                    //Debug.Log("スタート画面");
+                    break;
+                case GameState.Playing:
+                    //Debug.Log("プレイ中");
+                    //通常のプレイ中
+                    break;
+                case GameState.Run:
+                    //Debug.Log("逃げ中");
+                    //逃げ中。このとき会話とかできなくしたい
+                    break;
+                case GameState.Pause:
+                    //Debug.Log("ポーズ中");
+                    //イベント中。いろいろ動かない
+                    break;
+                case GameState.GameOver:
+                    Debug.Log("ゲームオーバー");
+                    //ゲームオーバーシーンをロード
+                    break;
+            }
         //ゲームステート切り替え
         if (flowchart.GetBooleanVariable("event") == true)
         {
@@ -113,6 +148,8 @@ public class GameManager : MonoBehaviour
         {
             MenuPanelButton();
         }
+
+        
 
 
         //----------------------体力処理---------------------------
@@ -186,11 +223,19 @@ public class GameManager : MonoBehaviour
         if (!menuPanel.activeSelf)
         {
             menuPanel.SetActive(true);
+            if (inputManager != null)
+            {
+                inputManager.isUION = true;
+            }
             Time.timeScale = 0f;
         }
         else
         {
             menuPanel.SetActive(false);
+            if (inputManager != null)
+            {
+                inputManager.isUION = false;
+            }
             Time.timeScale = 1f;
         }
     }
@@ -200,6 +245,35 @@ public class GameManager : MonoBehaviour
     {
         choicesPanel.SetActive(true);
     }
+
+    //--------------画像表示--------------------
+    public IEnumerator ImagePanel()
+    {
+        if (imagePanel == null) yield break;
+        if (!imagePanel.activeSelf)
+        {
+            //開く
+            imagePanel.SetActive(true);
+            //画像を表示
+            imagePanelImage.GetComponent<Image>().sprite = sprite;
+        }
+
+        
+
+        while (true)
+        {
+            yield return null;
+            //画像を閉じる
+            if (InputManager.inputType == InputType.Action || InputManager.inputType == InputType.Back)
+            {
+                break;
+            }
+        }
+        imagePanel.SetActive(false);
+        flowchart.SetBooleanVariable("event", false);
+    }
+    
+
 
     //ロードした時に時間差で敵を出現させる
     IEnumerator AppearEnemy()

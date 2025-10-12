@@ -38,7 +38,7 @@ public class MenuPanelManager : MonoBehaviour
     public GameObject buttonOption0;
     public GameObject buttonOption1;//難易度切り替え
     public GameObject buttonOption2;//ダッシュ切り替え
-    public GameObject buttonOption3;
+    //public GameObject buttonOption3;
     //-----------------------ゲームをやめるタブ---------------------
 
     public GameObject buttonExit;
@@ -76,7 +76,7 @@ public class MenuPanelManager : MonoBehaviour
         buttons = new GameObject[] { buttonItem0, buttonHowToPlay, buttonOption0, buttonExit };
         buttonsItem = new GameObject[] { buttonItem0, buttonItem1, buttonItem2, buttonItem3, buttonItem4, buttonItem5, buttonItem6 };
         buttonsItemText = new GameObject[] { buttonItem1Text, buttonItem2Text, buttonItem3Text, buttonItem4Text, buttonItem5Text, buttonItem6Text };
-        buttonsOption = new GameObject[] { buttonOption0, buttonOption1, buttonOption2, buttonOption3 };
+        buttonsOption = new GameObject[] { buttonOption0, buttonOption1, buttonOption2};
         panels = new GameObject[] { panelItem, panelHowToPlay, panelOption, panelExit };
 
         panelItemInfo.SetActive(false);
@@ -346,7 +346,7 @@ public class MenuPanelManager : MonoBehaviour
                 Data.currentDifficulty = Difficulty.VeryHard;
                 break;
             case Difficulty.Easy://簡単→オート
-                Data.difficulty = Difficulty.Auto;
+                //Data.difficulty = Difficulty.Auto;//オート設定はGameManagerにて
                 Data.currentDifficulty = Difficulty.Auto;
                 break;
             case Difficulty.Normal://普通→簡単

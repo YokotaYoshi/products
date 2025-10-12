@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class BoxScript : MonoBehaviour
 {
     //倉庫番の箱のように、押すことができる
+    public int boxID = 1;
     GameObject player;
     PlayerController playerCnt;
     float speed;//箱を押すスピード
@@ -19,9 +20,15 @@ public class BoxScript : MonoBehaviour
 
     public bool isMoving = false;//移動中かどうか
     bool isCoroutineWorking;
+    //IEnumerator moveCoroutine;//コルーチン
     Vector2 nearestGrid;
 
     Direction moveDirection = Direction.N;
+    //---------------------上下左右にモノがあるか-----------------
+    public bool isCollisionUp = false;
+    public bool isCollisionDown = false;
+    public bool isCollisionRight = false;
+    public bool isCollisionLeft = false;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -48,10 +55,14 @@ public class BoxScript : MonoBehaviour
         if (axisV == 0)
         {
             axisH = Input.GetAxisRaw("Horizontal");
+            if (isCollisionRight && axisH >= 0.5f) axisH = 0f;
+            if (isCollisionLeft && axisH <= -0.5f) axisH = 0f;
         }
         if (axisH == 0)
         {
             axisV = Input.GetAxisRaw("Vertical");
+            if (isCollisionUp && axisV >= 0.5f) axisV = 0f;
+            if (isCollisionDown && axisV <= -0.5f) axisV = 0f;
         }
 
 
@@ -195,9 +206,8 @@ public class BoxScript : MonoBehaviour
         speed = 0.0f;
         isMoving = false;
         isCoroutineWorking = false;
-        Debug.Log(nearestGrid);
     }
-    
+
     void OnTriggerEnter2D(Collider2D other)
     {
         //ロードする場所をふさぐことがないように
@@ -209,6 +219,15 @@ public class BoxScript : MonoBehaviour
         if (other.gameObject.tag == "")
         {
             //ゴールについたらイベント？
+        }
+    }
+    
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Carry")
+        {
+            transform.position = nearestGrid;
+            rb2d.linearVelocity = Vector2.zero;
         }
     }
 }

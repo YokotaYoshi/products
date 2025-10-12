@@ -301,13 +301,13 @@ public class PlayerController : MonoBehaviour
             //ゴールに近づいたらループを抜ける
             if (isGoal > distance)
             {
+                time = 0f;
                 break;
             }
 
             //distanceの値がおかしくなった時用
-            //場所がほぼ格子点上ならそこで止める
-            if (new Vector2(transform.position.x - Mathf.Round(transform.position.x),
-            transform.position.y - Mathf.Round(transform.position.y)).magnitude < isGoal)
+            //時間経過でコルーチン停止
+            if (time > 1f / speed)
             {
                 break;
             }
@@ -370,7 +370,12 @@ public class PlayerController : MonoBehaviour
 
             
             time += Time.deltaTime;
-            if (time > waitingTime) break;
+            if (time > waitingTime)
+            {
+                time = 0f;
+                break;
+            }
+            
             
             yield return null;
         }

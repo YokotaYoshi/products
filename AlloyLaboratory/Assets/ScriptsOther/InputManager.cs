@@ -10,6 +10,7 @@ public class InputManager : MonoBehaviour
 {
     public static InputType inputType = InputType.Null;
     public GameObject InputPanel;
+    public bool isUION = false;//ボタンがあるとき、左クリックでActionに変わらないように
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -37,13 +38,28 @@ public class InputManager : MonoBehaviour
         //戻る:右クリック、X、Space
         //ダッシュ:左右Shift
         //最初に入力をニュートラルに戻す
+        //Fungusの都合でEnter、Spaceを決定に
         inputType = InputType.Null;
 
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Z) || Input.GetMouseButtonDown(0))
+        if (isUION)
         {
-            inputType = InputType.Action;
+            //ボタンクリック優先
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+            {
+                inputType = InputType.Action;
+            }
         }
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.X) || Input.GetMouseButtonDown(1))
+        else
+        {
+            //基本的にはこっち
+            //右クリックも決定
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+            {
+                inputType = InputType.Action;
+            }
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.V) || Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.N) || Input.GetKeyDown(KeyCode.M) || Input.GetMouseButtonDown(1))
         {
             inputType = InputType.Back;
         }

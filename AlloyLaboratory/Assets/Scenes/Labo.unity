@@ -1082,7 +1082,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 132
   indentLevel: 0
-  storyText: "\u64CD\u4F5C\u65B9\u6CD5\u306FSPACE\u3001X\u3001\u30DE\u30A6\u30B9\u53F3\u30AF\u30EA\u30C3\u30AF\u3067\n\u300C\u30E1\u30CB\u30E5\u30FC\u300D\u304B\u3089\u300C\u64CD\u4F5C\u65B9\u6CD5\u300D\u3092\u3054\u89A7\u304F\u3060\u3055\u3044"
+  storyText: "\u64CD\u4F5C\u65B9\u6CD5\u306FZ~M\u3001\u30DE\u30A6\u30B9\u53F3\u30AF\u30EA\u30C3\u30AF\u3067\n\u300C\u30E1\u30CB\u30E5\u30FC\u300D\u304B\u3089\u300C\u64CD\u4F5C\u65B9\u6CD5\u300D\u3092\u3054\u89A7\u304F\u3060\u3055\u3044"
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -8023,7 +8023,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1561539114180268040, guid: e229861b1f83a744bb27aecd4b544eb7, type: 3}
       propertyPath: sceneName
-      value: Future0
+      value: 1-1
       objectReference: {fileID: 0}
     - target: {fileID: 6231967622669917043, guid: e229861b1f83a744bb27aecd4b544eb7, type: 3}
       propertyPath: m_Name
@@ -8821,9 +8821,9 @@ MonoBehaviour:
     width: 1114
     height: 859
   selectedBlocks:
-  - {fileID: 1178785212}
+  - {fileID: 1330639167}
   selectedCommands:
-  - {fileID: 5128167487383370812}
+  - {fileID: 1330639171}
   variables:
   - {fileID: 470528181653962044}
   - {fileID: 2828508056818846539}

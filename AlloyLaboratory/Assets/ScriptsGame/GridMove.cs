@@ -33,6 +33,7 @@ public class GridMove : MonoBehaviour
     void FixedUpdate()
     {
         if (GameManager.gameState == GameState.Pause) return;
+        
         switch (moveDirection)
         {
             case Direction.Right:
@@ -52,6 +53,7 @@ public class GridMove : MonoBehaviour
                 rb2d.linearVelocity = Vector2.zero;
                 break;
         }
+        
     }
     public IEnumerator Move(Direction moveDirectionEnum, float distance)
     {
@@ -97,7 +99,9 @@ public class GridMove : MonoBehaviour
             if (gap < isGoal)
             {
                 transform.position = nearestGrid;
-                rb2d.linearVelocity = Vector2.zero;
+
+                //rb2d.linearVelocity = Vector2.zero;//ここで一瞬0になるせいでアニメーションがくずれる?
+
                 moveDirection = Direction.N;
                 break;
             }

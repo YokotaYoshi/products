@@ -17,6 +17,10 @@ PrefabInstance:
       value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 4943746111211744566, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4943746111211744566, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 2
       objectReference: {fileID: 0}
@@ -109,4 +113,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df76190613c5bc44a08161720364264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: Future3
+  sceneName: 1-4

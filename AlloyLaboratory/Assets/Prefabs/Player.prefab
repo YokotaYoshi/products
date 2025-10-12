@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 8436578972686524018}
   m_Layer: 0
   m_Name: PlayerCensorRight
-  m_TagString: Untagged
+  m_TagString: Censor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -163,8 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43efef39a5ae19a429f4e52a58351a4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCollisionDirection: 2
-  player: {fileID: 8608506806624387366}
+  collisionDirection: 2
 --- !u!1 &4929173672564273232
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,7 +177,7 @@ GameObject:
   - component: {fileID: 2145500502170018564}
   m_Layer: 0
   m_Name: PlayerCensorDown
-  m_TagString: Untagged
+  m_TagString: Censor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -246,8 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43efef39a5ae19a429f4e52a58351a4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCollisionDirection: 1
-  player: {fileID: 8608506806624387366}
+  collisionDirection: 1
 --- !u!1 &5084089309603670888
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,7 +506,7 @@ GameObject:
   - component: {fileID: 6287245235779369951}
   m_Layer: 0
   m_Name: PlayerCensorLeft
-  m_TagString: Untagged
+  m_TagString: Censor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -576,8 +574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43efef39a5ae19a429f4e52a58351a4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCollisionDirection: 3
-  player: {fileID: 8608506806624387366}
+  collisionDirection: 3
 --- !u!1 &7157822008561409877
 GameObject:
   m_ObjectHideFlags: 0
@@ -591,7 +588,7 @@ GameObject:
   - component: {fileID: 2893193948146277878}
   m_Layer: 0
   m_Name: PlayerCensorUp
-  m_TagString: Untagged
+  m_TagString: Censor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -659,8 +656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43efef39a5ae19a429f4e52a58351a4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCollisionDirection: 0
-  player: {fileID: 8608506806624387366}
+  collisionDirection: 0
 --- !u!1 &8608506806624387366
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,10 +768,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 040f19feff2ed0c419ee3378a1d78de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  downImage: {fileID: -7127183229904908337, guid: 2488983417ee4414bbbc3e083d6608d6, type: 3}
-  upImage: {fileID: -1863436029972793218, guid: 2488983417ee4414bbbc3e083d6608d6, type: 3}
-  rightImage: {fileID: -1783808350427418317, guid: 2488983417ee4414bbbc3e083d6608d6, type: 3}
-  leftImage: {fileID: -1783808350427418317, guid: 2488983417ee4414bbbc3e083d6608d6, type: 3}
   walkSpeed: 5
   dashSpeed: 10
   isMoving: 0

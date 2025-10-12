@@ -11,18 +11,11 @@ public class TitleManager : MonoBehaviour
 
     //セーブデータをロードする
     public GameObject continueButton;
-    public GameObject saveDatasPanel;
-    //public GameObject buttonSaveData1;//21.いったんセーブデータはひとつだけ
-
-    //オプション設定。static変数をいじる
     public GameObject optionButton;
-    public GameObject optionPanel;
-    //public GameObject buttonOption1;//41
-    //public GameObject buttonOption2;
 
-
-
-
+    InputManager inputManager;
+    
+   
     GameObject[] buttons;
     GameObject buttonFocused;
 
@@ -35,10 +28,11 @@ public class TitleManager : MonoBehaviour
     void Start()
     {
         menuPanel.SetActive(false);
-        saveDatasPanel.SetActive(false);
-        optionPanel.SetActive(false);
+        
 
         buttonFocused = startButton;
+
+        inputManager = GetComponent<InputManager>();
 
         focusColor = new Color(0.7f, 0.7f, 1f);//フォーカスされたボタンの色
         unfocusColor = new Color(1f, 1f, 1f);//その他のボタンの色
@@ -51,6 +45,7 @@ public class TitleManager : MonoBehaviour
     {
         if (menuPanel.activeSelf)
         {
+            if (inputManager != null) inputManager.isUION = true;
             SwitchButtonNum();
             if (InputManager.inputType == InputType.Action)
             {
@@ -134,7 +129,11 @@ public class TitleManager : MonoBehaviour
         SceneManager.LoadScene(PlayerPrefs.GetString("シーン名"));
         Data.eventProgressMain = PlayerPrefs.GetInt("eventProgressMain");
         Data.eventProgressSub = PlayerPrefs.GetInt("eventProgressSub");
+        Data.playerLevel = PlayerPrefs.GetInt("playerLevel");
         Data.items = PlayerPrefs.GetInt("items");
+        Data.loadPosX = PlayerPrefs.GetFloat("loadPosX");
+        Data.loadPosY = PlayerPrefs.GetFloat("loadPosY");
+        PlayerController.startPos = Direction.Down;
         for (int i = 0; i < PlayerPrefs.GetInt("items"); ++i)
         {
             Data.itemDataNum[i] = PlayerPrefs.GetInt($"item{i}");
@@ -146,59 +145,6 @@ public class TitleManager : MonoBehaviour
         }
     }
 
-
-    public void OpenSaveDatasPanel()
-    {
-        saveDatasPanel.SetActive(true);
-        buttonNum = 21;
-    }
-
-    public void CloseSaveDatasPanel()
-    {
-        saveDatasPanel.SetActive(false);
-        buttonNum = 20;
-    }
-
-    public void OpenOptionPanel()
-    {
-        optionPanel.SetActive(true);
-        buttonNum = 41;
-    }
-
-    public void CloseOptionPanel()
-    {
-        optionPanel.SetActive(false);
-        buttonNum = 40;
-    }
-
-    //--------------------セーブデータをロード----------------
-
-    public void LoadSaveData()
-    {
-        //ロードする情報は
-        /*
-        シーンの名前
-        プレイヤーの座標
-        仲間情報
-        アイテム情報
-        eventProgressMain
-        eventProgressSub→疑問。謎解きの途中でセーブした場合はどうすべきか
-        アイテムをロードする際に矛盾が生じそうなのでロードするべき
-
-        保存した情報を
-        buttonNum - 21
-        PlayerPrefs.Get???("キー", 中身)
-        */
-    }
-
-    //--------------------オプション操作---------------------
-
-    public void OptionDash()
-    {
-        //デフォルトをダッシュにするか
-        //モードを反転
-        Data.dashWhilePush = !Data.dashWhilePush;
-    }
 
     public void GameEnd()
     {

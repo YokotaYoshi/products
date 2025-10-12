@@ -58,6 +58,7 @@ public class DataEdit : MonoBehaviour
 
     public void SubData()
     {
+        Debug.Log("キャラとおわかれ");
         if (dataType == DataType.Member)
         {
             Data.MemberSub(charaName);

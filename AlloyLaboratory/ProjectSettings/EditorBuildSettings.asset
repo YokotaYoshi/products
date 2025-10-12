@@ -36,19 +36,19 @@ EditorBuildSettings:
     path: Assets/Scenes/FutureRun.unity
     guid: eba6170e1b744e7489f46c9c4585ddf0
   - enabled: 1
-    path: Assets/Scenes/Future1.unity
+    path: Assets/Scenes/1-2.unity
     guid: c252e03629bd62d4d8481628634a1de6
   - enabled: 1
-    path: Assets/Scenes/Future0.unity
+    path: Assets/Scenes/1-1.unity
     guid: d682382e290554b4885e14929f24c89e
   - enabled: 1
-    path: Assets/Scenes/Future2.unity
+    path: Assets/Scenes/1-3.unity
     guid: 40e42549b98af46408f55bf2807fa568
   - enabled: 1
-    path: Assets/Scenes/Future3.unity
+    path: Assets/Scenes/1-4.unity
     guid: 20048e3948a30374ba145d13f99869fe
   - enabled: 1
-    path: Assets/Scenes/Future4.unity
+    path: Assets/Scenes/1-5.unity
     guid: 2df76459e934642419471324af097a21
   - enabled: 1
     path: Assets/Scenes/2-1.unity

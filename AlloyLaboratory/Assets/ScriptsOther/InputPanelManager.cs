@@ -8,11 +8,13 @@ public class InputPanelManager : MonoBehaviour
 {
     public static string question;
     public static string ans;
+    public static Sprite sprite;
 
     public static string text = "";
     string newText = "";
     public GameObject textDisplay;
     public GameObject textQuestion;
+    public GameObject hintImage;
     public Flowchart flowchart;
     public static ItemName reward;
     public static int eventProgressMainSet;
@@ -29,6 +31,7 @@ public class InputPanelManager : MonoBehaviour
     void OnEnable()
     {
         text = "";
+        hintImage.GetComponent<Image>().sprite = sprite;
     }
 
     // Update is called once per frame
@@ -52,9 +55,9 @@ public class InputPanelManager : MonoBehaviour
             //text = text.Substring(0, text.Length -1)
             return;
         }
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (InputManager.inputType == InputType.Action)
         {
-            if (text == ans)
+            if (text.ToUpper() == ans)
             {
                 question = "正解";
                 Debug.Log("正解");
@@ -64,17 +67,22 @@ public class InputPanelManager : MonoBehaviour
                 //eventProgressも変化させる
             }
             //Data.inputString = text;
-            flowchart.SetBooleanVariable("event", false);
-            GameManager.gameState = GameState.Playing;
-            gameObject.SetActive(false);
+            Invoke("Close", 0.1f);
 
         }
-        if (Input.GetKey(KeyCode.Space)) return;//スペースはなし
         if (text.Length >= 10) return;//とりあえず10文字まで
         text = string.Concat(text, Input.inputString);
 
 
         textQuestion.GetComponent<Text>().text = question;
+
+    }
+
+    void Close()
+    {
+        flowchart.SetBooleanVariable("event", false);
+        GameManager.gameState = GameState.Playing;
+        gameObject.SetActive(false);
     }
 
     void Success()

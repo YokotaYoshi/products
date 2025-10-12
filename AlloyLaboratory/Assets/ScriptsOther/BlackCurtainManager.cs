@@ -16,9 +16,9 @@ public class BlackCurtainManager : MonoBehaviour
     public Brightness brightness = Brightness.Dark;
     public bool isBrightStart = true;//スタート時に明るくするかどうか
     public float fadeInTime = 0.2f;//暗闇が完全に晴れるまでの時間
-    
+
     public float fadeOutTime = 0.3f;//暗転時間
-    
+
     Image image;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,9 +28,9 @@ public class BlackCurtainManager : MonoBehaviour
         if (isBrightStart)
         {
             FadeIn();
-            
+
         }
-            
+
     }
 
     // Update is called once per frame
@@ -97,5 +97,25 @@ public class BlackCurtainManager : MonoBehaviour
             }
         }
         brightness = Brightness.Dark;
+    }
+
+    public IEnumerator BlaclFlash()
+    {
+        //明るいタイミングで一瞬暗くする
+        brightness = Brightness.Middle;
+        image.color = new Color(0f, 0f, 0f, 1f);
+        yield return new WaitForSeconds(0.5f);
+        brightness = Brightness.Bright;
+        image.color = new Color(0f, 0f, 0f, 0f);
+    }
+
+    public IEnumerator WhiteFlash()
+    {
+        //暗いタイミングで一瞬暗くする
+        brightness = Brightness.Middle;
+        image.color = new Color(0f, 0f, 0f, 0f);
+        yield return new WaitForSeconds(0.5f);
+        brightness = Brightness.Dark;
+        image.color = new Color(0f, 0f, 0f, 1f);
     }
 }

@@ -17,6 +17,7 @@ public class ExecuteFungus : MonoBehaviour
     //----------------謎解き----------------
     public string question;
     public string ans;
+    public Sprite sprite;
     public ItemName reward;
     public int eventProgressMainSet;
     public int eventProgressSubSet;
@@ -60,7 +61,10 @@ public class ExecuteFungus : MonoBehaviour
             {
                 SetQandA();
             }
-
+            else if (sprite != null)
+            {
+                SetImage();
+            }
         }
         
         
@@ -104,8 +108,14 @@ public class ExecuteFungus : MonoBehaviour
     {
         InputPanelManager.ans = ans;
         InputPanelManager.question = question;
+        InputPanelManager.sprite = sprite;
         InputPanelManager.reward = reward;
         InputPanelManager.eventProgressMainSet = eventProgressMainSet;
         InputPanelManager.eventProgressSubSet = eventProgressSubSet;
+    }
+
+    public void SetImage()
+    {
+        GameManager.sprite = sprite;
     }
 }

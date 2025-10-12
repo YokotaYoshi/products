@@ -17,6 +17,8 @@ TagManager:
   - Enemy
   - PlayerCollider
   - Carry
+  - Censor
+  - Goal
   layers:
   - Default
   - TransparentFX

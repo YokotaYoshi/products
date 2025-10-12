@@ -19,6 +19,7 @@ public class BlockScript : MonoBehaviour
     public Sprite sprite0;
 
     public Sprite sprite1;
+    public Sprite sprite1Sub;
     //eventProgressMainSubがこれ以上ならスプライト切り替えるか削除
     //両方ゼロなら切りかえないオブジェクト
     public int eventProgressMainBase = 0;
@@ -26,43 +27,40 @@ public class BlockScript : MonoBehaviour
     public bool willDestroy = false;//イベント進行でオブジェクト削除
     public float animateTime = 0.3f;
 
+    //eventProgressがBase以上だったら固定
+    //それ以下の場合は一時的に変更することもありうる
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (eventProgressMainBase == 0 && eventProgressSubBase == 0) return;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
-        Debug.Log("あ");
+        //Debug.Log("あ");
 
-        if (Data.eventProgressMain < eventProgressMainBase)
-        {
-            //イベント進行していない
-            if (willDestroy) return;
-            else spriteRenderer.sprite = sprite0;
-        }
-        else
-        {
-            if (willDestroy) Destroy(gameObject);
-            else spriteRenderer.sprite = sprite1;
-        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (eventProgressMainBase == 0 && eventProgressSubBase == 0) return;
-        if (Data.eventProgressMain < eventProgressMainBase)
+        if (eventProgressMainBase != 0)
         {
-            //イベント進行していない
-            if (willDestroy) return;
-
-            else if (sprite0 != null) spriteRenderer.sprite = sprite0;
+            if (Data.eventProgressMain >= eventProgressMainBase)
+            {
+                if (willDestroy) Destroy(gameObject);
+                else if (sprite1 != null) spriteRenderer.sprite = sprite1;
+            }
         }
-        else
+        
+        if (eventProgressSubBase != 0)
         {
-            if (willDestroy) Destroy(gameObject);
-            else if (sprite1 != null) spriteRenderer.sprite = sprite1;
+            if (Data.eventProgressSub >= eventProgressSubBase)
+            {
+                if (willDestroy) Destroy(gameObject);
+                else if (sprite1Sub != null) spriteRenderer.sprite = sprite1Sub;
+            }
         }
+        
     }
 
     IEnumerator ChangeTemporarily()
