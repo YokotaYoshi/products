@@ -134,6 +134,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: 70_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64a8e41a55f766a46a040492b5add7b2
+      internalID: 11555390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -149,6 +171,7 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       70_0: 2730765880487802524
+      70_1: 11555390
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

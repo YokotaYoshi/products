@@ -51,7 +51,7 @@ public class EnemyFocusCS : MonoBehaviour
     void OnTriggerStay2D(Collider2D other)
     {
         //Debug.Log(other.gameObject.tag);
-        if (other.gameObject.tag == "Untagged")
+        if (other.gameObject.tag != "Player" && other.gameObject.tag != "PlayerFocus" && other.gameObject.tag != "Censor")
         {
             enemyChaseCnt.isBlocked = true;//プレイヤー以外のオブジェクトが目の前にあることを通知
 
@@ -75,7 +75,7 @@ public class EnemyFocusCS : MonoBehaviour
     }
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.tag != "Player")
+        if (other.gameObject.tag != "Player" && other.gameObject.tag != "PlayerFocus" && other.gameObject.tag != "Censor")
         {
             //目の前が開けている
             enemyChaseCnt.isBlocked = false;

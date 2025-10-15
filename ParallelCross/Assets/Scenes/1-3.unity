@@ -9099,6 +9099,7 @@ GameObject:
   - component: {fileID: 5128167487383370834}
   - component: {fileID: 5128167487383370833}
   - component: {fileID: 5128167487383370835}
+  - component: {fileID: 5128167487383370836}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -9162,7 +9163,8 @@ MonoBehaviour:
     height: 859
   selectedBlocks:
   - {fileID: 5128167487383370829}
-  selectedCommands: []
+  selectedCommands:
+  - {fileID: 5128167487383370836}
   variables:
   - {fileID: 470528181653962044}
   - {fileID: 2828508056818846539}
@@ -9374,6 +9376,7 @@ MonoBehaviour:
   - {fileID: 5128167487383370828}
   - {fileID: 5128167487383370835}
   - {fileID: 5128167487383370833}
+  - {fileID: 5128167487383370836}
   - {fileID: 5128167487383370834}
   - {fileID: 5128167487383370830}
   suppressAllAutoSelections: 0
@@ -9834,6 +9837,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 18
   indentLevel: 0
+--- !u!114 &5128167487383370836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2296575535541983027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 19
+  indentLevel: 1
+  storyText: "\u306A\u3093\u3060\u3053\u308C\u306F"
+  description: 
+  character: {fileID: 952317095}
+  portrait: {fileID: 0}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

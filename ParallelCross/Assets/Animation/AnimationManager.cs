@@ -112,6 +112,7 @@ public class AnimationManager : MonoBehaviour
             else
             {
                 //moveDirection = Direction.N;
+                //動いていない場合は外部からいじれる
             }
         }
     }

@@ -30,6 +30,7 @@ public class BoxScript : MonoBehaviour
     public bool isCollisionRight = false;
     public bool isCollisionLeft = false;
 
+    public GameObject boxBroken;//壊れた箱
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -216,9 +217,12 @@ public class BoxScript : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (other.gameObject.tag == "")
+        if (other.gameObject.tag == "Enemy")
         {
-            //ゴールについたらイベント？
+            //敵が接触すると踏みつぶされる
+            Instantiate(boxBroken, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+
         }
     }
     

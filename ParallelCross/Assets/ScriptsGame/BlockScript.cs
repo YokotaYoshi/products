@@ -25,7 +25,12 @@ public class BlockScript : MonoBehaviour
     public int eventProgressMainBase = 0;
     public int eventProgressSubBase = 0;
     public bool willDestroy = false;//イベント進行でオブジェクト削除
+    public GameObject createObject;
     public float animateTime = 0.3f;
+
+    GameObject player;
+    Vector2 playerPosition;
+    AnimationManager animManager;
 
     //eventProgressがBase以上だったら固定
     //それ以下の場合は一時的に変更することもありうる
@@ -36,7 +41,8 @@ public class BlockScript : MonoBehaviour
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         //Debug.Log("あ");
-
+        player = GameObject.FindGameObjectWithTag("Player");
+        animManager = GetComponent<AnimationManager>();
         
     }
 
@@ -47,7 +53,17 @@ public class BlockScript : MonoBehaviour
         {
             if (Data.eventProgressMain >= eventProgressMainBase)
             {
-                if (willDestroy) Destroy(gameObject);
+                if (willDestroy) 
+                {
+                    if (createObject != null)
+                    {
+                        Instantiate(createObject, transform.position, Quaternion.identity);
+                        Data.loadPosX = transform.position.x;//仲間を生成する場合必要になる
+                        Data.loadPosY = transform.position.y;
+                    }
+
+                    Destroy(gameObject);
+                }
                 else if (sprite1 != null) spriteRenderer.sprite = sprite1;
             }
         }
@@ -56,11 +72,42 @@ public class BlockScript : MonoBehaviour
         {
             if (Data.eventProgressSub >= eventProgressSubBase)
             {
-                if (willDestroy) Destroy(gameObject);
+                if (willDestroy) 
+                {
+                    if (createObject != null)
+                    {
+                        Instantiate(createObject, transform.position, Quaternion.identity);
+                        Data.loadPosX = transform.position.x;
+                        Data.loadPosY = transform.position.y;
+                    }
+                    Destroy(gameObject);
+                }
                 else if (sprite1Sub != null) spriteRenderer.sprite = sprite1Sub;
             }
         }
         
+        if (animManager != null)
+        {
+            //プレイヤーの方向にmoveDirectionを一致させる
+            playerPosition = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
+
+            if (playerPosition.y > playerPosition.x && playerPosition.y > -playerPosition.x)
+            {
+                animManager.moveDirection = Direction.Up;
+            }
+            else if (playerPosition.y <= playerPosition.x && playerPosition.y > -playerPosition.x)
+            {
+                animManager.moveDirection = Direction.Right;
+            }
+            else if (playerPosition.y > playerPosition.x && playerPosition.y <= -playerPosition.x)
+            {
+                animManager.moveDirection = Direction.Left;
+            }
+            else
+            {
+                animManager.moveDirection = Direction.Down;
+            }
+        }
     }
 
     IEnumerator ChangeTemporarily()

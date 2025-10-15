@@ -18,9 +18,10 @@ public class EnemyChaseController : MonoBehaviour
     
     Vector2 playerDirection;//自分から見たプレイヤーの位置
     public float playerDirectionDegree;//自分から見たプレイヤーの角度
-   
-    
+
+
     Direction moveDirectionEnum;
+    Direction moveDirectionNext = Direction.N;
     float distance = 1f;
 
     //-------------何かに衝突した時に使う--------------
@@ -142,8 +143,10 @@ public class EnemyChaseController : MonoBehaviour
         }
         else
         {
+            //2段階で動く。
             //Debug.Log("障害物を避ける");
             //2番目にプレイヤーとの距離を縮められる方向に動く
+            //次に1番目にプレイヤーとの距離を縮められる方向に
             if ((playerDirectionDegree >= -90 && playerDirectionDegree < -50) ||
             (playerDirectionDegree >= 50 && playerDirectionDegree < 90))
             {

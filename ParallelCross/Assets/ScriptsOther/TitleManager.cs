@@ -119,8 +119,12 @@ public class TitleManager : MonoBehaviour
     {
         Data.eventProgressMain = 0;
         Data.eventProgressSub = 0;
-        PlayerController.startPos = Direction.N;
-        SceneManager.LoadScene("HomeStart");
+        PlayerController.startPos = Direction.Right;
+        PlayerController.hp = 3;
+        Data.charas = 2;
+        Data.charaDataNum[1] = 1;
+        SceneManager.LoadScene("Labo");
+        
     }
 
     public void Continue()
@@ -134,6 +138,7 @@ public class TitleManager : MonoBehaviour
         Data.loadPosX = PlayerPrefs.GetFloat("loadPosX");
         Data.loadPosY = PlayerPrefs.GetFloat("loadPosY");
         PlayerController.startPos = Direction.Down;
+        PlayerController.hp = 3;
         for (int i = 0; i < PlayerPrefs.GetInt("items"); ++i)
         {
             Data.itemDataNum[i] = PlayerPrefs.GetInt($"item{i}");

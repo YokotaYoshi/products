@@ -27,12 +27,12 @@ public class GridMove : MonoBehaviour
     void Update()
     {
         nearestGrid = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
+        Debug.Log(speed);
         //Debug.Log(moveDirection);
     }
 
     void FixedUpdate()
     {
-        if (GameManager.gameState == GameState.Pause) return;
         
         switch (moveDirection)
         {

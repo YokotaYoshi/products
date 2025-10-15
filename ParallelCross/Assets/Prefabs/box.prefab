@@ -262,11 +262,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb22504fadd71442b6b16e1c698a418, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boxID: 1
   isMoving: 0
   isCollisionUp: 0
   isCollisionDown: 0
   isCollisionRight: 0
   isCollisionLeft: 0
+  boxBroken: {fileID: 5461706718967258396, guid: 1ff476bbcb9386e45b3a4ba2255162db, type: 3}
 --- !u!114 &4060100894819119206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,6 +291,7 @@ MonoBehaviour:
   eventProgressMainBase: 0
   eventProgressSubBase: 0
   willDestroy: 0
+  createObject: {fileID: 0}
   animateTime: 0.3
 --- !u!1 &4669583533458517456
 GameObject:
