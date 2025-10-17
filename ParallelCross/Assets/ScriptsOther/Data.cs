@@ -9,10 +9,16 @@ public enum DataType
 
 public enum ItemName
 {
+    //アイテムを追加するときは
+    //ここにアイテムの名前を追加
+    //Dataクラス内にitemCameraのように追加
+    //static Data()内itemDataAllにも追加
     Smaho,
     Watch,
     Extinguisher,
     Camera,
+    Cord,
+    Bat,
     Null,
 }
 
@@ -67,6 +73,8 @@ public static class Data
     public static string[] itemWatch = { "腕時計", "最近はスマホで時間を確認するから使う機会がない" };
     public static string[] itemExtinguisher = { "消火器", "Fire Extinguisher" };
     public static string[] itemCamera = { "カメラ", "これでタイムトラベルの証拠を撮るのだ" };
+    public static string[] itemCord = { "ひも", "丈夫そう。簡単には切れないだろう" };
+    public static string[] itemBat = { "バット", "放てホームラン" };
     public static string[] itemRing = { "腕輪", "去年の誕生日に渡したものだ" };
     public static string[][] itemDataAll;
 
@@ -110,7 +118,7 @@ public static class Data
     static Data()
     {
 
-        itemDataAll = new string[][] { itemSmaho, itemWatch, itemExtinguisher, itemCamera };
+        itemDataAll = new string[][] { itemSmaho, itemWatch, itemExtinguisher, itemCamera , itemCord, itemBat};
 
 
         charaDataAll = new string[][] { charaRino, charaKurumi, charaRinoF, charaNull};

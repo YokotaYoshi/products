@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 807764782189430666}
   - component: {fileID: 6522760325671941649}
   m_Layer: 0
-  m_Name: Square (1)
+  m_Name: EnemyBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -507,7 +507,7 @@ GameObject:
   - component: {fileID: 9075423138297414331}
   - component: {fileID: 1320796833839692205}
   m_Layer: 0
-  m_Name: Square
+  m_Name: EnemyTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

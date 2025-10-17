@@ -9,10 +9,11 @@ public class ExecuteFungus : MonoBehaviour
 
     public string blockName;//実行したいブロック名
     public bool executeOnClick = true;//決定で実行するか、触れただけで実行するか
-    
+
     //-------------選択肢-----------------
-    
+
     public string[] choices;
+    public string addChoice;
 
     //----------------謎解き----------------
     public string question;
@@ -117,5 +118,21 @@ public class ExecuteFungus : MonoBehaviour
     public void SetImage()
     {
         GameManager.sprite = sprite;
+    }
+
+    public void AddChoice()
+    {
+        //Fungusから選択肢を追加する
+        string[] preChoices = new string[choices.Length];
+        for (int i = 0; i < preChoices.Length; ++i)
+        {
+            preChoices[i] = choices[i];//一時的に保存
+        }
+        choices = new string[choices.Length + 1];
+        choices[0] = addChoice;
+        for (int i = 0; i < preChoices.Length; ++i)
+        {
+            choices[i + 1] = preChoices[i];//新しい選択肢を先頭に持ってきて再構成
+        }
     }
 }
