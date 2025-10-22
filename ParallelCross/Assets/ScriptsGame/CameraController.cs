@@ -16,6 +16,7 @@ public class CameraController : MonoBehaviour
     float x = 0.0f;
     float y = 0.0f;
     float z = 0.0f;
+    public float vibTimeWhole = 0.3f;
 
     GameObject player;//プレイヤー
 
@@ -123,22 +124,41 @@ public class CameraController : MonoBehaviour
         //強制スクロールかどうかで座標を設定
 
         //Vector2 startPosition = transform.position;
-
+        float basePositionX = transform.position.x;
+        float basePositionY = transform.position.y;
         float cameraPositionX = transform.position.x;
         float cameraPositionY = transform.position.y;
 
-        float amptitude = 0.1f;//振動の振れ幅
+        float amptitude = 0.5f;//振動の振れ幅
         float displacement = 0f;
-        float vivTime = 0.0f;
+        float vibTime = 0.0f;
 
         while (true)
         {
+            if (isScrollX)
+            {
+                cameraPositionX = basePositionX + scrollX * vibTime;
+            }
+            else
+            {
+                cameraPositionX = player.transform.position.x ;
+            }
+            if (isScrollY)
+            {
+                cameraPositionY = cameraPositionY + scrollY * vibTime;
+            }
+            else
+            {
+                cameraPositionY = player.transform.position.y;
+            }
             //減衰振動
-            displacement = 10f / 3f * (0.3f - vivTime) * amptitude * Mathf.Cos(20 * vivTime * Mathf.PI);
-            transform.position = new Vector3(transform.position.x + displacement, transform.position.y, z);
-            vivTime += Time.deltaTime;
             yield return null;
-            if (vivTime >= 0.3f)
+            vibTime += Time.deltaTime;
+            displacement = (vibTimeWhole - vibTime) / vibTimeWhole * amptitude * Mathf.Cos(20 * vibTime * Mathf.PI);
+
+            transform.position = new Vector3(cameraPositionX + displacement, cameraPositionY, z);
+            
+            if (vibTime >= vibTimeWhole)
             {
                 break;
             }
@@ -146,7 +166,7 @@ public class CameraController : MonoBehaviour
 
         if (isScrollX)
         {
-            cameraPositionX = cameraPositionX + scrollX * 0.3f;
+            cameraPositionX = basePositionX + scrollX * vibTimeWhole;
         }
         else
         {
@@ -154,7 +174,7 @@ public class CameraController : MonoBehaviour
         }
         if (isScrollY)
         {
-            cameraPositionY = cameraPositionY + scrollY * 0.3f;
+            cameraPositionY = basePositionY + scrollY * vibTimeWhole;
         }
         else
         {

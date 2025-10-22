@@ -72,9 +72,18 @@ public class GameManager : MonoBehaviour
 
 
         player = GameObject.FindGameObjectWithTag("Player");//プレイヤーを取得
-        playerCnt = player.GetComponent<PlayerController>();//プレイヤーコントローラーを取得
+        if (player != null)
+        {
+            playerCnt = player.GetComponent<PlayerController>();//プレイヤーコントローラーを取得
+        }
+
+
         playerFocus = GameObject.FindGameObjectWithTag("PlayerFocus");//プレイヤーの目線を取得
-        playerFocusCS = playerFocus.GetComponent<PlayerFocus>();//PlayerFocusスクリプト取得
+        if (playerFocus != null)
+        {
+            playerFocusCS = playerFocus.GetComponent<PlayerFocus>();//PlayerFocusスクリプト取得
+        }
+        
 
         inputManager = GetComponent<InputManager>();
 

@@ -18,6 +18,7 @@ public class BlackCurtainManager : MonoBehaviour
     public float fadeInTime = 0.2f;//暗闇が完全に晴れるまでの時間
 
     public float fadeOutTime = 0.3f;//暗転時間
+    public GameObject flash;
 
     Image image;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -31,6 +32,10 @@ public class BlackCurtainManager : MonoBehaviour
 
         }
 
+        if (flash != null)
+        {
+            flash.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -117,5 +122,10 @@ public class BlackCurtainManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         brightness = Brightness.Dark;
         image.color = new Color(0f, 0f, 0f, 1f);
+    }
+
+    public void Flash()
+    {
+        flash.SetActive(true);
     }
 }

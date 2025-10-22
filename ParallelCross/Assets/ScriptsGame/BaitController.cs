@@ -9,24 +9,19 @@ public class BaitController : MonoBehaviour
 
     //ゲームオーバー画面で自機から逃げるように動く
     public float speed;
-    Direction moveDirection;
-    GridMove gridMove;
+    //Direction moveDirection;
+    //GridMove gridMove;
     
     void Start()
     {
-        gridMove = GetComponent<GridMove>();
+        //gridMove = GetComponent<GridMove>();
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Random.value);
-        Debug.Log(moveDirection);
-        if (Random.value <= 0.25f)
-        {
-            moveDirection = Direction.Right;
-        }
+        transform.position += new Vector3(speed * Time.deltaTime, 0f, 0f);
     }
 
     void OnTriggerEnter2D(Collider2D other)

@@ -3,6 +3,7 @@ using UnityEngine;
 public class AttackAreaManager : MonoBehaviour
 {
     float time = 0f;
+    public float deleteTime = 0.33f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -14,7 +15,7 @@ public class AttackAreaManager : MonoBehaviour
     {
         time += Time.deltaTime;
 
-        if (time >= 0.33f)
+        if (time >= deleteTime)
         {
             Destroy(gameObject);
         }
