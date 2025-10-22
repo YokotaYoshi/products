@@ -19,6 +19,7 @@ TagManager:
   - Carry
   - Censor
   - Goal
+  - PlayerAttack
   layers:
   - Default
   - TransparentFX

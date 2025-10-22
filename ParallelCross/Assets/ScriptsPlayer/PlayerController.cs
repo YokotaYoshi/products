@@ -45,10 +45,16 @@ public class PlayerController : MonoBehaviour
     public bool isCollisionDown = false;
     public bool isCollisionRight = false;
     public bool isCollisionLeft = false;
+    //--------------攻撃-------------------
+    public GameObject attack;
+    Direction currentDirection = Direction.N;
+    bool isAttacking = false;
+    float attackTime = 0f;
     //--------------------その他----------------------------------
     public bool isAttacked = false;//攻撃された！
     public Vector2 blownDirection;//吹っ飛ばされる方向
     Vector2 nearestGrid;
+    bool isFreezing = false;
 
 
     void Awake()
@@ -70,18 +76,23 @@ public class PlayerController : MonoBehaviour
         {
             case Direction.Right:
                 transform.position = new Vector2(Data.loadPosX + 1.0f, Data.loadPosY);
+                currentDirection = Direction.Right;
                 break;
             case Direction.Left:
                 transform.position = new Vector2(Data.loadPosX - 1.0f, Data.loadPosY);
+                currentDirection = Direction.Left;
                 break;
             case Direction.Up:
                 transform.position = new Vector2(Data.loadPosX, Data.loadPosY + 1.0f);
+                currentDirection = Direction.Up;
                 break;
             case Direction.Down:
                 transform.position = new Vector2(Data.loadPosX, Data.loadPosY - 1.0f);
+                currentDirection = Direction.Down;
                 break;
             case Direction.N:
                 transform.position = new Vector2(startPosX, startPosY);
+                currentDirection = Direction.N;
                 break;
         }
     }
@@ -103,7 +114,12 @@ public class PlayerController : MonoBehaviour
             
         }
 
-        if (GameManager.gameState == GameState.Pause) return;
+        //操作を受け付けない状態
+        if (GameManager.gameState == GameState.Pause || isFreezing)//ゲーム全体がとまる、プレイヤーだけとまる
+        {
+            speed = 0f;
+            return;
+        } 
 
         switch (Data.difficulty)//難易度に応じて速度変更
         {
@@ -173,7 +189,10 @@ public class PlayerController : MonoBehaviour
             isMoving = true;
         }
         inputVector = new Vector2(axisH, axisV);//入力ベクトル
-
+        if (inputVector.y == -1f) currentDirection = Direction.Down;
+        else if (inputVector.y == 1f) currentDirection = Direction.Up;
+        else if (inputVector.x == 1f) currentDirection = Direction.Right;
+        else if (inputVector.x == -1f) currentDirection = Direction.Left;
 
 
         //Debug.Log(inputVector);
@@ -235,6 +254,30 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(Attacked(blownDirection));
         }
+
+        //-----------------------攻撃--------------------------
+        if (isAttacking)
+        {
+            attackTime += Time.deltaTime;
+            if (attackTime >= 1f) isAttacking = false;//強制的に攻撃可能に
+        }
+        else
+        {
+            attackTime = 0f;
+            if (InputManager.inputType == InputType.Action)
+            {
+                
+                for (int i = 0; i < 6; ++i)
+                {
+                    if ((int)Data.itemDataNum[i] == 5)
+                    {
+                        //バットを持っていたら攻撃できる
+                        StartCoroutine(Attack());
+                    }
+                }
+            }
+        }
+        
     }
 
     void FixedUpdate()
@@ -272,6 +315,7 @@ public class PlayerController : MonoBehaviour
 
     void ResetPosition()
     {
+        isAttacking = false;
         StopAllCoroutines();
         transform.position = nearestGrid;
         rb2d.linearVelocity = Vector2.zero;
@@ -345,6 +389,7 @@ public class PlayerController : MonoBehaviour
         //Debug.Log(time);
     }
 
+
     //--------------------被弾モーション--------------------
 
     IEnumerator Attacked(Vector2 direction)
@@ -396,8 +441,8 @@ public class PlayerController : MonoBehaviour
 
         isInvincible = false;//無敵解除
     }
-    
-  
+
+
     //-------------------やられモーション---------------------------
     IEnumerator Dead()
     {
@@ -411,11 +456,68 @@ public class PlayerController : MonoBehaviour
             yield return null;
             if (time >= 1.0f) break;
         }
-        
+
     }
 
-    
+    //---------------------攻撃モーション--------------
+    public IEnumerator Attack()
+    {
+        isAttacking = true;
+        float attackTime = 0f;
+        //前隙
+        while (true)
+        {
+            yield return null;
+            attackTime += Time.deltaTime;
+            if (Data.onEvent)
+            {
+                isAttacking = false;
+                yield break;
+            }
+            if (attackTime >= 0.1f) break;
+        }
+        
+        //人に話しかけたり、ものを調べた場合は攻撃しない
+        Vector3 attackPosition = new Vector3(transform.position.x, transform.position.y );
+        //攻撃
+        switch (currentDirection)
+        {
+            
+            case Direction.N:
+                Instantiate(attack, attackPosition, Quaternion.identity, transform);
+                break;
+            case Direction.Down:
+                Instantiate(attack, attackPosition, Quaternion.identity, transform);
+                break;
+            case Direction.Up:
+                Instantiate(attack, attackPosition, Quaternion.Euler(0f, 0f, 180f), transform);
+                break;
+            case Direction.Right:
+                Instantiate(attack, attackPosition, Quaternion.Euler(0f, 0f, 90f), transform);
+                break;
+            case Direction.Left:
+                Instantiate(attack, attackPosition, Quaternion.Euler(0f, 0f, 270f), transform);
+                break;
+        }
+        Debug.Log("攻撃");
 
+        //後隙
+        while (true)
+        {
+            yield return null;
+            attackTime += Time.deltaTime;
+            if (attackTime >= 1.0f) break;//全体の時間
+        }
+        isAttacking = false;
+
+    }
+
+
+    public void Freeze()
+    {
+        isFreezing = !isFreezing;
+    }
+    
 }
     
     

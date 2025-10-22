@@ -14,10 +14,12 @@ public class AttackAreaManager : MonoBehaviour
     {
         time += Time.deltaTime;
 
-        if (time >= 0.5f)
+        if (time >= 0.33f)
         {
             Destroy(gameObject);
         }
+
+        
     }
     /*
     void OnTriggerEnter2D(Collider2D other)

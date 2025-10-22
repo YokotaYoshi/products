@@ -9,10 +9,12 @@ public class AnimationManager : MonoBehaviour
     //------------------アニメーション関係------------------------
     //public CharaName charaName;
     public bool isPlayer;
+    public bool auto = true;//自動切り替え
     public Direction moveDirection = Direction.Down;
-    
-    
+
+
     Rigidbody2D rb2d;
+    Animator animator;
     Animator[] animators;
     
     string currentAnime = "";
@@ -23,17 +25,45 @@ public class AnimationManager : MonoBehaviour
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        
+
+        animator = GetComponent<Animator>();
         animators = GetComponentsInChildren<Animator>();
+
+        Debug.Log(moveDirection);
+        for (int i = 0; i < animators.Length; i++)
+        {
+            switch (moveDirection)
+            {
+                case (Direction.Down):
+                    animators[i].Play("animStayDown");
+                    break;
+                case (Direction.Up):
+                    animators[i].Play("animStayUp");
+                    break;
+                case (Direction.Right):
+                    animators[i].Play("animStayRight");
+                    break;
+                case (Direction.Left):
+                    animators[i].Play("animStayLeft");
+                    break;
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (GameManager.gameState == GameState.Pause) return;
+        if (auto && GameManager.gameState == GameState.Pause) return;
 
-        ChangeAnimation();
+        if (auto)
+        {
+            ChangeAnimation();
+        }
+        else
+        {
+            ManualAnimation();
+        }
 
         if (currentAnime != preAnime)
         {
@@ -43,6 +73,7 @@ public class AnimationManager : MonoBehaviour
                 preAnime = currentAnime;
             }
         }
+        
     }
     
     void ChangeAnimation()
@@ -153,27 +184,61 @@ public class AnimationManager : MonoBehaviour
 
     public IEnumerator ManualAnimation()
     {
+        currentAnime = "";
+        yield return null;
+    }
+    public void AnimDown()
+    {
         for (int i = 0; i < animators.Length; i++)
         {
-            switch (moveDirection)
-            {
-                case Direction.Down:
-                    animators[i].Play("animWalkDown");
-                    break;
-                case Direction.Up:
-                    animators[i].Play("animWalkUp");
-                    break;
-                case Direction.Right:
-                    animators[i].Play("animWalkRight");
-                    break;
-                case Direction.Left:
-                    animators[i].Play("animWalkLeft");
-                    break;
-            }
+            animators[i].Play("animStayDown");
         }
-        yield return new WaitForSeconds(1f);
     }
-    
+    public void AnimUp()
+    {
+        for (int i = 0; i < animators.Length; i++)
+        {
+            animators[i].Play("animStayUp");
+        }
+    }
+    public void AnimRight()
+    {
+        for (int i = 0; i < animators.Length; i++)
+        {
+            animators[i].Play("animStayRight");
+        }
+    }
+    public void AnimLeft()
+    {
+        for (int i = 0; i < animators.Length; i++)
+        {
+            animators[i].Play("animStayLeft");
+        }
+    }
+
+    public void AnimStop()
+    {
+        animator.enabled = false;
+    }
+    public void AnimRestart()
+    {
+        animator.enabled = true;
+    }
+
+    public void AnimStopAll()
+    {
+        for (int i = 0; i < animators.Length; i++)
+        {
+            animators[i].enabled = false;
+        }
+    }
+    public void AnimRestartAll()
+    {
+        for (int i = 0; i < animators.Length; i++)
+        {
+            animators[i].enabled = true;
+        }
+    }
     public IEnumerator WalkBack()
     {
         //1秒かけて1マス後ずさりするアニメーション

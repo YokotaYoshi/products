@@ -84,6 +84,11 @@ public class ExecuteFungus : MonoBehaviour
                 flowchart.ExecuteBlock(blockName);//引数はblockの名前
             }
         }
+
+        if (other.gameObject.tag == "Player" && !executeOnClick)
+        {
+            flowchart.ExecuteBlock(blockName);
+        }
     }
 
     void OnTriggerExit2D(UnityEngine.Collider2D other)//UnityEngineをつけないとFungusのと間違える

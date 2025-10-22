@@ -2,40 +2,55 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EnemyState
+{
+    Chase,
+    Move,
+    Stay,
+}
 public class EnemyChaseController : MonoBehaviour
 {
     //追いかけ状態でロードしたら出現しないようにしたい
     public bool isFirstAppearance = false;//最初に登場する＝シーン切り替え時に登場するやつじゃない
     public int eventProgressStartChasing;
     public bool chaseWhenSeePlayer;
+    float chaseTime;//見失ってもしばらくは追いかける
     EnemyGuardianController enemyGCnt;
     GameObject player;//プレイヤー
     //PlayerController playerCnt;//プレイヤーコントローラー
-    float baseSpeed = 6.0f;//基準となる追跡速度
+    public float baseSpeed = 8.0f;//基準となる追跡速度
     float speed;//追跡速度
     Rigidbody2D rb2d;//Rigidbody2D;
     CircleCollider2D enemyCollider;//CircleCollider2D;
-    
+
     Vector2 playerDirection;//自分から見たプレイヤーの位置
     public float playerDirectionDegree;//自分から見たプレイヤーの角度
 
 
-    Direction moveDirectionEnum;
-    Direction moveDirectionNext = Direction.N;
+    public Vector2 targetGrid;//外部からいじる
+    //public float speed;//外部からいじる
+    public Direction moveDirection = Direction.N;//外部からいじる
+    public bool isCoroutineWorking;
+    Vector2 targetDirection;
+    float gap;
     float distance = 1f;
 
     //-------------何かに衝突した時に使う--------------
     public bool isBlocked = false;//壁衝突フラグ。プレイヤーの方向にいけるかどうか
-    
+
     public float down = 0.0f;//ブロックを避けるための下方向移動量
     public float right = 0.0f;//ブロックを避けるための右方向移動量
     public float up = 0.0f;//ブロックを避けるための上方向移動量
     public float left = 0.0f;//ブロックを避けるための左方向移動量
 
-
+    public GameObject damageArea;//攻撃判定
+    public float stanTime = 1f;//攻撃されたときにひるむ時間
     GridMove gridMove;
     Vector2 nearestGrid;
-    bool isWaiting = false;
+    //レイキャスト
+    RaycastHit2D hit;
+    public EnemyState enemyState = EnemyState.Chase;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -46,14 +61,6 @@ public class EnemyChaseController : MonoBehaviour
         enemyCollider = GetComponent<CircleCollider2D>();//CircleCollider2Dを取得
 
         if (GameManager.gameState == GameState.Run && isFirstAppearance) Destroy(gameObject);
-
-        if (chaseWhenSeePlayer)
-        {
-            enemyGCnt = gameObject.GetComponent<EnemyGuardianController>();
-        }
-
-
-        gridMove = this.GetComponent<GridMove>();
     }
 
     // Update is called once per frame
@@ -76,25 +83,72 @@ public class EnemyChaseController : MonoBehaviour
                 break;
         }
 
-        SetMoveDirection();
+
+
         nearestGrid = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
+
+        if (enemyState == EnemyState.Chase)
+        {
+            SetMoveDirection();
+        }
+        else if (enemyState == EnemyState.Move)
+        {
+            speed = 4f;
+
+            moveDirection = (Direction)Random.Range(0, 4);
+            
+        }
 
         //gameState切り替え
         if (GameManager.gameState == GameState.Pause)
         {
-            gridMove.speed = 0.0f;
+            speed = 0.0f;
         }
         else if (GameManager.gameState != GameState.GameOver)
         {
-            gridMove.speed = speed;
             GameManager.gameState = GameState.Run;
         }
 
-        if (!isWaiting)
+        //物陰に隠れたプレイヤーを探してから追跡する
+
+        playerDirection = new Vector2(player.transform.position.x - transform.position.x,
+        player.transform.position.y - transform.position.y);
+
+        float distance = Vector2.Distance(transform.position, player.transform.position);
+
+        Ray ray = new Ray(transform.position, playerDirection);
+        Debug.DrawRay(ray.origin, ray.direction * playerDirection.magnitude, Color.red, 0.5f);
+
+        /*
+        int excludedLayer = LayerMask.NameToLayer("Enemy");
+        int excludedMask = 1 << excludedLayer;
+        int invertedMask = ~excludedMask;//~:ビット反転で除外レイヤー以外を対象にする
+        */
+        int invertedMask = LayerMask.GetMask("Default");
+
+        hit = Physics2D.Raycast(transform.position, playerDirection, distance, invertedMask);
+
+        if (chaseWhenSeePlayer)
         {
-            StartCoroutine(gridMove.Move(moveDirectionEnum, distance));
+            if (hit.collider != null)
+            {
+                //Debug.Log(hit.collider.gameObject.name.Substring(0, 6));
+                
+                if (hit.collider.gameObject.name.Length >= 6)
+                {
+                    if (hit.collider.gameObject.name.Substring(0, 6) == "Player")
+                    {
+                        chaseTime = 0f;
+                        enemyState = EnemyState.Chase;//プレイヤーを見つけた時だけ追いかける
+                    }
+                }
+            }
+            chaseTime += Time.deltaTime;
+            if (chaseTime >= 3f)
+            {
+                enemyState = EnemyState.Move;//見失ったら3秒であきらめる
+            }
         }
-        
     }
 
     void FixedUpdate()
@@ -102,6 +156,11 @@ public class EnemyChaseController : MonoBehaviour
         if (PlayerController.hp <= 0)
         {
             rb2d.linearVelocity = Vector2.zero;
+        }
+
+        if (enemyState != EnemyState.Stay)
+        {
+            StartCoroutine(Move(moveDirection, distance));
         }
     }
 
@@ -123,22 +182,22 @@ public class EnemyChaseController : MonoBehaviour
             if (playerDirectionDegree >= -50 && playerDirectionDegree < 50)
             {
                 //プレイヤーが右のほうにいる
-                moveDirectionEnum = Direction.Right;
+                moveDirection = Direction.Right;
             }
             else if (playerDirectionDegree >= 50 && playerDirectionDegree < 130)
             {
                 //プレイヤーが上のほうにいる
-                moveDirectionEnum = Direction.Up;
+                moveDirection = Direction.Up;
             }
             else if (playerDirectionDegree >= -130 && playerDirectionDegree < -50)
             {
                 //プレイヤーが下のほうにいる
-                moveDirectionEnum = Direction.Down;
+                moveDirection = Direction.Down;
             }
             else
             {
                 //プレイヤーが左のほうにいる
-                moveDirectionEnum = Direction.Left;
+                moveDirection = Direction.Left;
             }
         }
         else
@@ -152,7 +211,7 @@ public class EnemyChaseController : MonoBehaviour
             {
                 //プレイヤーが右のほうにいる
                 //右に移動
-                moveDirectionEnum = Direction.Right;
+                moveDirection = Direction.Right;
                 distance = right;
             }
             else if ((playerDirectionDegree >= 130 && playerDirectionDegree <= 180) ||
@@ -162,7 +221,7 @@ public class EnemyChaseController : MonoBehaviour
                 //上に移動
                 //Debug.Log("上");
 
-                moveDirectionEnum = Direction.Up;
+                moveDirection = Direction.Up;
                 distance = up;
             }
             else if ((playerDirectionDegree >= -50 && playerDirectionDegree < 0) ||
@@ -171,22 +230,22 @@ public class EnemyChaseController : MonoBehaviour
                 //プレイヤーが下のほうにいる
                 //下に移動
 
-                moveDirectionEnum = Direction.Down;
+                moveDirection = Direction.Down;
                 distance = down;
             }
             else
             {
                 //プレイヤーが左のほうにいる
 
-                moveDirectionEnum = Direction.Left;
+                moveDirection = Direction.Left;
                 distance = left;
             }
         }
-        
+
         if (PlayerController.hp <= 0)
         {
             //プレイヤーが死んだら動かない
-            moveDirectionEnum = Direction.N;
+            moveDirection = Direction.N;
             distance = 0f;
         }
     }
@@ -198,24 +257,93 @@ public class EnemyChaseController : MonoBehaviour
         {
             Debug.Log("衝突");
             //プレイヤーに衝突したら
-            StopCoroutine(gridMove.Move(moveDirectionEnum, distance));
-            
-            StartCoroutine(HitPlayer());//再度追いかける。当たり判定を復活する
+            StopCoroutine(Move(moveDirection, distance));
+
+            StartCoroutine(HitPlayer(1f));//再度追いかける。当たり判定を復活する
+        }
+        if (other.gameObject.tag == "PlayerAttack")
+        {
+            //攻撃に衝突したら
+            StopCoroutine(Move(moveDirection, distance));
+            StartCoroutine(HitPlayer(stanTime));//再度追いかける。当たり判定を復活する
         }
     }
-    IEnumerator HitPlayer()
+
+    public IEnumerator Move(Direction moveDirection, float distance)
     {
+        if (isCoroutineWorking) yield break;
+        //目標となる格子点まで移動する
+        float time = 0f;
+        //動いているフラグ立て
+        isCoroutineWorking = true;
+        float isGoal = 0.1f;//ゴールまでの距離がこれ以下だったらゴールとする
+
+        switch (moveDirection)
+        {
+            case Direction.Right:
+                targetGrid = nearestGrid + new Vector2(distance, 0f);
+                rb2d.linearVelocity = new Vector2(speed, 0f);
+                break;
+            case Direction.Left:
+                targetGrid = nearestGrid + new Vector2(-distance, 0f);
+                rb2d.linearVelocity = new Vector2(-speed, 0f);
+                break;
+            case Direction.Up:
+                targetGrid = nearestGrid + new Vector2(0f, distance);
+                rb2d.linearVelocity = new Vector2(0f, speed);
+                break;
+            case Direction.Down:
+                targetGrid = nearestGrid + new Vector2(0f, -distance);
+                rb2d.linearVelocity = new Vector2(0f, -speed);
+                break;
+        }
+
+        while (true)
+        {
+            //ゴールまでの距離を更新
+            gap = new Vector2(targetGrid.x - transform.position.x, targetGrid.y - transform.position.y).magnitude;
+
+            isGoal = 0.01f * speed;
+
+            time += Time.deltaTime;
+
+            //ゴールに十分近づいたらおわり
+            if (gap < isGoal)
+            {
+                transform.position = nearestGrid;
+                moveDirection = Direction.N;
+                break;
+            }
+
+            //そのほか時間経過でも終わり
+
+            if (time >= 1f)
+            {
+                transform.position = nearestGrid;
+                rb2d.linearVelocity = Vector2.zero;
+                moveDirection = Direction.N;
+                break;
+            }
+            yield return null;
+        }
+        //動いているフラグおろし
+        isCoroutineWorking = false;
+    }
+    IEnumerator HitPlayer(float wait)
+    {
+        //waitが全体時間
         //近くの格子点に移動し停止
         //当たり判定を削除
-        if (isWaiting) yield break;
-        isWaiting = true;
+        if (enemyState == EnemyState.Stay) yield break;
+        enemyState = EnemyState.Stay;
+        damageArea.GetComponent<CircleCollider2D>().enabled = false;//攻撃判定停止
 
         Vector2 targetGrid = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
         float point;
 
         //少し時間をかけて近くの格子点に移動する
         //動いていた方向と反対方向に少しのけぞる
-        switch (moveDirectionEnum)
+        switch (moveDirection)
         {
             case Direction.Right:
                 targetGrid = new Vector2(Mathf.Round(transform.position.x - 0.2f), Mathf.Round(transform.position.y));
@@ -230,17 +358,12 @@ public class EnemyChaseController : MonoBehaviour
                 targetGrid = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y + 0.2f));
                 break;
         }
-        
-
         Vector2 hitPosition = transform.position;
 
         float time = 0;//吹っ飛ばされてからの時間
         float waitingTime = 0.3f;//吹っ飛ばされる時間
 
         rb2d.linearVelocity = Vector2.zero;
-
-        Debug.Log(targetGrid);
-
         while (time < waitingTime)
         {
             if (PlayerController.hp <= 0)
@@ -251,20 +374,27 @@ public class EnemyChaseController : MonoBehaviour
             }
 
             //Vector2.Lerpで位置調整
-            point = -10f * (time - waitingTime) * (time - waitingTime) + 1f;
+            point = -10f * (time - waitingTime) * (time - waitingTime) + 1f;//二次関数
 
             transform.position = Vector2.Lerp(hitPosition, targetGrid, point);
 
             time += Time.deltaTime;
             yield return null;
         }
-        //Debug.Log(time);
+        transform.position = targetGrid;
         rb2d.linearVelocity = Vector2.zero;//停止
-        
-        //数フレーム待機した後、当たり判定を復活させ追跡を再開する。
-        yield return new WaitForSeconds(1f);
 
-        isWaiting = false;
+        //数フレーム待機した後、当たり判定を復活させ追跡を再開する。
+        while (time < wait)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+
+        enemyState = EnemyState.Chase;
+
+        damageArea.GetComponent<CircleCollider2D>().enabled = true;//攻撃判定復活
         enemyCollider.enabled = true;//当たり判定復活
     }
 }

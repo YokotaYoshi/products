@@ -99,7 +99,7 @@ public class BlackCurtainManager : MonoBehaviour
         brightness = Brightness.Dark;
     }
 
-    public IEnumerator BlaclFlash()
+    public IEnumerator BlackFlash()
     {
         //明るいタイミングで一瞬暗くする
         brightness = Brightness.Middle;

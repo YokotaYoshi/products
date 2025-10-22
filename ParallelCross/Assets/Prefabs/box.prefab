@@ -165,7 +165,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 2730765880487802524, guid: ab6ddd90aeb582746a6a874533741aee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -263,6 +263,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boxID: 1
+  boxSprite: {fileID: 2730765880487802524, guid: ab6ddd90aeb582746a6a874533741aee, type: 3}
+  fragileBox: {fileID: 1201995319, guid: ab6ddd90aeb582746a6a874533741aee, type: 3}
+  isFragile: 0
   isMoving: 0
   isCollisionUp: 0
   isCollisionDown: 0

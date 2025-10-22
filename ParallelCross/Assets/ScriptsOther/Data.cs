@@ -26,6 +26,9 @@ public enum CharaName
 {
     Rino,
     Kurumi,
+    RinoF,
+    KarinF,
+    Null,
 }
 
 public enum Difficulty
@@ -82,7 +85,7 @@ public static class Data
     //----------------------キャラクター関係のデータ----------------------
     public static int charas = 1;
 
-    public static int[] charaDataNum = new int[3];
+    public static int[] charaDataNum = {0, 4, 4};
     public static string[] charaRino = { "リノ", "charaImageRino1" };//0
     public static string[] charaKurumi = { "クルミ", "charaImageMikoru1" };//1
     public static string[] charaRinoF = { "リノ", null };
@@ -100,6 +103,7 @@ public static class Data
     //--------------イベントの進捗に関するデータ---------------
     public static int eventProgressMain;
     public static int eventProgressSub;
+    public static bool onEvent;
     //----------------------入力-------------------------
     public static string inputString;
     //------------------オプション関係のデータ----------------
@@ -191,11 +195,12 @@ public static class Data
             if ((int)charaName == charaDataNum[i])
             {
                 //最後は空白に
-                if (i == 2) charaDataNum[i] = 0;
+                if (i == 2) charaDataNum[i] = 4;
                 else
                 {
+                    //順番を一つ前へ
                     charaDataNum[i] = charaDataNum[i + 1];
-                    charaDataNum[2] = 0;
+                    charaDataNum[2] = 4;
                 }
                 charas -= 1;
             }

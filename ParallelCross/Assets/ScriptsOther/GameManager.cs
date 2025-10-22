@@ -61,7 +61,11 @@ public class GameManager : MonoBehaviour
         if (gameState == GameState.Run)
         {
             //敵出現コルーチン
-            StartCoroutine(AppearEnemy());
+            if (enemy != null)
+            {
+                StartCoroutine(AppearEnemy());
+            }
+            
         }
 
         choicesPanel.SetActive(false);
@@ -80,9 +84,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //DataクラスのeventProgressをfungusのeventProgressと同期させる
+        //DataクラスのonEvent,eventProgressをfungusのevent,eventProgressと同期させる
         Data.eventProgressMain = flowchart.GetIntegerVariable("eventProgressMain");
         Data.eventProgressSub = flowchart.GetIntegerVariable("eventProgressSub");
+        Data.onEvent = flowchart.GetBooleanVariable("event");
 
         //難易度切り替え
         if (Data.currentDifficulty == Difficulty.Auto)

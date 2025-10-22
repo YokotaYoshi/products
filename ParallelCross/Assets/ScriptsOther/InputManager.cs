@@ -27,7 +27,7 @@ public class InputManager : MonoBehaviour
     {
         //入力があれば状態変化
         InputTypeManagement();
-        if (inputType != InputType.Null) Debug.Log(inputType);
+        //if (inputType != InputType.Null) Debug.Log(inputType);
     }
 
     //------------------------入力切替メソッド-----------------------

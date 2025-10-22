@@ -73,8 +73,25 @@ public class LoadSceneManager : MonoBehaviour
             //敵がいたら敵からの距離に応じて移動先で敵が現れるまでの時間を計測
             Data.timeWaitEnemy = new Vector2(transform.position.x - enemy.transform.position.x, transform.position.y - enemy.transform.position.y).magnitude / 3f + 0.1f;
         }
-        
+
         SceneManager.LoadScene(sceneName);
+    }
+    
+    public void LoadSceneEnd()
+    {
+        //最後の逃げ切りシーン
+        //難易度に応じて遷移先を変更
+        //normal,easyは通常エンド
+        //hard, veryhardは真エンド
+        if (Data.difficulty == Difficulty.Easy || Data.difficulty == Difficulty.Normal)
+        {
+            SceneManager.LoadScene("EndNormal0");
+        }
+        else if(Data.difficulty == Difficulty.Hard || Data.difficulty == Difficulty.VeryHard)
+        {
+            SceneManager.LoadScene("EndTrue0");
+        }
+        
     }
 
     public void LoadSceneFromFungus(string sceneName)

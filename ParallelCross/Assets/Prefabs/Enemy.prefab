@@ -11,12 +11,11 @@ GameObject:
   - component: {fileID: 6018977057891790961}
   - component: {fileID: 7692915673969828460}
   - component: {fileID: 2086826690176122886}
-  - component: {fileID: 589265765513871292}
   - component: {fileID: 4947212955471802331}
   - component: {fileID: 6063361226835626638}
   - component: {fileID: 2484120559603980383}
   - component: {fileID: 3548160662250572673}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -112,28 +111,18 @@ MonoBehaviour:
   isFirstAppearance: 0
   eventProgressStartChasing: 0
   chaseWhenSeePlayer: 0
+  baseSpeed: 8
   playerDirectionDegree: 0
+  targetGrid: {x: 0, y: 0}
+  moveDirection: 4
+  isCoroutineWorking: 0
   isBlocked: 0
   down: 0
   right: 0
   up: 0
   left: 0
---- !u!114 &589265765513871292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 377503884860249825}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7a93dbdff713b748b2a28e7b3a66e7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetGrid: {x: 0, y: 0}
-  speed: 0
-  moveDirection: 0
-  isCoroutineWorking: 0
+  damageArea: {fileID: 723687872578124077}
+  stanTime: 0.5
 --- !u!114 &4947212955471802331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,7 +137,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayer: 0
   moveDirection: 1
-  directionReference: 4
 --- !u!50 &6063361226835626638
 Rigidbody2D:
   serializedVersion: 5
@@ -244,7 +232,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2424431651012192638}
   - component: {fileID: 2224936444738503304}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: EnemyDamageArea
   m_TagString: Damage1
   m_Icon: {fileID: 0}
@@ -313,7 +301,7 @@ GameObject:
   - component: {fileID: 2777308972417648919}
   - component: {fileID: 807764782189430666}
   - component: {fileID: 6522760325671941649}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: EnemyBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -423,7 +411,7 @@ GameObject:
   - component: {fileID: 4090889789552017356}
   - component: {fileID: 4701477491054695609}
   - component: {fileID: 5442878206716395782}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: EnemyFocus
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -506,7 +494,7 @@ GameObject:
   - component: {fileID: 1312013070100698119}
   - component: {fileID: 9075423138297414331}
   - component: {fileID: 1320796833839692205}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: EnemyTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}

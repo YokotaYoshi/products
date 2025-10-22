@@ -6,6 +6,10 @@ public class BoxScript : MonoBehaviour
 {
     //倉庫番の箱のように、押すことができる
     public int boxID = 1;
+    SpriteRenderer spriteRenderer;
+    public Sprite boxSprite;
+    public Sprite fragileBox;
+    public bool isFragile = false;//壊れやすいかどうか
     GameObject player;
     PlayerController playerCnt;
     float speed;//箱を押すスピード
@@ -30,6 +34,7 @@ public class BoxScript : MonoBehaviour
     public bool isCollisionRight = false;
     public bool isCollisionLeft = false;
 
+   
     public GameObject boxBroken;//壊れた箱
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -41,6 +46,16 @@ public class BoxScript : MonoBehaviour
             playerCnt = player.GetComponent<PlayerController>();
         }
         rb2d = GetComponent<Rigidbody2D>();
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (isFragile)
+        {
+            spriteRenderer.sprite = fragileBox;
+        }
+        else
+        {
+            spriteRenderer.sprite = boxSprite;
+        }
     }
 
     // Update is called once per frame
@@ -223,6 +238,14 @@ public class BoxScript : MonoBehaviour
             Instantiate(boxBroken, transform.position, Quaternion.identity);
             Destroy(gameObject);
 
+        }
+
+        if (other.gameObject.tag == "PlayerAttack" && isFragile)
+        {
+            //壊れかけの場合
+            //攻撃で破壊できる
+            Instantiate(boxBroken, transform.position, Quaternion.identity);
+            Destroy(gameObject);
         }
     }
     
