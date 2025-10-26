@@ -375,7 +375,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1561539114180268040, guid: e229861b1f83a744bb27aecd4b544eb7, type: 3}
       propertyPath: sceneName
-      value: TitleScene
+      value: 6-2
       objectReference: {fileID: 0}
     - target: {fileID: 6231967622669917043, guid: e229861b1f83a744bb27aecd4b544eb7, type: 3}
       propertyPath: m_Name
@@ -52012,6 +52012,7 @@ MonoBehaviour:
   scrollY: 0
   maxScrollY: 999
   minScrollY: -999
+  vibTimeWhole: 0.3
 --- !u!114 &1861194960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52346,6 +52347,8 @@ GameObject:
   - component: {fileID: 5128167487383370844}
   - component: {fileID: 5128167487383370846}
   - component: {fileID: 5128167487383370847}
+  - component: {fileID: 5128167487383370848}
+  - component: {fileID: 5128167487383370849}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -52407,10 +52410,8 @@ MonoBehaviour:
     y: -340
     width: 1114
     height: 859
-  selectedBlocks:
-  - {fileID: 5128167487383370820}
-  selectedCommands:
-  - {fileID: 5128167487383370846}
+  selectedBlocks: []
+  selectedCommands: []
   variables:
   - {fileID: 470528181653962044}
   - {fileID: 2828508056818846539}
@@ -52682,6 +52683,8 @@ MonoBehaviour:
   eventHandler: {fileID: 5128167487383370821}
   commandList:
   - {fileID: 5128167487383370827}
+  - {fileID: 5128167487383370849}
+  - {fileID: 5128167487383370848}
   - {fileID: 5128167487383370837}
   - {fileID: 5128167487383370835}
   - {fileID: 5128167487383370840}
@@ -53531,7 +53534,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 0}
 --- !u!114 &5128167487383370840
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -53549,7 +53552,7 @@ MonoBehaviour:
   durationOLD: 0
 --- !u!114 &5128167487383370841
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -53570,7 +53573,7 @@ MonoBehaviour:
   targetGameObjectOLD: {fileID: 0}
 --- !u!114 &5128167487383370842
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -53588,7 +53591,7 @@ MonoBehaviour:
   durationOLD: 0
 --- !u!114 &5128167487383370843
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -53606,7 +53609,7 @@ MonoBehaviour:
   durationOLD: 0
 --- !u!114 &5128167487383370844
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -53633,7 +53636,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 0}
 --- !u!114 &5128167487383370845
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -53660,7 +53663,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 0}
 --- !u!114 &5128167487383370846
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -53677,7 +53680,7 @@ MonoBehaviour:
   delay: 1
 --- !u!114 &5128167487383370847
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -53691,6 +53694,49 @@ MonoBehaviour:
   indentLevel: 0
   targetObject: {fileID: 847974250}
   methodName: FadeOut
+  delay: 0
+--- !u!114 &5128167487383370848
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2296575535541983027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5316d953c7abe498799575550c973535, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 42
+  indentLevel: 0
+  animator:
+    animatorRef: {fileID: 0}
+    animatorVal: {fileID: 60972549}
+  stateName:
+    stringRef: {fileID: 0}
+    stringVal: animSPMonster
+  layer:
+    integerRef: {fileID: 0}
+    integerVal: -1
+  time:
+    floatRef: {fileID: 0}
+    floatVal: 0
+--- !u!114 &5128167487383370849
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2296575535541983027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17a200dbd67304446a3019434503338a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 43
+  indentLevel: 0
+  targetObject: {fileID: 221606745}
+  methodName: EditPlayerLevel
   delay: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

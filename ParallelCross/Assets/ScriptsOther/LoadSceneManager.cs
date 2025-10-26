@@ -56,8 +56,8 @@ public class LoadSceneManager : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            blackCurtainManager.FadeOut();
-            Invoke("LoadScene", 0.3f);
+            StartCoroutine(blackCurtainManager.FadeOut());
+            Invoke("LoadScene", 0.5f);
         }
     }
 
@@ -71,7 +71,7 @@ public class LoadSceneManager : MonoBehaviour
         if (enemy != null)
         {
             //敵がいたら敵からの距離に応じて移動先で敵が現れるまでの時間を計測
-            Data.timeWaitEnemy = new Vector2(transform.position.x - enemy.transform.position.x, transform.position.y - enemy.transform.position.y).magnitude / 3f + 0.1f;
+            Data.timeWaitEnemy = new Vector2(transform.position.x - enemy.transform.position.x, transform.position.y - enemy.transform.position.y).magnitude / 10f + 1f;
         }
 
         SceneManager.LoadScene(sceneName);
@@ -92,13 +92,6 @@ public class LoadSceneManager : MonoBehaviour
             SceneManager.LoadScene("EndTrue0");
         }
         
-    }
-
-    public void LoadSceneFromFungus(string sceneName)
-    {
-        SceneManager.LoadScene(sceneName);
-        Data.loadPosX = loadPosX;
-        Data.loadPosY = loadPosY;
     }
 }
 

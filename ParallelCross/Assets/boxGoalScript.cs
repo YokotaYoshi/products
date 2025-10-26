@@ -12,11 +12,17 @@ public class boxGoalScript : MonoBehaviour
     //eventProgressSubを変更
     public Flowchart flowchart;
     public int goalID = 1;
+    public bool willDestroy = false;
+    public GameObject hole;
+    SpriteRenderer spriteRenderer;
+    BoxCollider2D boxCollider;
+    public Sprite filledHole;
     int boxID;
     int point;
     void Start()
     {
-        
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        boxCollider = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -30,14 +36,24 @@ public class boxGoalScript : MonoBehaviour
         if (other.gameObject.tag == "Carry")
         {
             //箱が乗っている
-            boxID = other.gameObject.GetComponent<BoxScript>().boxID;
-            if (boxID == goalID)
+            if (willDestroy)
             {
-                point = flowchart.GetIntegerVariable("eventProgressSub");
-                point += boxID;
-                Debug.Log(point);
-                flowchart.SetIntegerVariable("eventProgressSub", point);
+                Destroy(other.gameObject);
+                spriteRenderer.sprite = filledHole;
+                boxCollider.enabled = false;
+                Destroy(hole);
             }
+            else
+            {
+                boxID = other.gameObject.GetComponent<BoxScript>().boxID;
+                if (boxID == goalID)
+                {
+                    point = flowchart.GetIntegerVariable("eventProgressSub");
+                    point += boxID;
+                    Debug.Log(point);
+                    flowchart.SetIntegerVariable("eventProgressSub", point);
+                }
+            }            
         }
     }
     

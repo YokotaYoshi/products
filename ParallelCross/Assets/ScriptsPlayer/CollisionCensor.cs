@@ -8,6 +8,7 @@ public class CollisionCensor : MonoBehaviour
     //public GameObject player;
     PlayerController playerCnt;
     BoxScript boxCnt;
+    BoxScript otherBoxCnt;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -44,9 +45,6 @@ public class CollisionCensor : MonoBehaviour
                         break;
                 }
             }
-        }
-        if (other.gameObject.tag == "Untagged" || other.gameObject.tag == "Block" || other.gameObject.tag == "Carry")
-        {
             if (boxCnt != null)
             {
                 switch (collisionDirection)
@@ -66,11 +64,86 @@ public class CollisionCensor : MonoBehaviour
                 }
             }
         }
+        if (other.gameObject.tag == "Carry")
+        {
+            otherBoxCnt = other.GetComponent<BoxScript>();
+            //接触した箱が動けるかどうか
+            if (boxCnt != null)
+            {
+                switch (collisionDirection)
+                {
+                    case Direction.Up:
+                        boxCnt.isCollisionUp = true;
+                        break;
+                    case Direction.Down:
+                        boxCnt.isCollisionDown = true;
+                        break;
+                    case Direction.Right:
+                        boxCnt.isCollisionRight = true;
+                        break;
+                    case Direction.Left:
+                        boxCnt.isCollisionLeft = true;
+                        break;
+                }
+            }
+            if (playerCnt != null)
+            {
+                switch (collisionDirection)
+                {
+                    case Direction.Up:
+                        if (otherBoxCnt.isCollisionUp)
+                        {
+                            playerCnt.isCollisionUp = true;
+                        }
+                        break;
+                    case Direction.Down:
+                        if (otherBoxCnt.isCollisionDown)
+                        {
+                            playerCnt.isCollisionDown = true;
+                        }
+                        break;
+                    case Direction.Right:
+                        if (otherBoxCnt.isCollisionRight)
+                        {
+                            playerCnt.isCollisionRight = true;
+                        }
+                        break;
+                    case Direction.Left:
+                        if (otherBoxCnt.isCollisionLeft)
+                        {
+                            playerCnt.isCollisionLeft = true;
+                        }
+                        break;
+                }
+            }
+        }
+        if (other.gameObject.tag == "Hole")
+        {
+            //プレイヤーだけ通れない
+            if (playerCnt != null)
+            {
+                switch (collisionDirection)
+                {
+                    case Direction.Up:
+                        playerCnt.isCollisionUp = true;
+                        break;
+                    case Direction.Down:
+                        playerCnt.isCollisionDown = true;
+                        break;
+                    case Direction.Right:
+                        playerCnt.isCollisionRight = true;
+                        break;
+                    case Direction.Left:
+                        playerCnt.isCollisionLeft = true;
+                        break;
+                }
+            }
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Untagged" || other.gameObject.tag == "Block")
+        if (other.gameObject.tag == "Untagged" || other.gameObject.tag == "Block" || other.gameObject.tag == "Carry" || other.gameObject.tag == "Hole")
         {
             if (playerCnt != null)
             {
@@ -90,9 +163,6 @@ public class CollisionCensor : MonoBehaviour
                         break;
                 }
             }
-        }
-        if (other.gameObject.tag == "Untagged" || other.gameObject.tag == "Block" || other.gameObject.tag == "Carry")
-        {
             if (boxCnt != null)
             {
                 switch (collisionDirection)

@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     Direction currentDirection = Direction.N;
     bool isAttacking = false;
     float attackTime = 0f;
+    float attackTimeWhole;//攻撃全体時間
     //--------------------その他----------------------------------
     public bool isAttacked = false;//攻撃された！
     public Vector2 blownDirection;//吹っ飛ばされる方向
@@ -77,18 +78,22 @@ public class PlayerController : MonoBehaviour
             case Direction.Right:
                 transform.position = new Vector2(Data.loadPosX + 1.0f, Data.loadPosY);
                 currentDirection = Direction.Right;
+                
                 break;
             case Direction.Left:
                 transform.position = new Vector2(Data.loadPosX - 1.0f, Data.loadPosY);
                 currentDirection = Direction.Left;
+                
                 break;
             case Direction.Up:
                 transform.position = new Vector2(Data.loadPosX, Data.loadPosY + 1.0f);
                 currentDirection = Direction.Up;
+                
                 break;
             case Direction.Down:
                 transform.position = new Vector2(Data.loadPosX, Data.loadPosY - 1.0f);
                 currentDirection = Direction.Down;
+                
                 break;
             case Direction.N:
                 transform.position = new Vector2(startPosX, startPosY);
@@ -121,23 +126,27 @@ public class PlayerController : MonoBehaviour
             return;
         } 
 
-        switch (Data.difficulty)//難易度に応じて速度変更
+        switch (Data.difficulty)//難易度に応じて速度変更、攻撃の隙も変更
         {
             case Difficulty.VeryHard:
                 dashSpeed = 10.0f;
                 walkSpeed = 5.0f;
+                attackTimeWhole = 0.7f;
                 break;
             case Difficulty.Hard:
                 dashSpeed = 8.0f;
                 walkSpeed = 5.0f;
+                attackTimeWhole = 0.7f;
                 break;
             case Difficulty.Normal:
                 dashSpeed = 8.0f;
                 walkSpeed = 5.0f;
+                attackTimeWhole = 0.7f;
                 break;
             case Difficulty.Easy:
                 dashSpeed = 7.0f;
                 walkSpeed = 4.0f;
+                attackTimeWhole = 0.5f;
                 break;
         }
 
@@ -259,7 +268,7 @@ public class PlayerController : MonoBehaviour
         if (isAttacking)
         {
             attackTime += Time.deltaTime;
-            if (attackTime >= 1f) isAttacking = false;//強制的に攻撃可能に
+            if (attackTime >= attackTimeWhole) isAttacking = false;//強制的に攻撃可能に
         }
         else
         {
@@ -478,7 +487,7 @@ public class PlayerController : MonoBehaviour
         }
         
         //人に話しかけたり、ものを調べた場合は攻撃しない
-        Vector3 attackPosition = new Vector3(transform.position.x, transform.position.y );
+        Vector3 attackPosition = new Vector3(transform.position.x, transform.position.y + 0.5f);
         //攻撃
         switch (currentDirection)
         {
@@ -499,14 +508,14 @@ public class PlayerController : MonoBehaviour
                 Instantiate(attack, attackPosition, Quaternion.Euler(0f, 0f, 270f), transform);
                 break;
         }
-        Debug.Log("攻撃");
+        //Debug.Log("攻撃");0.33秒
 
         //後隙
         while (true)
         {
             yield return null;
             attackTime += Time.deltaTime;
-            if (attackTime >= 1.0f) break;//全体の時間
+            if (attackTime >= attackTimeWhole) break;//全体の時間
         }
         isAttacking = false;
 

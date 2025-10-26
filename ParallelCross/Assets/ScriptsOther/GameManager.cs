@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     
     public GameObject menuPanel;
     public GameObject enemy;
+    public float enemySpawnTime = 1f;
     public GameObject choicesPanel;
     public GameObject imagePanel;
     public GameObject imagePanelImage;
@@ -83,9 +84,11 @@ public class GameManager : MonoBehaviour
         {
             playerFocusCS = playerFocus.GetComponent<PlayerFocus>();//PlayerFocusスクリプト取得
         }
-        
+
 
         inputManager = GetComponent<InputManager>();
+        
+        Data.LoadDifficulty();
 
         Debug.Log(Data.difficulty);//現在の難易度確認
     }
@@ -93,6 +96,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(gameState);
         //DataクラスのonEvent,eventProgressをfungusのevent,eventProgressと同期させる
         Data.eventProgressMain = flowchart.GetIntegerVariable("eventProgressMain");
         Data.eventProgressSub = flowchart.GetIntegerVariable("eventProgressSub");
@@ -160,6 +164,8 @@ public class GameManager : MonoBehaviour
 
         if (InputManager.inputType == InputType.Back)
         {
+            Debug.Log("メニュー");
+            if (Time.timeScale < 1f) Time.timeScale = 1f;
             MenuPanelButton();
         }
 
@@ -201,27 +207,34 @@ public class GameManager : MonoBehaviour
 
     }
 
-    
+
 
     //-----------------------ゲームオーバーメソッド--------------------
     IEnumerator GameOver()
     {
         if (gameState == GameState.GameOver) yield break;
         //時間ゆっくりにしたりしたい
-        
+
+
         float unscaledTime = 0f;
         while (true)
         {
             unscaledTime += Time.unscaledDeltaTime;
-            
+
             Time.timeScale = Mathf.Max(1f - unscaledTime, 0f);
             yield return null;
             if (unscaledTime >= 1.0f) break;
         }
         Time.timeScale = 1f;
         gameState = GameState.GameOver;
+        Data.playerLevel += 2;
         SceneManager.LoadScene("GameOver");
-        
+
+    }
+    
+    public void EditPlayerLevel()
+    {
+        Data.playerLevel -= 1;//難易度上昇
     }
     //-------------------セーブ画面を閉じる--------------------------
     public void CloseSavePanel()
@@ -233,9 +246,10 @@ public class GameManager : MonoBehaviour
     public void MenuPanelButton()
     {
         if (menuPanel == null) return;
-        if (gameState == GameState.Pause) return;//会話中はメニューを開けない
+        
         if (!menuPanel.activeSelf)
         {
+            if (gameState == GameState.Pause) return;//会話中はメニューを開けない
             menuPanel.SetActive(true);
             if (inputManager != null)
             {
@@ -245,23 +259,24 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            Time.timeScale = 1f;
             menuPanel.SetActive(false);
             if (inputManager != null)
             {
                 inputManager.isUION = false;
             }
-            Time.timeScale = 1f;
+            
         }
     }
 
     //-----------------選択肢表示---------------------
-    public void ShowChoices()
+    public void OpenChoicesPanel()
     {
         choicesPanel.SetActive(true);
     }
 
     //--------------画像表示--------------------
-    public IEnumerator ImagePanel()
+    public IEnumerator OpenImagePanel()
     {
         if (imagePanel == null) yield break;
         if (!imagePanel.activeSelf)
@@ -293,12 +308,13 @@ public class GameManager : MonoBehaviour
     IEnumerator AppearEnemy()
     {
         float time = 0f;
+        Debug.Log(Data.timeWaitEnemy);
         while (true)
         {
             yield return null;
             if (gameState == GameState.Pause) yield break;
             else time += Time.deltaTime;
-            if (time > Data.timeWaitEnemy) break;
+            if (time > enemySpawnTime) break;
         }
         Vector2 appearPos = new Vector2(Data.loadPosX, Data.loadPosY);
         Instantiate(enemy, appearPos, Quaternion.identity);

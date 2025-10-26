@@ -39,6 +39,36 @@ EditorBuildSettings:
     path: Assets/Scenes/FutureRun.unity
     guid: eba6170e1b744e7489f46c9c4585ddf0
   - enabled: 1
+    path: Assets/Scenes/3-5.unity
+    guid: 41e0c96fd71347b4eaba908bfd9618cd
+  - enabled: 1
+    path: Assets/Scenes/3-6.unity
+    guid: c2f81cd401750294687805f40e8120da
+  - enabled: 1
+    path: Assets/Scenes/11-2.unity
+    guid: 3175472fd73971b408e75c9959b30082
+  - enabled: 1
+    path: Assets/Scenes/11-3.unity
+    guid: edaadf3acfa6fbc4fae4da4c9e100b37
+  - enabled: 1
+    path: Assets/Scenes/4-2.unity
+    guid: 6f8388310e28405429e2cabb25a3bb69
+  - enabled: 1
+    path: Assets/Scenes/4-3.unity
+    guid: 3a03a009133a7a24d9d71a936c37c67c
+  - enabled: 1
+    path: Assets/Scenes/2-N.unity
+    guid: 30369d2c505c69449ad840adaf32e8a7
+  - enabled: 1
+    path: Assets/Scenes/EndNormal1.unity
+    guid: 4088dcc7eb376fe428cfae988612a60c
+  - enabled: 1
+    path: Assets/Scenes/EndTrue0.unity
+    guid: 6f8b41b058dd3d2429eb567dfe025c47
+  - enabled: 1
+    path: Assets/Scenes/EndTrue1.unity
+    guid: 418326fff1a368a47850694a57a5c103
+  - enabled: 1
     path: Assets/Scenes/1-2.unity
     guid: c252e03629bd62d4d8481628634a1de6
   - enabled: 1
@@ -56,8 +86,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EndNormal0.unity
     guid: 13e1d8d57aa85db429d9bdb94f225d87
-  - enabled: 1
-    path: Assets/Scenes/EndTrue0.unity
+  - enabled: 0
+    path: Assets/Scenes/EndTrue01.unity
     guid: a8093b3bb0aaa4645a3fba6c234fe2db
   - enabled: 1
     path: Assets/Scenes/1-4.unity
@@ -97,7 +127,7 @@ EditorBuildSettings:
     guid: 335d7da5fdcfee34da5645253c01c480
   - enabled: 1
     path: Assets/Scenes/3-3.unity
-    guid: a4515dff39c1b084fb9ed511d96a4106
+    guid: 4c3a27922ae38e84ea523b5e78154fe4
   - enabled: 1
     path: Assets/Scenes/3-4.unity
     guid: 83da02696ba580446b44d664b2d6978d

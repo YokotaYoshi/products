@@ -51,8 +51,17 @@ public class ExecuteFungus : MonoBehaviour
                 for (int i = 0; i < choices.Length; i++)
                 {
                     //ボタンの小オブジェクトのテキストを編集
-                    ChoicesPanelManager.choices[i].GetComponentInChildren<Text>().text = choices[i];
-                    ChoicesPanelManager.blockNames[i] = choices[i];
+                    //Debug.Log(choices[i]);
+                    Debug.Log(i);
+                    Debug.Log(ChoicesPanelManager.choices[i]);//null
+                    
+                    if (ChoicesPanelManager.choices[i] != null)
+                    {
+                        Debug.Log(ChoicesPanelManager.choices[i].GetComponentInChildren<Text>().text);
+                        ChoicesPanelManager.choices[i].GetComponentInChildren<Text>().text = choices[i];
+                        ChoicesPanelManager.blockNames[i] = choices[i];
+                    }
+                    
                 }
                 ChoicesPanelManager.choicesNum = choices.Length;
             }
@@ -122,6 +131,7 @@ public class ExecuteFungus : MonoBehaviour
 
     public void SetImage()
     {
+        //ImagePanelで表示するやつ
         GameManager.sprite = sprite;
     }
 

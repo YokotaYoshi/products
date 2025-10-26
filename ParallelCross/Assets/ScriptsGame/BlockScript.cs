@@ -16,6 +16,9 @@ public class BlockScript : MonoBehaviour
     //eventProgressの値に応じてスプライトを切り替える
 
     SpriteRenderer spriteRenderer;
+    BoxCollider2D boxCollider;
+    public bool collisionStart = true;//最初判定あり
+    public bool collisionEnd = true;//最後判定あり
     public Sprite sprite0;
 
     public Sprite sprite1;
@@ -38,54 +41,56 @@ public class BlockScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        boxCollider = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         //Debug.Log("あ");
         player = GameObject.FindGameObjectWithTag("Player");
         animManager = GetComponent<AnimationManager>();
-        
+
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);//下にあるほど手前に見える
+
+
+        if (boxCollider != null)
+        {
+            if (collisionStart) boxCollider.enabled = true;
+            else boxCollider.enabled = false;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (eventProgressMainBase != 0)
+        if (eventProgressMainBase != 0 && eventProgressSubBase != 0)
         {
-            if (Data.eventProgressMain >= eventProgressMainBase)
+            if (Data.eventProgressMain >= eventProgressMainBase && Data.eventProgressSub >= eventProgressSubBase)
             {
-                if (willDestroy) 
+                ChangePermanently();
+            }
+        }
+        else
+        {
+            if (eventProgressMainBase != 0)
+            {
+                if (Data.eventProgressMain >= eventProgressMainBase)
                 {
-                    if (createObject != null)
-                    {
-                        Instantiate(createObject, transform.position, Quaternion.identity);
-                        Data.loadPosX = transform.position.x;//仲間を生成する場合必要になる
-                        Data.loadPosY = transform.position.y;
-                    }
+                    ChangePermanently();
+                }
+            }
 
-                    Destroy(gameObject);
-                }
-                else if (sprite1 != null) spriteRenderer.sprite = sprite1;
-            }
-        }
-        
-        if (eventProgressSubBase != 0)
-        {
-            if (Data.eventProgressSub >= eventProgressSubBase)
+            if (eventProgressSubBase != 0)
             {
-                if (willDestroy) 
+                if (Data.eventProgressSub >= eventProgressSubBase)
                 {
-                    if (createObject != null)
-                    {
-                        Instantiate(createObject, transform.position, Quaternion.identity);
-                        Data.loadPosX = transform.position.x;
-                        Data.loadPosY = transform.position.y;
-                    }
-                    Destroy(gameObject);
+                    ChangePermanently();
                 }
-                else if (sprite1Sub != null) spriteRenderer.sprite = sprite1Sub;
             }
         }
+        if (eventProgressMainBase != 0 && Data.eventProgressMain > eventProgressMainBase)
+        {
+            ChangePermanently();//イベントがかなり先に進んでいる場合も考慮
+        }
         
+
         if (animManager != null)
         {
             //プレイヤーの方向にmoveDirectionを一致させる
@@ -116,6 +121,11 @@ public class BlockScript : MonoBehaviour
         float time = 0.0f;
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = sprite1;
+        if (boxCollider != null)
+        {
+            if (collisionStart) boxCollider.enabled = true;
+            else boxCollider.enabled = false;
+        }
         while (true)
         {
             yield return null;
@@ -123,8 +133,13 @@ public class BlockScript : MonoBehaviour
             if (time >= animateTime)
             {
                 spriteRenderer.sprite = sprite0;
-                yield break;
+                break;
             }
+        }
+        if (boxCollider != null)
+        {
+            if (collisionStart) boxCollider.enabled = true;
+            else boxCollider.enabled = false;
         }
     }
 
@@ -134,12 +149,24 @@ public class BlockScript : MonoBehaviour
         //変えたら戻さない
         if (willDestroy)
         {
+            if (createObject != null)
+            {
+                Instantiate(createObject, transform.position, Quaternion.identity);
+                Data.loadPosX = transform.position.x;
+                Data.loadPosY = transform.position.y;
+            }
             Destroy(gameObject);
         }
-        else
+        else if (sprite1 != null)
         {
             spriteRenderer.sprite = sprite1;
+            if (boxCollider != null)
+        {
+            if (collisionStart) boxCollider.enabled = true;
+            else boxCollider.enabled = false;
         }
+        }
+        
     }
 
     

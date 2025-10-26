@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 2674749960476766153, guid: b54aa0b25b970834a906adbdc2079004, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,6 +103,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flowchart: {fileID: 0}
   goalID: 1
+  willDestroy: 0
+  hole: {fileID: 0}
+  filledHole: {fileID: 0}
 --- !u!61 &5910219021979164765
 BoxCollider2D:
   m_ObjectHideFlags: 0

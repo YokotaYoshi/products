@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Fungus;
 
 public class TitleManager : MonoBehaviour
 {
     public GameObject menuPanel;
     public GameObject startButton;
+    public Flowchart flowchart;
 
     //セーブデータをロードする
     public GameObject continueButton;
@@ -117,12 +119,20 @@ public class TitleManager : MonoBehaviour
 
     public void GameStart()
     {
+        flowchart.SetIntegerVariable("eventProgressMain", 0);
+        flowchart.SetIntegerVariable("eventProgressSub", 0);
+        flowchart.SetBooleanVariable("event", false);
+        GameManager.gameState = GameState.Playing;
         Data.eventProgressMain = 0;
         Data.eventProgressSub = 0;
-        PlayerController.startPos = Direction.Right;
+        Data.loadPosX = 1f;
+        Data.loadPosY = 0f;
+        PlayerController.startPos = Direction.Left;
         PlayerController.hp = 3;
         Data.charas = 2;
-        Data.charaDataNum[1] = 1;
+        Data.charaDataNum[1] = 2;//追従キャラにクルミをセット
+        Data.items = 0;
+        Data.itemDataNum = new int[6];
         SceneManager.LoadScene("Labo");
         
     }
@@ -130,7 +140,11 @@ public class TitleManager : MonoBehaviour
     public void Continue()
     {
         //データをロード
-        SceneManager.LoadScene(PlayerPrefs.GetString("シーン名"));
+        
+        flowchart.SetIntegerVariable("eventProgressMain", PlayerPrefs.GetInt("eventProgressMain"));
+        flowchart.SetIntegerVariable("eventProgressSub", PlayerPrefs.GetInt("eventProgressSub"));
+        flowchart.SetBooleanVariable("event", false);
+        GameManager.gameState = GameState.Playing;
         Data.eventProgressMain = PlayerPrefs.GetInt("eventProgressMain");
         Data.eventProgressSub = PlayerPrefs.GetInt("eventProgressSub");
         Data.playerLevel = PlayerPrefs.GetInt("playerLevel");
@@ -148,6 +162,7 @@ public class TitleManager : MonoBehaviour
         {
             Data.charaDataNum[i] = PlayerPrefs.GetInt($"chara{i}");
         }
+        SceneManager.LoadScene(PlayerPrefs.GetString("sceneName"));
     }
 
 
@@ -155,5 +170,6 @@ public class TitleManager : MonoBehaviour
     {
         //ウィンドウを閉じる
         Debug.Log("ウィンドウを閉じる");
+        Application.Quit();
     }
 }

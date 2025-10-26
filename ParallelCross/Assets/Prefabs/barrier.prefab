@@ -77,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 5
   m_Sprite: {fileID: 158777831206505336, guid: 8bd8962e04e46ca4ca7486556a9d88b6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -151,6 +151,8 @@ MonoBehaviour:
   down: 1
   right: 1
   left: 1
+  collisionStart: 1
+  collisionEnd: 1
   sprite0: {fileID: 0}
   sprite1: {fileID: 0}
   sprite1Sub: {fileID: 0}

@@ -88,7 +88,9 @@ public class InputPanelManager : MonoBehaviour
     void Success()
     {
         flowchart.SetBooleanVariable("event", false);
-        flowchart.SetIntegerVariable("eventProgressMain", eventProgressMainSet);
+        if (eventProgressMainSet != 0)
+            flowchart.SetIntegerVariable("eventProgressMain", eventProgressMainSet);
+        if (eventProgressSubSet != 0)
         flowchart.SetIntegerVariable("eventProgressSub", eventProgressSubSet);
         GameManager.gameState = GameState.Playing;
         gameObject.SetActive(false);

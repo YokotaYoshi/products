@@ -15,7 +15,7 @@ public class EnemyChaseController : MonoBehaviour
     public int eventProgressStartChasing;
     public bool chaseWhenSeePlayer;
     float chaseTime;//見失ってもしばらくは追いかける
-    EnemyGuardianController enemyGCnt;
+    //EnemyGuardianController enemyGCnt;
     GameObject player;//プレイヤー
     //PlayerController playerCnt;//プレイヤーコントローラー
     public float baseSpeed = 8.0f;//基準となる追跡速度
@@ -44,7 +44,8 @@ public class EnemyChaseController : MonoBehaviour
     public float left = 0.0f;//ブロックを避けるための左方向移動量
 
     public GameObject damageArea;//攻撃判定
-    public float stanTime = 1f;//攻撃されたときにひるむ時間
+    public float stanTimeBase = 1f;//攻撃されたときにひるむ時間
+    float stanTime;
     GridMove gridMove;
     Vector2 nearestGrid;
     //レイキャスト
@@ -66,20 +67,32 @@ public class EnemyChaseController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(enemyState);
         //難易度におうじて速度変更
         switch (Data.difficulty)
         {
             case (Difficulty.VeryHard):
                 speed = baseSpeed + 4.0f;//10
+                stanTime = stanTimeBase - 0.1f;
                 break;
             case (Difficulty.Hard):
                 speed = baseSpeed + 2.0f;//8
+                stanTime = stanTimeBase;
                 break;
             case (Difficulty.Normal):
                 speed = baseSpeed;//6
+                stanTime = stanTimeBase;
                 break;
             case (Difficulty.Easy):
-                speed = baseSpeed - 2.0f;//4
+                if (Data.playerLevel >= 4)
+                {
+                    speed = baseSpeed + 2.0f - (float)Data.playerLevel;//4
+                }
+                else
+                {
+                    speed = baseSpeed - 2.0f;
+                }
+                stanTime = stanTimeBase + 0.2f;
                 break;
         }
 
@@ -202,7 +215,7 @@ public class EnemyChaseController : MonoBehaviour
         }
         else
         {
-            //2段階で動く。
+            //2段階で動く?
             //Debug.Log("障害物を避ける");
             //2番目にプレイヤーとの距離を縮められる方向に動く
             //次に1番目にプレイヤーとの距離を縮められる方向に
@@ -253,16 +266,21 @@ public class EnemyChaseController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log(other.gameObject.tag);
         if (other.gameObject.tag == "PlayerCollider")
         {
-            Debug.Log("衝突");
+            Debug.Log("プレイヤー");
             //プレイヤーに衝突したら
-            StopCoroutine(Move(moveDirection, distance));
+            if (other.gameObject.tag == "PlayerCollider")
+            {
+                StopCoroutine(Move(moveDirection, distance));
 
-            StartCoroutine(HitPlayer(1f));//再度追いかける。当たり判定を復活する
+                StartCoroutine(HitPlayer(1f));//再度追いかける。当たり判定を復活する
+            }
         }
         if (other.gameObject.tag == "PlayerAttack")
         {
+            Debug.Log("被弾");
             //攻撃に衝突したら
             StopCoroutine(Move(moveDirection, distance));
             StartCoroutine(HitPlayer(stanTime));//再度追いかける。当たり判定を復活する
@@ -317,7 +335,7 @@ public class EnemyChaseController : MonoBehaviour
 
             //そのほか時間経過でも終わり
 
-            if (time >= 1f)
+            if (time >= 1f / speed)
             {
                 transform.position = nearestGrid;
                 rb2d.linearVelocity = Vector2.zero;
@@ -329,14 +347,20 @@ public class EnemyChaseController : MonoBehaviour
         //動いているフラグおろし
         isCoroutineWorking = false;
     }
-    IEnumerator HitPlayer(float wait)
+    public IEnumerator HitPlayer(float wait)
     {
         //waitが全体時間
         //近くの格子点に移動し停止
         //当たり判定を削除
         if (enemyState == EnemyState.Stay) yield break;
         enemyState = EnemyState.Stay;
-        damageArea.GetComponent<CircleCollider2D>().enabled = false;//攻撃判定停止
+
+        if (damageArea != null)
+        {
+            damageArea.GetComponent<CircleCollider2D>().enabled = false;//攻撃判定停止
+        }
+        
+        //GetComponent<CircleCollider2D>().enabled = false;//攻撃判定停止
 
         Vector2 targetGrid = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
         float point;
@@ -346,16 +370,16 @@ public class EnemyChaseController : MonoBehaviour
         switch (moveDirection)
         {
             case Direction.Right:
-                targetGrid = new Vector2(Mathf.Round(transform.position.x - 0.2f), Mathf.Round(transform.position.y));
+                targetGrid = new Vector2(Mathf.Round(transform.position.x - 0.4f), Mathf.Round(transform.position.y));
                 break;
             case Direction.Left:
-                targetGrid = new Vector2(Mathf.Round(transform.position.x + 0.2f), Mathf.Round(transform.position.y));
+                targetGrid = new Vector2(Mathf.Round(transform.position.x + 0.4f), Mathf.Round(transform.position.y));
                 break;
             case Direction.Up:
-                targetGrid = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y - 0.2f));
+                targetGrid = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y - 0.4f));
                 break;
             case Direction.Down:
-                targetGrid = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y + 0.2f));
+                targetGrid = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y + 0.4f));
                 break;
         }
         Vector2 hitPosition = transform.position;
@@ -393,8 +417,12 @@ public class EnemyChaseController : MonoBehaviour
 
 
         enemyState = EnemyState.Chase;
-
-        damageArea.GetComponent<CircleCollider2D>().enabled = true;//攻撃判定復活
+        if (damageArea != null)
+        {
+            damageArea.GetComponent<CircleCollider2D>().enabled = true;//攻撃判定復活
+        }
+        
+        //GetComponent<CircleCollider2D>().enabled = true;
         enemyCollider.enabled = true;//当たり判定復活
     }
 }

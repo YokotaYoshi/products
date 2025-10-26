@@ -56,11 +56,15 @@ public class BoxScript : MonoBehaviour
         {
             spriteRenderer.sprite = boxSprite;
         }
+
+        //y座標が下のほうほど手前に見える
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         //こっちから見たプレイヤーの位置
         playerPosition = new Vector2(player.transform.position.x - transform.position.x,
         player.transform.position.y - transform.position.y);
@@ -145,7 +149,7 @@ public class BoxScript : MonoBehaviour
 
         if (!isMoving)
         {
-            transform.position = nearestGrid;
+            transform.position = new Vector3(nearestGrid.x, nearestGrid.y, nearestGrid.y);
             //Debug.Log("位置リセット");
         }
     }
@@ -218,7 +222,7 @@ public class BoxScript : MonoBehaviour
         }
 
         //格子点についたら座標を整数値にし、速度を0にし、動いていない状態にする
-        transform.position = nearestGrid;
+        transform.position = new Vector3(nearestGrid.x, nearestGrid.y, nearestGrid.y);
         speed = 0.0f;
         isMoving = false;
         isCoroutineWorking = false;
@@ -244,6 +248,7 @@ public class BoxScript : MonoBehaviour
         {
             //壊れかけの場合
             //攻撃で破壊できる
+            Debug.Log("破壊");
             Instantiate(boxBroken, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
@@ -253,7 +258,7 @@ public class BoxScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Carry")
         {
-            transform.position = nearestGrid;
+            transform.position = new Vector3(nearestGrid.x, nearestGrid.y, nearestGrid.y);
             rb2d.linearVelocity = Vector2.zero;
         }
     }

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6027569667955850588}
   - component: {fileID: 4943746111211744566}
   - component: {fileID: -8989079292625201773}
-  - component: {fileID: 8233579855152220873}
   - component: {fileID: -6585148235054806281}
   m_Layer: 0
   m_Name: Object
@@ -80,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 517070072, guid: 792a3690f17f3994480efcb6ea870171, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -153,27 +152,14 @@ MonoBehaviour:
   down: 1
   right: 1
   left: 1
---- !u!114 &8233579855152220873
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 491720009289861157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8297797f1b50fe34fb78664b3a73b399, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flowchart: {fileID: 5128167486347520422, guid: 3dabc314522b2c742aa291472853f467, type: 3}
-  blockName: NewBlock1
-  executeOnClick: 1
-  willDelete: 0
-  choices: []
-  question: 
-  ans: 
-  reward: 4
-  eventProgressSet: 0
+  sprite0: {fileID: 0}
+  sprite1: {fileID: 0}
+  sprite1Sub: {fileID: 0}
+  eventProgressMainBase: 0
+  eventProgressSubBase: 0
+  willDestroy: 0
+  createObject: {fileID: 0}
+  animateTime: 0.3
 --- !u!50 &-6585148235054806281
 Rigidbody2D:
   serializedVersion: 5

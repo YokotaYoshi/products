@@ -147,7 +147,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: -0.5}
-  m_Size: {x: 3, y: 4}
+  m_Size: {x: 10, y: 10}
   m_Direction: 0
 --- !u!114 &4969398701406920372
 MonoBehaviour:
@@ -161,3 +161,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2515b12c4d6c54f88e4f39e0d2d911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deleteTime: 0.33

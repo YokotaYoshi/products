@@ -265,7 +265,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1561539114180268040, guid: e229861b1f83a744bb27aecd4b544eb7, type: 3}
       propertyPath: sceneName
-      value: TitleScene
+      value: 6-5
       objectReference: {fileID: 0}
     - target: {fileID: 6231967622669917043, guid: e229861b1f83a744bb27aecd4b544eb7, type: 3}
       propertyPath: m_Name
@@ -51774,6 +51774,11 @@ Sprite:
   m_Bones: []
   m_ScriptableObjects: []
   m_SpriteID: 
+--- !u!1 &1632218336 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6231967622669917043, guid: e229861b1f83a744bb27aecd4b544eb7, type: 3}
+  m_PrefabInstance: {fileID: 126308606}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1731322456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51921,6 +51926,7 @@ MonoBehaviour:
   scrollY: 0
   maxScrollY: 999
   minScrollY: -999
+  vibTimeWhole: 0.3
 --- !u!1 &1809989930
 GameObject:
   m_ObjectHideFlags: 0
@@ -52229,12 +52235,12 @@ GameObject:
   - component: {fileID: 5128167487383370846}
   - component: {fileID: 5128167487383370856}
   - component: {fileID: 5128167487383370855}
-  - component: {fileID: 5128167487383370854}
   - component: {fileID: 5128167487383370853}
   - component: {fileID: 5128167487383370852}
   - component: {fileID: 5128167487383370851}
   - component: {fileID: 5128167487383370858}
   - component: {fileID: 5128167487383370857}
+  - component: {fileID: 5128167487383370859}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -52559,7 +52565,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 402.91974
-    y: -100.166
+    y: -101.38551
     width: 110.19
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
@@ -52579,13 +52585,13 @@ MonoBehaviour:
   - {fileID: 5128167487383370846}
   - {fileID: 5128167487383370856}
   - {fileID: 5128167487383370855}
-  - {fileID: 5128167487383370854}
   - {fileID: 5128167487383370853}
   - {fileID: 5128167487383370852}
   - {fileID: 5128167487383370851}
   - {fileID: 5128167487383370858}
-  - {fileID: 5128167487383370835}
   - {fileID: 5128167487383370857}
+  - {fileID: 5128167487383370835}
+  - {fileID: 5128167487383370859}
   suppressAllAutoSelections: 0
 --- !u!114 &5128167487383370821
 MonoBehaviour:
@@ -53554,33 +53560,6 @@ MonoBehaviour:
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 0}
---- !u!114 &5128167487383370854
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2296575535541983027}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemId: 48
-  indentLevel: 0
-  storyText: "\u79C1\u304C\u533B\u5B66\u90E8\u884C\u304D\u305F\u3044\u306A\u3093\u3066\u8A00\u3063\u305F\u3070\u304B\u308A\u306B"
-  description: 
-  character: {fileID: 2125555998}
-  portrait: {fileID: 0}
-  voiceOverClip: {fileID: 0}
-  showAlways: 1
-  showCount: 1
-  extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
-  stopVoiceover: 1
-  waitForVO: 0
-  setSayDialog: {fileID: 0}
 --- !u!114 &5128167487383370855
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -53689,6 +53668,23 @@ MonoBehaviour:
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 0}
+--- !u!114 &5128167487383370859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2296575535541983027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17a200dbd67304446a3019434503338a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 54
+  indentLevel: 0
+  targetObject: {fileID: 1632218336}
+  methodName: LoadScene
+  delay: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

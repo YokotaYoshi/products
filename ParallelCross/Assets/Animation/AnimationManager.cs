@@ -12,7 +12,7 @@ public class AnimationManager : MonoBehaviour
     public bool auto = true;//自動切り替え
     public Direction moveDirection = Direction.Down;
 
-
+    float stopTime = 0f;
     Rigidbody2D rb2d;
     Animator animator;
     Animator[] animators;
@@ -29,7 +29,7 @@ public class AnimationManager : MonoBehaviour
         animator = GetComponent<Animator>();
         animators = GetComponentsInChildren<Animator>();
 
-        Debug.Log(moveDirection);
+        //Debug.Log(moveDirection);
         for (int i = 0; i < animators.Length; i++)
         {
             switch (moveDirection)
@@ -92,9 +92,9 @@ public class AnimationManager : MonoBehaviour
             {
                 moveDirection = Direction.Right;
             }
-            else if (Input.GetAxisRaw("Vertical") == -1.0f)
+            else if (Input.GetAxisRaw("Horizontal") == -1.0f)
             {
-                moveDirection = Direction.Down;
+                moveDirection = Direction.Left;
             }
 
 
@@ -159,24 +159,30 @@ public class AnimationManager : MonoBehaviour
                 currentAnime = "animWalkLeft";
                 moveDirection = Direction.Left;
             }
-            else //動いていないとき
+
+            if (rb2d.linearVelocity.magnitude <= 0.1f) //動いていないとき
             {
-                switch (moveDirection)
+                stopTime += Time.deltaTime;
+                if (stopTime >= 0.1f)
                 {
-                    case Direction.Up:
-                        currentAnime = "animStayUp";
-                        break;
-                    case Direction.Down:
-                        currentAnime = "animStayDown";
-                        break;
-                    case Direction.Right:
-                        currentAnime = "animStayRight";
-                        break;
-                    case Direction.Left:
-                        currentAnime = "animStayLeft";
-                        break;
+                    switch (moveDirection)
+                    {
+                        case Direction.Up:
+                            currentAnime = "animStayUp";
+                            break;
+                        case Direction.Down:
+                            currentAnime = "animStayDown";
+                            break;
+                        case Direction.Right:
+                            currentAnime = "animStayRight";
+                            break;
+                        case Direction.Left:
+                            currentAnime = "animStayLeft";
+                            break;
+                    }
                 }
             }
+            else stopTime = 0f;
         }
         
     }

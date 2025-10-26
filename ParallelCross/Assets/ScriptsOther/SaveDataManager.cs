@@ -19,21 +19,21 @@ public class SaveDataManager : MonoBehaviour
     public void SaveData()
     {
         //fungusから起動する
-        PlayerPrefs.SetString("シーン名", sceneName);
+        PlayerPrefs.SetString("sceneName", sceneName);
         PlayerPrefs.SetInt("eventProgressMain", Data.eventProgressMain);
         PlayerPrefs.SetInt("eventProgressSub", Data.eventProgressSub);
         PlayerPrefs.SetInt("playerLevel", Data.playerLevel);
         PlayerPrefs.SetInt("items", Data.items);
         PlayerPrefs.SetFloat("loadPosX", transform.position.x);
         PlayerPrefs.SetFloat("loadPosY", transform.position.y - 1f);
-        for (int i = 0; i < Data.items; i++)
+        for (int i = 0; i < Data.items; ++i)
         {
             //アイテムは対応する数値を順番に記憶する
             //ロードするときはitemDataAllから順に取り出す
             PlayerPrefs.SetInt($"item{i}", Data.itemDataNum[i]);
         }
         PlayerPrefs.SetInt("charas", Data.charas);
-        for (int i = 0; i < Data.charas; i++)
+        for (int i = 0; i < Data.charas; ++i)
         {
             //アイテムは対応する数値を順番に記憶する
             //ロードするときはcharaDataAllから順に取り出す

@@ -27,7 +27,17 @@ public class ChoicesPanelManager : MonoBehaviour
         focusColor = new Color(0.7f, 0.7f, 1f);//フォーカスされたボタンの色
         unfocusColor = new Color(1f, 1f, 1f);//その他のボタンの色
         choices = new GameObject[] { choice0, choice1, choice2, choice3 };
+        Debug.Log(choice0);
+        Debug.Log(choices[0]);
         blockNames = new string[] { "", "", "", "" };
+    }
+
+    void OnEnable()
+    {
+        //choices = new GameObject[] { choice0, choice1, choice2, choice3 };
+        //Debug.Log(choice0);
+        //Debug.Log(choices[0]);
+        //blockNames = new string[] { "", "", "", "" };
     }
 
     // Update is called once per frame
@@ -80,7 +90,17 @@ public class ChoicesPanelManager : MonoBehaviour
     public void SetChoiceNum(int num)
     {
         //ボタンを押したときの処理
-        flowchart.ExecuteBlock(blockNames[num]);
+        Debug.Log(blockNames[num]);
+        Debug.Log(num);
+        if (blockNames[num] == "")
+        {
+            flowchart.ExecuteBlock("Button");
+        }
+        else
+        {
+            flowchart.ExecuteBlock(blockNames[num]);
+        }
+        
         gameObject.SetActive(false);
     }
 }

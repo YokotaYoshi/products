@@ -14,6 +14,7 @@ public class FollowerController : MonoBehaviour
 
     bool isMoving = false;//動いているかどうか
     bool isCoroutineWorking = false;//コルーチン中かどうか
+    bool isFollowing = true;//追従しているかどうか
     Vector2 targetDirection;//自動移動時のゴールの方向
     Vector2 targetPosition;//移動先
     
@@ -22,6 +23,7 @@ public class FollowerController : MonoBehaviour
     float speed = 5.0f;//移動速度
     float gap = 1.0f;//ゴールまでの距離
     Vector2 nearestGrid;
+    Vector2 playerGrid;
     public float startPosX;
     public float startPosY;
     public Direction moveDirection = Direction.N;
@@ -43,6 +45,9 @@ public class FollowerController : MonoBehaviour
         nearestGrid = new Vector2(Data.loadPosX, Data.loadPosY);
         Debug.Log(transform.position);
 
+        //おさらばした後シーンを移動した場合出現しない
+        if (Data.charaDataNum[1] == 0) Destroy(gameObject);
+
         //プレイヤーと離れていた場合について
     }
 
@@ -50,7 +55,7 @@ public class FollowerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Data.charaDataNum[1] == 0) Destroy(gameObject);
+        
 
         CheckPlayerPosition();
 
@@ -66,11 +71,13 @@ public class FollowerController : MonoBehaviour
 
         //最も近い格子点
         nearestGrid = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
+        //プレイヤーに最も近い格子点
+        playerGrid = new Vector2(Mathf.Round(player.transform.position.x), Mathf.Round(player.transform.position.y));
 
         //入力方向と自機方向が一致するかどうかで動きを変更
 
         //離れすぎたときに位置修正
-        
+        if (!isFollowing) return;
         if (distance >= 1.5f)
         {
             if (playerDirection == Direction.Right)
@@ -95,6 +102,7 @@ public class FollowerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!isFollowing) return;//追従しないなら静止
         if (isMoving && !isCoroutineWorking)
         {
             //コルーチン開始していなかったら開始
@@ -211,5 +219,22 @@ public class FollowerController : MonoBehaviour
         //transform.position = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
     }
     
-    
+    public IEnumerator MoveIndependently()
+    {
+        //プレイヤーから独立する
+        //プレイヤーのいる位置に動き、プレイヤーの向いている方向を向いて静止する
+        Vector2 goal = playerGrid;
+        isFollowing = false;//追従やめ
+        //Time.timeScale = 0に対応するため、Vector2.Lerpを使用
+        float time = 0f;
+        while (true)
+        {
+            yield return null;
+            time += Time.unscaledDeltaTime;
+            if (time >= 0.25f) break;
+            transform.position = Vector2.Lerp(nearestGrid, goal, time * 4);
+            
+        }
+        transform.position = goal;
+    }
 }

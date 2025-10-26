@@ -97,7 +97,14 @@ public class MenuPanelManager : MonoBehaviour
             buttonsItem[i + 1].SetActive(true);
 
             //ボタンの表示名を変更
-            buttonsItemText[i].GetComponent<Text>().text = Data.itemDataAll[Data.itemDataNum[i]][0];
+            Debug.Log(Data.items);
+            Debug.Log(Data.itemDataNum[i]);
+
+            if (buttonsItemText[i] != null)
+            {
+                buttonsItemText[i].GetComponent<Text>().text = Data.itemDataAll[Data.itemDataNum[i]][0];
+            }
+            
         }
         for (int i = Data.items; i < 6; ++i)
         {
@@ -107,7 +114,7 @@ public class MenuPanelManager : MonoBehaviour
         //オプションの説明にデータから取得したテキストを入れる
         if (InputManager.inputType == InputType.Action)
         {
-            Debug.Log("オプション操作");
+            //Debug.Log("オプション操作");
             //決定ボタンを押されたとき関数を呼ぶ
             if (buttonNum == 12) OptionDifficulty();
             if (buttonNum == 13) Exit();

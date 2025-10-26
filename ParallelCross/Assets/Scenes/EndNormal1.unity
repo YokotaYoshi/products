@@ -341,6 +341,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4267991979218237410, guid: a69b378297872cb4c82ca737a42611af, type: 3}
+      propertyPath: blackStart
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4267991979218237410, guid: a69b378297872cb4c82ca737a42611af, type: 3}
       propertyPath: fadeInTime
       value: 1
       objectReference: {fileID: 0}
@@ -77002,8 +77006,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeRect:
     serializedVersion: 2
-    x: 422.57083
-    y: -194.00674
+    x: 421.30502
+    y: -200.33586
     width: 110.19
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}

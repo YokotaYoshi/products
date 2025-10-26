@@ -63,6 +63,10 @@ public class DataEdit : MonoBehaviour
         {
             Data.MemberSub(charaName);
         }
+        else if (dataType == DataType.Item)
+        {
+            Data.ItemSub(itemName);
+        }
     }
 
     public void EditGameState()
