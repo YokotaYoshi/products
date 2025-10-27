@@ -47,23 +47,29 @@ public class ExecuteFungus : MonoBehaviour
             //選択肢がある場合
             if (choices.Length >= 1)
             {
+                Data.choices = new string[4];
+                Data.choicesNum = choices.Length;
                 //選択肢スクリプトを編集
                 for (int i = 0; i < choices.Length; i++)
                 {
                     //ボタンの小オブジェクトのテキストを編集
                     //Debug.Log(choices[i]);
+                    //一回Dataクラスに渡す
                     Debug.Log(i);
-                    Debug.Log(ChoicesPanelManager.choices[i]);//null
-                    
+                    //Debug.Log(ChoicesPanelManager.choices[i]);//null
+
+                    /*
                     if (ChoicesPanelManager.choices[i] != null)
                     {
                         Debug.Log(ChoicesPanelManager.choices[i].GetComponentInChildren<Text>().text);
                         ChoicesPanelManager.choices[i].GetComponentInChildren<Text>().text = choices[i];
                         ChoicesPanelManager.blockNames[i] = choices[i];
                     }
+                    */
                     
+                    Data.choices[i] = choices[i];
                 }
-                ChoicesPanelManager.choicesNum = choices.Length;
+                //ChoicesPanelManager.choicesNum = choices.Length;
             }
 
             //謎解きで入力がある場合

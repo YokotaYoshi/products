@@ -26,9 +26,9 @@ public class ChoicesPanelManager : MonoBehaviour
         rectTransform = GetComponent<RectTransform>();
         focusColor = new Color(0.7f, 0.7f, 1f);//フォーカスされたボタンの色
         unfocusColor = new Color(1f, 1f, 1f);//その他のボタンの色
-        choices = new GameObject[] { choice0, choice1, choice2, choice3 };
-        Debug.Log(choice0);
-        Debug.Log(choices[0]);
+        //choices = new GameObject[] { choice0, choice1, choice2, choice3 };
+        //Debug.Log(choice0);
+        //Debug.Log(choices[0]);
         blockNames = new string[] { "", "", "", "" };
     }
 
@@ -43,6 +43,13 @@ public class ChoicesPanelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        choicesNum = Data.choicesNum;
+        choices = new GameObject[] { choice0, choice1, choice2, choice3 };
+        for (int i = 0; i < choicesNum; ++i)
+        {
+            choices[i].GetComponentInChildren<Text>().text = Data.choices[i];
+            blockNames[i] = Data.choices[i];
+        }
         //選択肢の数に応じてパネルのサイズ変更
         if (choicesNum == 2)
         {

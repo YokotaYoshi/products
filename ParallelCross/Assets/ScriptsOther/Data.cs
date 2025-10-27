@@ -105,8 +105,15 @@ public static class Data
     public static int eventProgressMain;
     public static int eventProgressSub;
     public static bool onEvent;
-    //----------------------入力-------------------------
+    //----------------------入力、選択肢-------------------------
     public static string inputString;
+    public static string[] choices = new string[4];
+    public static int choicesNum;
+    public static string choice0;
+    public static string choice1;
+    public static string choice2;
+    public static string choice3;
+
     //------------------オプション関係のデータ----------------
 
     public static Difficulty difficulty = Difficulty.Hard;//実施の難易度

@@ -154,6 +154,11 @@ public class GameManager : MonoBehaviour
         if (flowchart.GetBooleanVariable("event") == true)
         {
             gameState = GameState.Pause;
+            if (InputManager.inputType == InputType.Back && choicesPanel.activeSelf)
+            {
+                choicesPanel.SetActive(false);
+                flowchart.SetBooleanVariable("event", false);
+            }
         }
         else if (gameState == GameState.Pause)
         {
