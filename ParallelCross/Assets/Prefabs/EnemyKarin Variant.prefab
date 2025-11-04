@@ -28,6 +28,22 @@ PrefabInstance:
       propertyPath: baseSpeed
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2086826690176122886, guid: c5e19e5dab9976e4383829b9de8d5e2c, type: 3}
+      propertyPath: speedEasy
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2086826690176122886, guid: c5e19e5dab9976e4383829b9de8d5e2c, type: 3}
+      propertyPath: speedHard
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2086826690176122886, guid: c5e19e5dab9976e4383829b9de8d5e2c, type: 3}
+      propertyPath: speedNormal
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2086826690176122886, guid: c5e19e5dab9976e4383829b9de8d5e2c, type: 3}
+      propertyPath: speedVeryHard
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 2224936444738503304, guid: c5e19e5dab9976e4383829b9de8d5e2c, type: 3}
       propertyPath: m_Radius
       value: 0.55

@@ -60,7 +60,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -119,15 +119,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 317a99497c220a647b27ced178466f84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFirstAppearance: 0
   chaseWhenSeePlayer: 1
-  speed: 3
+  speedVeryHard: 0
+  speedHard: 0
+  speedNormal: 0
+  speedEasy: 0
   playerDirectionDegree: 0
-  waitTime: 0.5
+  moveGrid: {x: 0, y: 0}
+  moveGridDirection: {x: 0, y: 0}
+  targetGrid: {x: 0, y: 0}
+  moveDirection: 4
+  isCoroutineWorking: 0
   isBlocked: 0
   down: 0
   right: 0
   up: 0
   left: 0
+  damageArea: {fileID: 0}
+  stanTimeBase: 1
+  enemyState: 0
 --- !u!58 &3526397023178968102
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -237,6 +248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 7643983102500890669}
+  offset: 0.5
 --- !u!58 &8191294395789273323
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6645208825811878457}
   - component: {fileID: 1561539114180268040}
   - component: {fileID: 1370956879912458583}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LoadScene
   m_TagString: LoadPoint
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}

@@ -21,6 +21,7 @@ TagManager:
   - Goal
   - PlayerAttack
   - Hole
+  - SearchPoint
   layers:
   - Default
   - TransparentFX
@@ -28,9 +29,9 @@ TagManager:
   - 
   - Water
   - UI
-  - Enemy
+  - SearchPoint
   - ShortObject
-  - 
+  - Under
   - 
   - 
   - 

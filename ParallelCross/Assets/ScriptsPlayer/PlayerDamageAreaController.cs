@@ -26,7 +26,7 @@ public class PlayerDamageAreaController : MonoBehaviour
         //Debug.Log("ヒット");
         //---------------------------------------------敵と接触----------------------------------------------------
         
-        if (!playerCnt.isInvincible)
+        if (!playerCnt.isInvincible && !Data.onEvent)
         {
             if (other.gameObject.tag == "Damage1")
             {

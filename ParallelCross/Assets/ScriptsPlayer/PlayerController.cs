@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;//URPを使うのに必要
 
 
 
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour
     public int maxHp = 3;//最大hp
     public static int hp = 3;//hp
     public bool isInvincible = false;//くらい無敵
+    SpriteRenderer[] spriteRenderers;
     //GameObject enemy;
 
     //------------------------カメラ関係-----------------------
@@ -51,11 +53,17 @@ public class PlayerController : MonoBehaviour
     bool isAttacking = false;
     float attackTime = 0f;
     float attackTimeWhole;//攻撃全体時間
+    //-------------------ライト--------------------------
+    public GameObject lightObj;
+    Light2D[] lights;
+    public bool lightsOn = false;
     //--------------------その他----------------------------------
     public bool isAttacked = false;//攻撃された！
+    bool resetPosition = false;//ノックバック中に別のオブジェクトに衝突
     public Vector2 blownDirection;//吹っ飛ばされる方向
     Vector2 nearestGrid;
     bool isFreezing = false;
+    
 
 
     void Awake()
@@ -71,34 +79,55 @@ public class PlayerController : MonoBehaviour
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         cameraCnt = mainCamera.GetComponent<CameraController>();
 
-        
+        lights = GetComponentsInChildren<Light2D>();
+        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
 
         switch (startPos)
         {
             case Direction.Right:
                 transform.position = new Vector2(Data.loadPosX + 1.0f, Data.loadPosY);
                 currentDirection = Direction.Right;
-                
+
                 break;
             case Direction.Left:
                 transform.position = new Vector2(Data.loadPosX - 1.0f, Data.loadPosY);
                 currentDirection = Direction.Left;
-                
+
                 break;
             case Direction.Up:
                 transform.position = new Vector2(Data.loadPosX, Data.loadPosY + 1.0f);
                 currentDirection = Direction.Up;
-                
+
                 break;
             case Direction.Down:
                 transform.position = new Vector2(Data.loadPosX, Data.loadPosY - 1.0f);
                 currentDirection = Direction.Down;
-                
+
                 break;
             case Direction.N:
                 transform.position = new Vector2(startPosX, startPosY);
                 currentDirection = Direction.N;
                 break;
+        }
+        
+        if (lightObj != null)
+        {
+            //ライトの向きを変更
+            switch (currentDirection)
+            {
+                case Direction.Down:
+                    lightObj.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
+                    break;
+                case Direction.Up:
+                    lightObj.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                    break;
+                case Direction.Right:
+                    lightObj.transform.rotation = Quaternion.Euler(0f, 0f, 270f);
+                    break;
+                case Direction.Left:
+                    lightObj.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+                    break;
+            }
         }
     }
 
@@ -107,7 +136,20 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //if (rb2d.linearVelocity.x < 5.0f) Debug.Log(rb2d.linearVelocity.x);
-        
+        if (lightsOn)
+        {
+            for (int i = 0; i < lights.Length; ++i)
+            {
+                lights[i].intensity = 1f;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < lights.Length; ++i)
+            {
+                lights[i].intensity = 0f;
+            }
+        }        
 
         nearestGrid = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
 
@@ -183,12 +225,22 @@ public class PlayerController : MonoBehaviour
         {
 
             axisH = Input.GetAxisRaw("Horizontal");
+            if (lightObj != null)
+            {
+                if (axisH == 1f) lightObj.transform.rotation = Quaternion.Euler(0f, 0f, 270f);
+                else if (axisH == -1f) lightObj.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+            }
             if (isCollisionRight && axisH >= 0.5f) axisH = 0f;
             if (isCollisionLeft && axisH <= -0.5f) axisH = 0f;
         }
         if (axisH == 0)
         {
             axisV = Input.GetAxisRaw("Vertical");
+            if (lightObj != null)
+            {
+                if (axisV == 1f) lightObj.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                else if (axisV == -1f) lightObj.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
+            }
             if (isCollisionUp && axisV >= 0.5f) axisV = 0f;
             if (isCollisionDown && axisV <= -0.5f) axisV = 0f;
         }
@@ -203,7 +255,7 @@ public class PlayerController : MonoBehaviour
         else if (inputVector.x == 1f) currentDirection = Direction.Right;
         else if (inputVector.x == -1f) currentDirection = Direction.Left;
 
-
+        
         //Debug.Log(inputVector);
 
         //入力が1,-1から変更されたらコルーチン開始フラグオン
@@ -315,22 +367,31 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag != "Enemy")
+        if (isInvincible)
         {
+            //無敵時間に
             //吹っ飛ばされているときになにかにぶつかったら最も近い格子点へ
-            ResetPosition();
+            if (collision.gameObject.tag.Length < 6)
+            {
+                ResetPosition();
+            }
+            else if (collision.gameObject.tag.Substring(0, 6) != "Damage")
+            {
+                ResetPosition();
+            }
+        }
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "LoadPoint")
+        {
+            isInvincible = true;
         }
     }
 
     void ResetPosition()
     {
-        isAttacking = false;
-        StopAllCoroutines();
-        transform.position = nearestGrid;
-        rb2d.linearVelocity = Vector2.zero;
-        isMoving = false;
-        isCoroutineWorking = false;
-        StartCoroutine(Invincible());
+        resetPosition = true;
     }
 
     //--------------上下左右の入力終了後の自動運転--------------------
@@ -404,7 +465,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator Attacked(Vector2 direction)
     {
         isAttacked = false;
-        isInvincible = true;//無敵時間
+        StartCoroutine(Invincible());//無敵時間
         isCoroutineWorking = true;//入力を受け付けない
         cameraCnt.Vib();
         float time = 0f;
@@ -429,7 +490,12 @@ public class PlayerController : MonoBehaviour
                 time = 0f;
                 break;
             }
-            
+            if (resetPosition)
+            {
+                resetPosition = false;
+                break;
+                
+            }
             
             yield return null;
         }
@@ -438,16 +504,47 @@ public class PlayerController : MonoBehaviour
         rb2d.linearVelocity = Vector2.zero;
         isCoroutineWorking = false;//入力をまた受け付けるように
 
-        StartCoroutine(Invincible());
+        
     }
 
     //無敵時間
     IEnumerator Invincible()
     {
         isInvincible = true;
+        float time = 0f;
 
-        yield return new WaitForSeconds(1f);//1s無敵
+        while (true)
+        {
+            time += Time.deltaTime;
+            yield return null;
 
+            //点滅
+            if ((time * 10f) % 2f < 1f)
+            {
+                for (int i = 0; i < spriteRenderers.Length; ++i)
+                {
+                    spriteRenderers[i].color = new Color(1f, 1f, 1f, 0.1f);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < spriteRenderers.Length; ++i)
+                {
+                    spriteRenderers[i].color = new Color(1f, 1f, 1f, 0.9f);
+                }
+            }
+
+            if (time >= 1.0f)
+            {
+                break;
+            }
+        }//1s無敵
+
+        for (int i = 0; i < spriteRenderers.Length; ++i)
+        {
+            spriteRenderers[i].color = new Color(1f, 1f, 1f, 1f);
+        }
+        resetPosition = false;
         isInvincible = false;//無敵解除
     }
 
@@ -521,6 +618,10 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void TurnLights()
+    {
+        lightsOn = !lightsOn;
+    }
 
     public void Freeze()
     {

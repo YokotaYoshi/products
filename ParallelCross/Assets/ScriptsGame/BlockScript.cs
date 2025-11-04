@@ -22,18 +22,20 @@ public class BlockScript : MonoBehaviour
     public Sprite sprite0;
 
     public Sprite sprite1;
-    public Sprite sprite1Sub;
+    //public Sprite sprite1Sub;
     //eventProgressMainSubがこれ以上ならスプライト切り替えるか削除
     //両方ゼロなら切りかえないオブジェクト
     public int eventProgressMainBase = 0;
     public int eventProgressSubBase = 0;
     public bool willDestroy = false;//イベント進行でオブジェクト削除
+    public bool willCreate = false;//イベント進行でオブジェクト生成
     public GameObject createObject;
     public float animateTime = 0.3f;
 
     GameObject player;
     Vector2 playerPosition;
     AnimationManager animManager;
+    public ItemName keyItem;
 
     //eventProgressがBase以上だったら固定
     //それ以下の場合は一時的に変更することもありうる
@@ -47,14 +49,17 @@ public class BlockScript : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         animManager = GetComponent<AnimationManager>();
 
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);//下にあるほど手前に見える
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);//レイヤーが同じなら下にあるほど手前に見える
 
-
-        if (boxCollider != null)
+        if (willCreate)
         {
-            if (collisionStart) boxCollider.enabled = true;
-            else boxCollider.enabled = false;
+            if (Data.eventProgressMain < eventProgressMainBase)
+            {
+                Destroy(gameObject);
+            }
         }
+
+        if (!collisionStart) boxCollider.enabled = false;
     }
 
     // Update is called once per frame
@@ -79,9 +84,14 @@ public class BlockScript : MonoBehaviour
 
             if (eventProgressSubBase != 0)
             {
-                if (Data.eventProgressSub >= eventProgressSubBase)
+                //こっちは一致した場合だけ変更
+                if (Data.eventProgressSub == eventProgressSubBase)
                 {
                     ChangePermanently();
+                }
+                else 
+                {
+                    ChangeBackward();
                 }
             }
         }
@@ -115,33 +125,27 @@ public class BlockScript : MonoBehaviour
         }
     }
 
-    IEnumerator ChangeTemporarily()
+    public IEnumerator ChangeTemporarily()
     {
         //一時的にスプライト変更
         float time = 0.0f;
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = sprite1;
-        if (boxCollider != null)
-        {
-            if (collisionStart) boxCollider.enabled = true;
-            else boxCollider.enabled = false;
-        }
+
         while (true)
         {
             yield return null;
             time += Time.deltaTime;
             if (time >= animateTime)
             {
+                //元の画像に戻す
                 spriteRenderer.sprite = sprite0;
                 break;
             }
         }
-        if (boxCollider != null)
-        {
-            if (collisionStart) boxCollider.enabled = true;
-            else boxCollider.enabled = false;
-        }
+
     }
+
 
     public void ChangePermanently()
     {
@@ -151,23 +155,40 @@ public class BlockScript : MonoBehaviour
         {
             if (createObject != null)
             {
+                //代わりとなるオブジェクトを生成する
                 Instantiate(createObject, transform.position, Quaternion.identity);
-                Data.loadPosX = transform.position.x;
-                Data.loadPosY = transform.position.y;
+
             }
             Destroy(gameObject);
         }
-        else if (sprite1 != null)
+        else //if (sprite1 != null)
         {
+            //画像を差し替え
             spriteRenderer.sprite = sprite1;
-            if (boxCollider != null)
-        {
-            if (collisionStart) boxCollider.enabled = true;
-            else boxCollider.enabled = false;
-        }
+
         }
         
+        if (collisionEnd) boxCollider.enabled = true;
+        else boxCollider.enabled = false;
+    }
+    
+    public void ChangeBackward()
+    {
+        //もとの状態に戻す
+        spriteRenderer.sprite = sprite0;
+        if (collisionStart) boxCollider.enabled = true;
+        else boxCollider.enabled = false;
     }
 
-    
+    public void Solve()
+    {
+        //キーアイテムを持っていたらオブジェクトを消去
+        for (int i = 0; i < Data.items; ++i)
+        {
+            if (Data.itemDataNum[i] == (int)keyItem)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
 }

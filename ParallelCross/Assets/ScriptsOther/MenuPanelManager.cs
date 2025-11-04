@@ -97,8 +97,8 @@ public class MenuPanelManager : MonoBehaviour
             buttonsItem[i + 1].SetActive(true);
 
             //ボタンの表示名を変更
-            Debug.Log(Data.items);
-            Debug.Log(Data.itemDataNum[i]);
+            //Debug.Log(Data.items);
+            //Debug.Log(Data.itemDataNum[i]);
 
             if (buttonsItemText[i] != null)
             {

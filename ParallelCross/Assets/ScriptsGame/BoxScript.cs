@@ -236,7 +236,7 @@ public class BoxScript : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Damage1" || other.gameObject.tag == "Damage2" || other.gameObject.tag == "Damage3")
         {
             //敵が接触すると踏みつぶされる
             Instantiate(boxBroken, transform.position, Quaternion.identity);

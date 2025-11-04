@@ -20,7 +20,7 @@ public class EnemyFocusCS : MonoBehaviour
     void Update()
     {
         //Debug.Log(enemyChaseCnt.playerDirectionDegree);
-        //座標をプレイヤーの方向に向ける
+        //座標を目的の方向に向ける
         //実際に動く方向を決定
         if (enemyChaseCnt.playerDirectionDegree >= -50 && enemyChaseCnt.playerDirectionDegree < 50)
         {

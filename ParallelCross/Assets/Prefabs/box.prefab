@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2024189269469140369}
   - component: {fileID: 6840321904436499506}
   - component: {fileID: 7572869560063843602}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CensorDown
   m_TagString: Censor
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 6377723645368010605}
   - component: {fileID: 7045676691957379625}
   - component: {fileID: 4060100894819119206}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: box
   m_TagString: Carry
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -296,8 +296,10 @@ MonoBehaviour:
   eventProgressMainBase: 0
   eventProgressSubBase: 0
   willDestroy: 0
+  willCreate: 0
   createObject: {fileID: 0}
   animateTime: 0.3
+  keyItem: 0
 --- !u!1 &4669583533458517456
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,7 +311,7 @@ GameObject:
   - component: {fileID: 1076531713151252017}
   - component: {fileID: 196342923575316787}
   - component: {fileID: 5763470526905491736}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CensorUp
   m_TagString: Censor
   m_Icon: {fileID: 0}
@@ -391,7 +393,7 @@ GameObject:
   - component: {fileID: 4281817265920199084}
   - component: {fileID: 6783060078481741385}
   - component: {fileID: 6894597837037971908}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CensorRight
   m_TagString: Censor
   m_Icon: {fileID: 0}
@@ -473,7 +475,7 @@ GameObject:
   - component: {fileID: 1054801888870333859}
   - component: {fileID: 9061486436186265262}
   - component: {fileID: 8076154871352312916}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CensorLeft
   m_TagString: Censor
   m_Icon: {fileID: 0}

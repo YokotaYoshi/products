@@ -84,9 +84,11 @@ public class BlackCurtainManager : MonoBehaviour
     public IEnumerator FadeIn()
     {
         if (brightness != Brightness.Dark) yield break;
-
+        image.color = new Color(0f, 0f, 0f, 1f);
+        
         float time = 0f;
         brightness = Brightness.Middle;
+        yield return new WaitForSeconds(0.1f);
         //明るくなる
 
         while (true)

@@ -24,7 +24,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        z = transform.position.z;//z座標は固定
+        z = transform.position.y - 10f;//z座標はy座標に依存
     }
 
     // Update is called once per frame
@@ -32,7 +32,7 @@ public class CameraController : MonoBehaviour
     {
         if (player != null)
         {
-            z = transform.position.z;//z座標は固定
+            z = transform.position.y - 10f;//z座標は固定
 
             //------------------------x座標について----------------------------
             if (isScrollX)

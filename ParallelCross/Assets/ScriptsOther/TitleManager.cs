@@ -151,7 +151,7 @@ public class TitleManager : MonoBehaviour
         Data.items = PlayerPrefs.GetInt("items");
         Data.loadPosX = PlayerPrefs.GetFloat("loadPosX");
         Data.loadPosY = PlayerPrefs.GetFloat("loadPosY");
-        PlayerController.startPos = Direction.Down;
+        PlayerController.startPos = Direction.Up;
         PlayerController.hp = 3;
         for (int i = 0; i < PlayerPrefs.GetInt("items"); ++i)
         {

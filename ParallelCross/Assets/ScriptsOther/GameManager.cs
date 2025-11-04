@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Fungus;
+using UnityEngine.Rendering.Universal;//URPを使うのに必要
 
 
 public class GameManager : MonoBehaviour
@@ -43,6 +44,11 @@ public class GameManager : MonoBehaviour
     //--------------Fungus------------------------------
     public Flowchart flowchart;
     InputManager inputManager;
+    //-------------明るさ----------------------
+    public GameObject lightObj;
+    public float lightIntensity = 0f;
+    Light2D light2D;
+    
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -85,10 +91,13 @@ public class GameManager : MonoBehaviour
             playerFocusCS = playerFocus.GetComponent<PlayerFocus>();//PlayerFocusスクリプト取得
         }
 
+        if (lightObj != null)
+        {
+            light2D = lightObj.GetComponent<Light2D>();
+        }
 
         inputManager = GetComponent<InputManager>();
         
-        Data.LoadDifficulty();
 
         Debug.Log(Data.difficulty);//現在の難易度確認
     }
@@ -105,19 +114,20 @@ public class GameManager : MonoBehaviour
         //難易度切り替え
         if (Data.currentDifficulty == Difficulty.Auto)
         {
+            //オートの場合
             //Data.playerLevelに応じて切り替え
             //デスでplayerLevel+1
             //クリアで-2
-            if (Data.playerLevel <= -4)
+            if (Data.playerLevel >= 12)
             {
                 //全ボスを一発クリア
                 Data.difficulty = Difficulty.VeryHard;
             }
-            else if (Data.playerLevel <= -1)
+            else if (Data.playerLevel >= 10)
             {
                 Data.difficulty = Difficulty.Hard;
             }
-            else if (Data.playerLevel <= 2)
+            else if (Data.playerLevel >= 8)
             {
                 Data.difficulty = Difficulty.Normal;
             }
@@ -126,8 +136,12 @@ public class GameManager : MonoBehaviour
                 Data.difficulty = Difficulty.Easy;
             }
         }
+        else
+        {
+            Data.difficulty = Data.currentDifficulty;
+        }
 
-        //ゲームステート切り替え
+            //ゲームステート切り替え
             switch (gameState)
             {
                 case GameState.Start:
@@ -232,14 +246,21 @@ public class GameManager : MonoBehaviour
         }
         Time.timeScale = 1f;
         gameState = GameState.GameOver;
-        Data.playerLevel += 2;
+        PlayerLevelDown();
+        //データをいじる
+        Data.itemDataNum = new int[] {7, 0, 0,0,0,0};
         SceneManager.LoadScene("GameOver");
 
     }
-    
-    public void EditPlayerLevel()
+
+    public void PlayerLevelUp()
     {
-        Data.playerLevel -= 1;//難易度上昇
+        if (Data.playerLevel < 6) Data.playerLevel = 6;//難易度アップ
+        else if (Data.playerLevel < 12) Data.playerLevel += 1;
+    }
+    public void PlayerLevelDown()
+    {
+        if (Data.playerLevel > 1) Data.playerLevel -= 1;//難易度ダウン
     }
     //-------------------セーブ画面を閉じる--------------------------
     public void CloseSavePanel()
@@ -306,7 +327,7 @@ public class GameManager : MonoBehaviour
         imagePanel.SetActive(false);
         flowchart.SetBooleanVariable("event", false);
     }
-    
+
 
 
     //ロードした時に時間差で敵を出現させる
@@ -323,5 +344,10 @@ public class GameManager : MonoBehaviour
         }
         Vector2 appearPos = new Vector2(Data.loadPosX, Data.loadPosY);
         Instantiate(enemy, appearPos, Quaternion.identity);
+    }
+    
+    public void SetBrightness()
+    {
+        light2D.intensity = lightIntensity;
     }
 }

@@ -16,10 +16,11 @@ public enum ItemName
     Null,
     Photo,
     Ring,
-    Camera,
+    NewsPaper,
     Cord,
     Bat,
-    
+    Key,
+    SmartPhone,
 }
 
 public enum CharaName
@@ -69,15 +70,17 @@ public static class Data
     //----------------------アイテム関係のデータ-------------------------
     //public ItemName itemName;
 
-    public static int items = 0;
-    public static int[] itemDataNum = new int[6];
+    public static int items = 1;
+    public static int[] itemDataNum = new int[] {7, 0, 0, 0, 0, 0};
     public static string[] itemNull = { null, null };
 
     public static string[] itemPhoto = { "家族写真", "3年前に撮った。この帰りの事故で両親は亡くなった"};
     public static string[] itemRing = { "指輪", "美しい。誰のだろう" };
-    public static string[] itemCamera = { "カメラ", "これでタイムトラベルの証拠を撮るのだ" };
+    public static string[] itemNewsPaper = { "新聞紙", "これを持って帰れば良いのだろうか" };
     public static string[] itemCord = { "ひも", "丈夫そう。簡単には切れないだろう" };
     public static string[] itemBat = { "バット", "放てホームラン" };
+    public static string[] itemKey = { "鍵", "どこの鍵かな" };
+    public static string[] itemSmartPhone = { "スマホ", "現代の必需品" };
     //public static string[] itemRing = { "腕輪", "去年の誕生日に渡したものだ" };
     public static string[][] itemDataAll;
 
@@ -89,7 +92,7 @@ public static class Data
     public static string[] charaRino = { "リノ", "charaImageRino1" };//0
     public static string[] charaKurumi = { "クルミ", "charaImageMikoru1" };//1
     public static string[] charaRinoF = { "リノ", null };
-    public static string[] charaKarin = { "カリン", null };
+    public static string[] charaKarin = { "カリン", "machu" };
     public static string[] charaNull = { null, null };
     public static string[][] charaDataAll;
     public static Sprite charaImage0;
@@ -118,7 +121,9 @@ public static class Data
 
     public static Difficulty difficulty = Difficulty.Hard;//実施の難易度
     public static Difficulty currentDifficulty = Difficulty.Auto;//設定上の難易度
-    public static int playerLevel = 0;
+    public static int playerLevel = 9;//1~12
+            //playerLeverlの値はGameManager.GameOver()内で変更
+            //GameManager.PlayerLevelUp()/Down()でも
     public static bool dashWhilePush = true;
     //------------------セーブデータ---------------------
     public static int[] saveDataEventProgressMain;
@@ -130,7 +135,7 @@ public static class Data
     static Data()
     {
 
-        itemDataAll = new string[][] {itemNull, itemPhoto, itemRing, itemCamera , itemCord, itemBat, itemNull, itemNull, itemNull, itemNull};
+        itemDataAll = new string[][] {itemNull, itemPhoto, itemRing, itemNewsPaper , itemCord, itemBat, itemKey, itemSmartPhone, itemNull, itemNull};
 
 
         charaDataAll = new string[][] {charaNull, charaRino, charaKurumi, charaRinoF, charaKarin };
@@ -144,18 +149,7 @@ public static class Data
     public static void ItemAdd(ItemName itemName)
     {
         //新しく取得したアイテムは配列の先頭に並べたい
-        /*
-        for (int i = 0; i < items; ++i)
-        {
-            if (itemDataAll[(int)itemName] == itemData[i]) return;//アイテムの重複は許さない
-        }
-        for (int i = items; i > 0; --i)
-        {
-            //すべてのアイテムを一つ後ろにずらす
-            itemData[i] = itemData[i - 1];
-        }
-        itemData[0] = itemDataAll[(int)itemName];
-        */
+        
         if (itemName == ItemName.Null) return;
 
         for (int i = 0; i < items; ++i)
@@ -184,8 +178,11 @@ public static class Data
                 else
                 {
                     //順番を一つ前へ
-                    charaDataNum[i] = charaDataNum[i + 1];
-                    charaDataNum[i + 1] = 0;
+                    for (int j = i; j < 5; ++j)
+                    {
+                        itemDataNum[j] = itemDataNum[j + 1];
+                    }
+                    itemDataNum[5] = 0;
                 }
                 items -= 1;
             }
@@ -202,6 +199,7 @@ public static class Data
 
     public static void MemberAdd(CharaName charaName)
     {
+        if (charaName == CharaName.Null) return;
         //charaDataの最後にcharaを追加
         //Debug.Log(chara);
 
@@ -216,6 +214,8 @@ public static class Data
     }
     public static void MemberSub(CharaName charaName)
     {
+        if (charaName == CharaName.Null) return;
+
         for (int i = 0; i < 3; ++i)
         {
             if ((int)charaName == charaDataNum[i])
@@ -225,7 +225,11 @@ public static class Data
                 else
                 {
                     //順番を一つ前へ
-                    charaDataNum[i] = charaDataNum[i + 1];
+                    for (int j = i; j < 2; ++j)
+                    {
+                        charaDataNum[j] = charaDataNum[j + 1];
+                    }
+                    
                     charaDataNum[2] = 0;
                 }
                 charas -= 1;
@@ -257,19 +261,6 @@ public static class Data
         }
     }
 
-    //-----------------難易度関係------------------------
-    public static void LoadDifficulty()
-    {
-        if (currentDifficulty == Difficulty.Auto)
-        {
-            //自動で難易度変更
-            //playerLeverlの値はGameManager.GameOver()内で変更
-            //GameManager.EditPlayerLevel()でも
-            if (playerLevel <= -3) difficulty = Difficulty.VeryHard;
-            else if (playerLevel <= -1) difficulty = Difficulty.Hard;
-            else if (playerLevel <= 3) difficulty = Difficulty.Normal;
-            else difficulty = Difficulty.Easy;
-        }
-    }
+   
 }
    

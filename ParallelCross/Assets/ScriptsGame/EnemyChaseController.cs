@@ -12,26 +12,35 @@ public class EnemyChaseController : MonoBehaviour
 {
     //追いかけ状態でロードしたら出現しないようにしたい
     public bool isFirstAppearance = false;//最初に登場する＝シーン切り替え時に登場するやつじゃない
-    public int eventProgressStartChasing;
+    //public int eventProgressStartChasing;
     public bool chaseWhenSeePlayer;
     float chaseTime;//見失ってもしばらくは追いかける
     //EnemyGuardianController enemyGCnt;
-    GameObject player;//プレイヤー
+    
     //PlayerController playerCnt;//プレイヤーコントローラー
-    public float baseSpeed = 8.0f;//基準となる追跡速度
+    //public float baseSpeed = 8.0f;//基準となる追跡速度
+    public float speedVeryHard;
+    public float speedHard;
+    public float speedNormal;
+    public float speedEasy;
     float speed;//追跡速度
     Rigidbody2D rb2d;//Rigidbody2D;
     CircleCollider2D enemyCollider;//CircleCollider2D;
 
+    
+
+    //動く方向について
+    GameObject player;//プレイヤー
     Vector2 playerDirection;//自分から見たプレイヤーの位置
     public float playerDirectionDegree;//自分から見たプレイヤーの角度
-
-
-    public Vector2 targetGrid;//外部からいじる
-    //public float speed;//外部からいじる
+    Vector2 playerGrid;
+    GameObject[] searchPoints;
+    public Vector2 moveGrid;
+    public Vector2 moveGridDirection;
+    public Vector2 targetGrid;
     public Direction moveDirection = Direction.N;//外部からいじる
     public bool isCoroutineWorking;
-    Vector2 targetDirection;
+    //Vector2 targetDirection;
     float gap;
     float distance = 1f;
 
@@ -50,6 +59,8 @@ public class EnemyChaseController : MonoBehaviour
     Vector2 nearestGrid;
     //レイキャスト
     RaycastHit2D hit;
+    RaycastHit2D hitSP;
+    
     public EnemyState enemyState = EnemyState.Chase;
 
 
@@ -57,6 +68,7 @@ public class EnemyChaseController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");//プレイヤーを取得
+        searchPoints = GameObject.FindGameObjectsWithTag("SearchPoint");
         //playerCnt = player.GetComponent<PlayerController>();//プレイヤーコントローラーを取得
         rb2d = GetComponent<Rigidbody2D>();//Rigidbody2Dを取得
         enemyCollider = GetComponent<CircleCollider2D>();//CircleCollider2Dを取得
@@ -72,26 +84,20 @@ public class EnemyChaseController : MonoBehaviour
         switch (Data.difficulty)
         {
             case (Difficulty.VeryHard):
-                speed = baseSpeed + 4.0f;//10
+                speed = speedVeryHard;
                 stanTime = stanTimeBase - 0.1f;
                 break;
             case (Difficulty.Hard):
-                speed = baseSpeed + 2.0f;//8
+                speed = speedHard;//8
                 stanTime = stanTimeBase;
                 break;
             case (Difficulty.Normal):
-                speed = baseSpeed;//6
+                speed = speedNormal;//6
                 stanTime = stanTimeBase;
                 break;
             case (Difficulty.Easy):
-                if (Data.playerLevel >= 4)
-                {
-                    speed = baseSpeed + 2.0f - (float)Data.playerLevel;//4
-                }
-                else
-                {
-                    speed = baseSpeed - 2.0f;
-                }
+                speed = Mathf.Min(speedEasy, (float)Data.playerLevel);
+                
                 stanTime = stanTimeBase + 0.2f;
                 break;
         }
@@ -99,9 +105,29 @@ public class EnemyChaseController : MonoBehaviour
 
 
         nearestGrid = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
+        playerGrid = new Vector2(Mathf.Round(player.transform.position.x), Mathf.Round(player.transform.position.y));
+        playerDirection = new Vector2(player.transform.position.x - transform.position.x,
+        player.transform.position.y - transform.position.y);
+
+        float distance = Vector2.Distance(transform.position, player.transform.position);
+
+        Ray ray = new Ray(transform.position, playerDirection);
+
+        
+
+        /*
+        Debug.DrawRay(ray.origin, ray.direction * playerDirection.magnitude, Color.red, 0.5f);
+        int excludedLayer = LayerMask.NameToLayer("Enemy");
+        int excludedMask = 1 << excludedLayer;
+        int invertedMask = ~excludedMask;//~:ビット反転で除外レイヤー以外を対象にする
+        */
+        int Mask = LayerMask.GetMask("Default");
+
+        hit = Physics2D.Raycast(transform.position, playerDirection, distance, Mask);
 
         if (enemyState == EnemyState.Chase)
         {
+            SetMoveGrid();
             SetMoveDirection();
         }
         else if (enemyState == EnemyState.Move)
@@ -124,22 +150,7 @@ public class EnemyChaseController : MonoBehaviour
 
         //物陰に隠れたプレイヤーを探してから追跡する
 
-        playerDirection = new Vector2(player.transform.position.x - transform.position.x,
-        player.transform.position.y - transform.position.y);
-
-        float distance = Vector2.Distance(transform.position, player.transform.position);
-
-        Ray ray = new Ray(transform.position, playerDirection);
-        Debug.DrawRay(ray.origin, ray.direction * playerDirection.magnitude, Color.red, 0.5f);
-
-        /*
-        int excludedLayer = LayerMask.NameToLayer("Enemy");
-        int excludedMask = 1 << excludedLayer;
-        int invertedMask = ~excludedMask;//~:ビット反転で除外レイヤー以外を対象にする
-        */
-        int invertedMask = LayerMask.GetMask("Default");
-
-        hit = Physics2D.Raycast(transform.position, playerDirection, distance, invertedMask);
+        
 
         if (chaseWhenSeePlayer)
         {
@@ -147,14 +158,12 @@ public class EnemyChaseController : MonoBehaviour
             {
                 //Debug.Log(hit.collider.gameObject.name.Substring(0, 6));
                 
-                if (hit.collider.gameObject.name.Length >= 6)
+                if (hit.collider.gameObject.tag == "Player")
                 {
-                    if (hit.collider.gameObject.name.Substring(0, 6) == "Player")
-                    {
-                        chaseTime = 0f;
-                        enemyState = EnemyState.Chase;//プレイヤーを見つけた時だけ追いかける
-                    }
+                    chaseTime = 0f;
+                    enemyState = EnemyState.Chase;//プレイヤーを見つけた時だけ追いかける
                 }
+                
             }
             chaseTime += Time.deltaTime;
             if (chaseTime >= 3f)
@@ -177,14 +186,82 @@ public class EnemyChaseController : MonoBehaviour
         }
     }
 
+    void SetMoveGrid()
+    {
+        //見える場所にプレイヤーがいるならプレイヤーに
+        //いない場合は見える場所にいるSearchPlayerのなかでpointが最も小さいもの
+        int minPoint = 99;
+        int searchPoint;
+        int searchPointNum = 0;
+        if (hit.collider != null)
+        {
+            if (hit.collider.gameObject.tag == "Player")
+            {
+                moveGrid = playerGrid;
+            }
+            else
+            {
+                //searchPoints[]
+                if (searchPoints.Length == 0)
+                {
+                    moveGrid = playerGrid;
+                }
+                else
+                {
+                    for (int i = 0; i < searchPoints.Length; ++i)
+                    {
+                        Vector2 searchPointDirection = new Vector2(searchPoints[i].transform.position.x - transform.position.x, searchPoints[i].transform.position.y - transform.position.y);//ここから見た捜索点の座標
+
+                        
+                        //int excludedLayer = LayerMask.NameToLayer("IgnoreRayCast");//レイヤーのインデックス取得
+                        //int excludedMask = 1 << excludedLayer;//左に1ビットシフト。2倍にしている。なぜ
+                        
+                        int excludedMask = LayerMask.GetMask("Ignore Raycast");
+                        
+                        int invertedMask = ~excludedMask;//~:ビット反転で除外レイヤー以外を対象にする
+                        
+                        hitSP = Physics2D.Raycast(transform.position, searchPointDirection, searchPointDirection.magnitude, invertedMask);
+                        
+
+                        if (hitSP.collider != null)
+                        {
+                            Debug.Log(hitSP.collider.gameObject.name);
+                            
+                           
+                            if (hitSP.collider.gameObject.tag == "SearchPoint")//見える位置の捜索点についてのみ
+                            {
+
+                                searchPoint = searchPoints[i].GetComponent<SearchPlayer>().point;
+                                minPoint = Mathf.Min(minPoint, searchPoint);
+                                Debug.Log(i);
+                                //Debug.Log(searchPoint);
+                                if (minPoint == searchPoint)
+                                {
+                                    //iをほぞん
+                                    searchPointNum = i;
+                                    
+                                }
+                            }
+                        }
+                        
+                        
+                    }
+                    moveGrid = new Vector2(searchPoints[searchPointNum].transform.position.x, searchPoints[searchPointNum].transform.position.y);
+                }
+            }
+        }
+    }
+
     void SetMoveDirection()
     {
         //どの方向にいくか
         //自分から見たプレイヤーの位置
-        playerDirection = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
+        //playerDirection = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
+        moveGridDirection = new Vector2(moveGrid.x - transform.position.x, moveGrid.y - transform.position.y);
+
 
         //自分から見たプレイヤーの角度
-        playerDirectionDegree = Mathf.Atan2(playerDirection.y, playerDirection.x) * Mathf.Rad2Deg;
+        playerDirectionDegree = Mathf.Atan2(moveGridDirection.y, moveGridDirection.x) * Mathf.Rad2Deg;
         //Debug.Log(playerDirectionDegree);
 
         //目の前を防がれていない場合
@@ -215,10 +292,8 @@ public class EnemyChaseController : MonoBehaviour
         }
         else
         {
-            //2段階で動く?
             //Debug.Log("障害物を避ける");
             //2番目にプレイヤーとの距離を縮められる方向に動く
-            //次に1番目にプレイヤーとの距離を縮められる方向に
             if ((playerDirectionDegree >= -90 && playerDirectionDegree < -50) ||
             (playerDirectionDegree >= 50 && playerDirectionDegree < 90))
             {
@@ -253,7 +328,9 @@ public class EnemyChaseController : MonoBehaviour
                 moveDirection = Direction.Left;
                 distance = left;
             }
+
         }
+            
 
         if (PlayerController.hp <= 0)
         {
@@ -266,10 +343,10 @@ public class EnemyChaseController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.gameObject.tag);
+        //Debug.Log(other.gameObject.tag);
         if (other.gameObject.tag == "PlayerCollider")
         {
-            Debug.Log("プレイヤー");
+            //Debug.Log("プレイヤー");
             //プレイヤーに衝突したら
             if (other.gameObject.tag == "PlayerCollider")
             {
@@ -280,7 +357,7 @@ public class EnemyChaseController : MonoBehaviour
         }
         if (other.gameObject.tag == "PlayerAttack")
         {
-            Debug.Log("被弾");
+            //Debug.Log("被弾");
             //攻撃に衝突したら
             StopCoroutine(Move(moveDirection, distance));
             StartCoroutine(HitPlayer(stanTime));//再度追いかける。当たり判定を復活する

@@ -18,6 +18,8 @@ public class SaveDataManager : MonoBehaviour
 
     public void SaveData()
     {
+        //回復する
+        PlayerController.hp = 3;
         //fungusから起動する
         PlayerPrefs.SetString("sceneName", sceneName);
         PlayerPrefs.SetInt("eventProgressMain", Data.eventProgressMain);
@@ -25,7 +27,7 @@ public class SaveDataManager : MonoBehaviour
         PlayerPrefs.SetInt("playerLevel", Data.playerLevel);
         PlayerPrefs.SetInt("items", Data.items);
         PlayerPrefs.SetFloat("loadPosX", transform.position.x);
-        PlayerPrefs.SetFloat("loadPosY", transform.position.y - 1f);
+        PlayerPrefs.SetFloat("loadPosY", transform.position.y - 2f);
         for (int i = 0; i < Data.items; ++i)
         {
             //アイテムは対応する数値を順番に記憶する

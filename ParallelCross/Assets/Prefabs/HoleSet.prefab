@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2621978140731875117}
   - component: {fileID: 1506380476249430385}
   - component: {fileID: 5620455501676272689}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hole
   m_TagString: Hole
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flowchart: {fileID: 0}
   blockName: hole
-  executeOnClick: 1
+  executeOnClick: 0
   choices: []
   addChoice: 
   question: 
@@ -146,6 +146,10 @@ PrefabInstance:
     - target: {fileID: 3505410168152339415, guid: 83c1a17430276c44da07768bb5078b48, type: 3}
       propertyPath: m_Name
       value: Goal
+      objectReference: {fileID: 0}
+    - target: {fileID: 4099685533735310085, guid: 83c1a17430276c44da07768bb5078b48, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4294965610852545391, guid: 83c1a17430276c44da07768bb5078b48, type: 3}
       propertyPath: m_LocalPosition.x

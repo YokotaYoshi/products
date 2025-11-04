@@ -59,7 +59,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -123,42 +123,6 @@ MonoBehaviour:
   rightImage: {fileID: 0}
   upImage: {fileID: 0}
   leftImage: {fileID: 0}
-  isTextChange: 0
-  isSavePoint: 0
-  choiceChatNum: 1
-  choices:
-  - "\u93E1\u3092\u5012\u3059"
-  - "\u305D\u306E\u307E\u307E\u306B\u3059\u308B"
-  textNum: 6
-  person0: 
-  text0: 
-  person1: 
-  text1: 
-  person2: 
-  text2: 
-  person3: 
-  text3: 
-  person4: 
-  text4: 
-  person5: 
-  text5: 
-  textNum1: 6
-  person10: 
-  text10: 
-  person11: 
-  text11: 
-  person12: 
-  text12: 
-  person13: 
-  text13: 
-  person14: 
-  text14: 
-  person15: 
-  text15: 
-  people: []
-  texts: []
-  eventProgressJunction: 0
-  eventProgressGetPoint: 0
 --- !u!61 &498269500009658004
 BoxCollider2D:
   m_ObjectHideFlags: 0
