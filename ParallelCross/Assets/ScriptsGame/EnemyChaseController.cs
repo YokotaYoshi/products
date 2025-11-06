@@ -225,7 +225,7 @@ public class EnemyChaseController : MonoBehaviour
 
                         if (hitSP.collider != null)
                         {
-                            Debug.Log(hitSP.collider.gameObject.name);
+                            //Debug.Log(hitSP.collider.gameObject.name);
                             
                            
                             if (hitSP.collider.gameObject.tag == "SearchPoint")//見える位置の捜索点についてのみ

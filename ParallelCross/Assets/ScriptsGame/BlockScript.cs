@@ -58,13 +58,17 @@ public class BlockScript : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-
-        if (!collisionStart) boxCollider.enabled = false;
+        if (boxCollider != null)
+        {
+            if (!collisionStart) boxCollider.enabled = false;
+        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if (eventProgressMainBase != 0 && eventProgressSubBase != 0)
         {
             if (Data.eventProgressMain >= eventProgressMainBase && Data.eventProgressSub >= eventProgressSubBase)
@@ -74,6 +78,7 @@ public class BlockScript : MonoBehaviour
         }
         else
         {
+            if (willCreate) return;
             if (eventProgressMainBase != 0)
             {
                 if (Data.eventProgressMain >= eventProgressMainBase)
@@ -167,17 +172,24 @@ public class BlockScript : MonoBehaviour
             spriteRenderer.sprite = sprite1;
 
         }
+        if (boxCollider != null)
+        {
+            if (collisionEnd) boxCollider.enabled = true;
+            else boxCollider.enabled = false;
+        }
         
-        if (collisionEnd) boxCollider.enabled = true;
-        else boxCollider.enabled = false;
     }
     
     public void ChangeBackward()
     {
         //もとの状態に戻す
         spriteRenderer.sprite = sprite0;
-        if (collisionStart) boxCollider.enabled = true;
-        else boxCollider.enabled = false;
+        if (boxCollider != null)
+        {
+            if (collisionStart) boxCollider.enabled = true;
+            else boxCollider.enabled = false;
+        }
+        
     }
 
     public void Solve()

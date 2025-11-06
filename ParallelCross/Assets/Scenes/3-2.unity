@@ -51273,7 +51273,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1561539114180268040, guid: e229861b1f83a744bb27aecd4b544eb7, type: 3}
       propertyPath: loadPosY
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1561539114180268040, guid: e229861b1f83a744bb27aecd4b544eb7, type: 3}
       propertyPath: startPos
@@ -52359,7 +52359,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 422.43195
-    y: -103.824524
+    y: -116.01965
     width: 110.19
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}

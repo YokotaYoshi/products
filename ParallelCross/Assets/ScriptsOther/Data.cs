@@ -92,7 +92,7 @@ public static class Data
     public static string[] charaRino = { "リノ", "charaImageRino1" };//0
     public static string[] charaKurumi = { "クルミ", "charaImageMikoru1" };//1
     public static string[] charaRinoF = { "リノ", null };
-    public static string[] charaKarin = { "カリン", "machu" };
+    public static string[] charaKarin = { "カリン", null};
     public static string[] charaNull = { null, null };
     public static string[][] charaDataAll;
     public static Sprite charaImage0;

@@ -24,7 +24,7 @@ public class SaveDataManager : MonoBehaviour
         PlayerPrefs.SetString("sceneName", sceneName);
         PlayerPrefs.SetInt("eventProgressMain", Data.eventProgressMain);
         PlayerPrefs.SetInt("eventProgressSub", Data.eventProgressSub);
-        PlayerPrefs.SetInt("playerLevel", Data.playerLevel);
+        //PlayerPrefs.SetInt("playerLevel", Data.playerLevel);
         PlayerPrefs.SetInt("items", Data.items);
         PlayerPrefs.SetFloat("loadPosX", transform.position.x);
         PlayerPrefs.SetFloat("loadPosY", transform.position.y - 2f);

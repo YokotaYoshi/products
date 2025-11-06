@@ -31,7 +31,7 @@ public class InputPanelManager : MonoBehaviour
     void OnEnable()
     {
         text = "";
-        hintImage.GetComponent<Image>().sprite = sprite;
+        
     }
 
     // Update is called once per frame
@@ -41,6 +41,7 @@ public class InputPanelManager : MonoBehaviour
         //アルファベットに対応完了
         //ひらがなに対応させることできないかな？
         textDis.text = text.ToUpper();
+        hintImage.GetComponent<Image>().sprite = sprite;
         //Debug.Log(text.Length);
         //if (text == ans) Debug.Log("あってる");
         if (Input.GetKeyDown(KeyCode.Backspace))

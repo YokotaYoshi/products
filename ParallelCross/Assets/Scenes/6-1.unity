@@ -52316,7 +52316,8 @@ MonoBehaviour:
     y: -340
     width: 1114
     height: 859
-  selectedBlocks: []
+  selectedBlocks:
+  - {fileID: 5128167487383370820}
   selectedCommands: []
   variables:
   - {fileID: 470528181653962044}
@@ -52361,7 +52362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeRect:
     serializedVersion: 2
-    x: 402.91974
+    x: 404.13925
     y: -94.068436
     width: 110.19
     height: 40
@@ -52896,7 +52897,7 @@ MonoBehaviour:
   indentLevel: 0
   _duration:
     floatRef: {fileID: 0}
-    floatVal: 1
+    floatVal: 1.2
   durationOLD: 0
 --- !u!114 &5128167487383370844
 MonoBehaviour:

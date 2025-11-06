@@ -54,17 +54,17 @@ public class ChoicesPanelManager : MonoBehaviour
         if (choicesNum == 2)
         {
             rectTransform.sizeDelta = new Vector2(320, 160);
-            rectTransform.anchoredPosition = new Vector2(-160, -100);
+            rectTransform.anchoredPosition = new Vector2(320, -100);
         }
         else if (choicesNum == 3)
         {
             rectTransform.sizeDelta = new Vector2(320, 230);
-            rectTransform.anchoredPosition = new Vector2(-160, -65);
+            rectTransform.anchoredPosition = new Vector2(320, -65);
         }
         else if (choicesNum == 4)
         {
             rectTransform.sizeDelta = new Vector2(320, 300);
-            rectTransform.anchoredPosition = new Vector2(-160, -30);
+            rectTransform.anchoredPosition = new Vector2(320, -30);
         }
         
         //選択肢の数だけボタン表示

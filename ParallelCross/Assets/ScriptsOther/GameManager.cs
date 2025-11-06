@@ -49,7 +49,13 @@ public class GameManager : MonoBehaviour
     public float lightIntensity = 0f;
     Light2D light2D;
     
-
+    void Awake()
+    {
+        if (gameState == GameState.GameOver)
+        {
+            gameState = GameState.Start;
+        }
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -98,8 +104,9 @@ public class GameManager : MonoBehaviour
 
         inputManager = GetComponent<InputManager>();
         
-
+        Debug.Log(Data.playerLevel);
         Debug.Log(Data.difficulty);//現在の難易度確認
+        Debug.Log(gameState);
     }
 
     // Update is called once per frame
@@ -116,8 +123,7 @@ public class GameManager : MonoBehaviour
         {
             //オートの場合
             //Data.playerLevelに応じて切り替え
-            //デスでplayerLevel+1
-            //クリアで-2
+            
             if (Data.playerLevel >= 12)
             {
                 //全ボスを一発クリア
@@ -248,7 +254,8 @@ public class GameManager : MonoBehaviour
         gameState = GameState.GameOver;
         PlayerLevelDown();
         //データをいじる
-        Data.itemDataNum = new int[] {7, 0, 0,0,0,0};
+        Data.itemDataNum = new int[] { 7, 0, 0, 0, 0, 0 };
+        PlayerController.hp = 3;
         SceneManager.LoadScene("GameOver");
 
     }

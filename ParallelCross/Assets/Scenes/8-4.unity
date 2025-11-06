@@ -51883,6 +51883,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SavePoint Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4419873419868789701, guid: 545a51c3adec6be44bdf5451c6b2a4b2, type: 3}
+      propertyPath: sceneName
+      value: 8-4
+      objectReference: {fileID: 0}
     - target: {fileID: 7150121438152621259, guid: 545a51c3adec6be44bdf5451c6b2a4b2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2

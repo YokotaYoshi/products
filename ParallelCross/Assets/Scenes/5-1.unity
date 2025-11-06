@@ -277,7 +277,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8989079292625201773, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
       propertyPath: eventProgressSubBase
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 491720009289861157, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
       propertyPath: m_Name
@@ -852,7 +852,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4529791918868914713, guid: 0e01a216f57f4a5408784506e40154bc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4529791918868914713, guid: 0e01a216f57f4a5408784506e40154bc, type: 3}
       propertyPath: m_LocalPosition.y
@@ -52293,7 +52293,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -591797814, guid: 9d56bb2c17813104c94ab11ab31e3f98, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -52338,7 +52338,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8989079292625201773, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
       propertyPath: eventProgressSubBase
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 491720009289861157, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
       propertyPath: m_Name
@@ -52439,7 +52439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8989079292625201773, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
       propertyPath: eventProgressSubBase
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 491720009289861157, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
       propertyPath: m_Name

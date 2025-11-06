@@ -24,7 +24,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        z = transform.position.y - 10f;//z座標はy座標に依存
+        //z = transform.position.y - 10f;//z座標はy座標に依存
     }
 
     // Update is called once per frame
@@ -32,7 +32,7 @@ public class CameraController : MonoBehaviour
     {
         if (player != null)
         {
-            z = transform.position.y - 10f;//z座標は固定
+            z = Mathf.Min(-10f, transform.position.y - 10f);
 
             //------------------------x座標について----------------------------
             if (isScrollX)
@@ -55,7 +55,7 @@ public class CameraController : MonoBehaviour
             else
             {
                 //カメラのx座標の移動範囲を制限する
-                if (player.transform.position.x  >= maxScrollX)
+                if (player.transform.position.x >= maxScrollX)
                 {
                     x = maxScrollX;
                 }
@@ -107,8 +107,49 @@ public class CameraController : MonoBehaviour
             }
 
             //カメラの座標を更新
-            transform.position = new Vector3(x, y, z);
+
         }
+        else
+        {
+            z = -10f;
+            if (isScrollX)
+            {
+                //カメラのy座標の移動範囲を制限する
+                if (transform.position.x >= maxScrollX)
+                {
+                    x = maxScrollX;
+                }
+                else if (transform.position.x <= minScrollX)
+                {
+                    x = minScrollX;
+                }
+                else
+                {
+                    //x方向強制スクロール
+                    x = transform.position.x + scrollX * Time.deltaTime;
+                }
+            }
+
+            //------------------------------y座標について-----------------------------
+            if (isScrollY)
+            {
+                //カメラのy座標の移動範囲を制限する
+                if (transform.position.y >= maxScrollY)
+                {
+                    y = maxScrollY;
+                }
+                else if (transform.position.y <= minScrollY)
+                {
+                    y = minScrollY;
+                }
+                else
+                {
+                    //y方向強制スクロール
+                    y = transform.position.y + scrollY * Time.deltaTime;
+                }
+            }
+        }    
+        transform.position = new Vector3(x, y, z);
     }
 
     public void Vib()

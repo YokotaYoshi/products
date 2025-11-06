@@ -11,6 +11,7 @@ public class LoadSceneManager : MonoBehaviour
     public float loadPosX;//ロード先のX座標
     public float loadPosY;//ロード先のY座標
     public Direction startPos;//ロード先の追従者
+    public float loadTime = 0.5f;//ロードするまでの時間。頻繁にロードする場面では短めに設定するべし
     GameObject player;
     PlayerController playerCnt;
     GameObject playerFocus;
@@ -57,7 +58,7 @@ public class LoadSceneManager : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             StartCoroutine(blackCurtainManager.FadeOut());
-            Invoke("LoadScene", 0.5f);
+            Invoke("LoadScene", loadTime);
         }
     }
 

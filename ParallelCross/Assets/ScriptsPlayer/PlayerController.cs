@@ -476,6 +476,12 @@ public class PlayerController : MonoBehaviour
         Vector2 hitPosition = transform.position;
         float point;
 
+        //上下左右に物体があるかどうかでゴールを変更
+        if (isCollisionUp && direction.y > 0f) direction.y = 0;
+        if (isCollisionDown && direction.y < 0f) direction.y = 0;
+        if (isCollisionRight && direction.x > 0f) direction.x = 0;
+        if (isCollisionLeft && direction.x < 0f) direction.x = 0;
+
         Vector2 targetGrid = new Vector2(Mathf.Round(transform.position.x + direction.x), Mathf.Round(transform.position.y + direction.y));
         while (true)
         {

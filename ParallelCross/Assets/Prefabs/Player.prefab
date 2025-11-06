@@ -234,7 +234,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.1
+  m_Radius: 0.2
 --- !u!114 &8436578972686524018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,7 +400,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.1
+  m_Radius: 0.2
 --- !u!114 &2145500502170018564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,7 +426,7 @@ GameObject:
   - component: {fileID: 4311582809431162689}
   - component: {fileID: 8031549226986598317}
   - component: {fileID: 2005271539226458843}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: PlayerFocus
   m_TagString: PlayerFocus
   m_Icon: {fileID: 0}
@@ -729,7 +729,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.1
+  m_Radius: 0.2
 --- !u!114 &6287245235779369951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,7 +811,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.1
+  m_Radius: 0.2
 --- !u!114 &2893193948146277878
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -530,7 +530,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5128167487383370804}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5604628053072055651, guid: a69b378297872cb4c82ca737a42611af, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a69b378297872cb4c82ca737a42611af, type: 3}
@@ -966,11 +967,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4720403534529518572, guid: e9e9eb012958b0e4e919629e27a35f0b, type: 3}
       propertyPath: dataType
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720403534529518572, guid: e9e9eb012958b0e4e919629e27a35f0b, type: 3}
+      propertyPath: itemName
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4720403534529518572, guid: e9e9eb012958b0e4e919629e27a35f0b, type: 3}
       propertyPath: charaName
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6940826776056657247, guid: e9e9eb012958b0e4e919629e27a35f0b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1019,6 +1024,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9e9eb012958b0e4e919629e27a35f0b, type: 3}
+--- !u!1 &1004506659 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 491720009289861157, guid: e9e9eb012958b0e4e919629e27a35f0b, type: 3}
+  m_PrefabInstance: {fileID: 1004506658}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1127943450
 GameObject:
   m_ObjectHideFlags: 0
@@ -1380,6 +1390,7 @@ MonoBehaviour:
   - {fileID: 5128167487383370814}
   - {fileID: 1330639162}
   - {fileID: 5128167487383370812}
+  - {fileID: 5128167487383370826}
   suppressAllAutoSelections: 0
 --- !u!1001 &1249533506
 PrefabInstance:
@@ -8222,7 +8233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 144
   indentLevel: 0
-  storyText: "\u672A\u6765\u306B\u884C\u3063\u3066\u3001\n\u8A3C\u62E0\u306B\u306A\u308B\u5199\u771F\u3092\u53D6\u3063\u3066\u304D\u3066\u307B\u3057\u3044"
+  storyText: "\u672A\u6765\u306B\u884C\u3063\u3066\u3001\n\u8A3C\u62E0\u306B\u306A\u308B\u3088\u3046\u306A\u30E2\u30CE\u3092\u6301\u3063\u3066\u5E30\u3063\u3066\u304D\u3066\u307B\u3057\u3044"
   description: 
   character: {fileID: 1127943451}
   portrait: {fileID: 0}
@@ -9643,6 +9654,7 @@ GameObject:
   - component: {fileID: 5128167487383370816}
   - component: {fileID: 5128167487383370815}
   - component: {fileID: 5128167487383370814}
+  - component: {fileID: 5128167487383370826}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -9705,8 +9717,9 @@ MonoBehaviour:
     width: 1114
     height: 859
   selectedBlocks:
-  - {fileID: 1330639161}
-  selectedCommands: []
+  - {fileID: 1178785212}
+  selectedCommands:
+  - {fileID: 5128167487383370826}
   variables:
   - {fileID: 470528181653962044}
   - {fileID: 2828508056818846539}
@@ -9795,7 +9808,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 615.2482
-    y: -57.29921
+    y: -58.565033
     width: 104.43
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
@@ -10593,6 +10606,23 @@ MonoBehaviour:
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 0}
+--- !u!114 &5128167487383370826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2296575535541983027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17a200dbd67304446a3019434503338a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 176
+  indentLevel: 0
+  targetObject: {fileID: 1004506659}
+  methodName: EditData
+  delay: 0
 --- !u!1001 &5376152027861305135
 PrefabInstance:
   m_ObjectHideFlags: 0

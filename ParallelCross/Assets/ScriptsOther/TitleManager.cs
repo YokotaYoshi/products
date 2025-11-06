@@ -129,7 +129,11 @@ public class TitleManager : MonoBehaviour
         Data.loadPosY = 0f;
         PlayerController.startPos = Direction.Left;
         PlayerController.hp = 3;
+        Data.playerLevel = 9;
+        Data.items = 1;
+        Data.itemDataNum[0] = 7;//スマホ
         Data.charas = 2;
+        Data.charaDataNum[0] = 1;//リノ
         Data.charaDataNum[1] = 2;//追従キャラにクルミをセット
         Data.items = 0;
         Data.itemDataNum = new int[6];
@@ -147,7 +151,7 @@ public class TitleManager : MonoBehaviour
         GameManager.gameState = GameState.Playing;
         Data.eventProgressMain = PlayerPrefs.GetInt("eventProgressMain");
         Data.eventProgressSub = PlayerPrefs.GetInt("eventProgressSub");
-        Data.playerLevel = PlayerPrefs.GetInt("playerLevel");
+        //Data.playerLevel = PlayerPrefs.GetInt("playerLevel");
         Data.items = PlayerPrefs.GetInt("items");
         Data.loadPosX = PlayerPrefs.GetFloat("loadPosX");
         Data.loadPosY = PlayerPrefs.GetFloat("loadPosY");
