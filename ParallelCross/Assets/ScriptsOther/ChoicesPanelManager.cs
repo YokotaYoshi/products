@@ -16,19 +16,18 @@ public class ChoicesPanelManager : MonoBehaviour
     public string blockName;
     public static string[] blockNames;
     public static GameObject[] choices;
-    Color focusColor;
-    Color unfocusColor;
+    Color focusColor = new Color(0.7f, 0.7f, 1f);//フォーカスされたボタンの色
+    Color unfocusColor = new Color(1f, 1f, 1f);//その他のボタンの色
     int buttonNum = 0;
+
+    //パネルの位置大きさについての数値
+    float panelSizeX = 320f;
+    float panelPosX = 320f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rectTransform = GetComponent<RectTransform>();
-        focusColor = new Color(0.7f, 0.7f, 1f);//フォーカスされたボタンの色
-        unfocusColor = new Color(1f, 1f, 1f);//その他のボタンの色
-        //choices = new GameObject[] { choice0, choice1, choice2, choice3 };
-        //Debug.Log(choice0);
-        //Debug.Log(choices[0]);
         blockNames = new string[] { "", "", "", "" };
     }
 
@@ -53,18 +52,18 @@ public class ChoicesPanelManager : MonoBehaviour
         //選択肢の数に応じてパネルのサイズ変更
         if (choicesNum == 2)
         {
-            rectTransform.sizeDelta = new Vector2(320, 160);
-            rectTransform.anchoredPosition = new Vector2(320, -100);
+            rectTransform.sizeDelta = new Vector2(panelSizeX, 160);
+            rectTransform.anchoredPosition = new Vector2(panelPosX, -100);
         }
         else if (choicesNum == 3)
         {
-            rectTransform.sizeDelta = new Vector2(320, 230);
-            rectTransform.anchoredPosition = new Vector2(320, -65);
+            rectTransform.sizeDelta = new Vector2(panelSizeX, 230);
+            rectTransform.anchoredPosition = new Vector2(panelPosX, -65);
         }
         else if (choicesNum == 4)
         {
-            rectTransform.sizeDelta = new Vector2(320, 300);
-            rectTransform.anchoredPosition = new Vector2(320, -30);
+            rectTransform.sizeDelta = new Vector2(panelSizeX, 300);
+            rectTransform.anchoredPosition = new Vector2(panelPosX, -30);
         }
         
         //選択肢の数だけボタン表示

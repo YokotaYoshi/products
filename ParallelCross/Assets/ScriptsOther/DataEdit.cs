@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class DataEdit : MonoBehaviour
 {
+    //オブジェクトにアタッチしてFungusから呼び出す
     //なんのデータをいじる？
     public DataType dataType;
     public CharaName charaName;
@@ -58,7 +59,7 @@ public class DataEdit : MonoBehaviour
 
     public void SubData()
     {
-        Debug.Log("キャラとおわかれ");
+        //Debug.Log("キャラとおわかれ");
         if (dataType == DataType.Member)
         {
             Data.MemberSub(charaName);

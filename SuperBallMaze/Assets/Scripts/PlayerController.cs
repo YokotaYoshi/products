@@ -55,14 +55,16 @@ public class PlayerController : MonoBehaviour
 
         axisX = Input.GetAxis("Horizontal");
         axisY = rb.linearVelocity.y;
-        //真ん中に近づきすぎるとそれ以上前にいけないように
+        
         if (distance < 0.9f)
         {
+            //真ん中に近づきすぎるとそれ以上前にいけないように
             axisZ = (Input.GetAxis("Vertical") - 1.0f) / 2f;
 
         }
         else if (distance > 19f)
         {
+            //円盤ステージから落ちないように
             axisZ = (Input.GetAxis("Vertical") + 1.0f) / 2f;
         }
         else

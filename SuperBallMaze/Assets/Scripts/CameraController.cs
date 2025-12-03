@@ -10,6 +10,7 @@ public class CameraController : MonoBehaviour
     float positionY;
     float positionZ;
     Vector2 playerPositionXZ;
+    float cameraAngle;
     float directionX;
     float directionY;
     float directionZ;
@@ -35,35 +36,43 @@ public class CameraController : MonoBehaviour
 
     void SetCameraPosition()
     {
-        playerPositionXZ = new Vector2(player.transform.position.x, player.transform.position.z);
-        //カメラの位置
+        //カメラの位置について
+        playerPositionXZ = new Vector2(player.transform.position.x, player.transform.position.z);//上から見た2次元座標
+        
+        //X,Zはプレイヤー後方一定の位置
         positionX = playerPositionXZ.x + playerPositionXZ.normalized.x * 10.0f;
-        if (player.transform.position.y > 3.5f)
+        positionZ = playerPositionXZ.y + playerPositionXZ.normalized.y * 10.0f;
+        //Yはプレイヤーが高く飛んだ時、見下ろせる位置に
+        if (player.transform.position.y > 5f)
         {
             positionY = player.transform.position.y + 1.0f;
         }
         else
         {
-            positionY = 4.5f;
+            positionY = 6f;
         }
-        positionZ = playerPositionXZ.y + playerPositionXZ.normalized.y * 10.0f;
+        
     }
     void SetCameraDirection()
     {
         //カメラの方向
+        //原点からカメラに引いた直線が円盤ステージとなす角
+        cameraAngle = Mathf.Atan2(positionY, Mathf.Sqrt(positionX * positionX + positionZ * positionZ)) * Mathf.Rad2Deg;
 
-        
-        if (Mathf.Atan2(positionY, Mathf.Sqrt(positionX * positionX + positionZ * positionZ)) * Mathf.Rad2Deg < 45f)
+        //上下
+        if (cameraAngle < 45f)
         {
             //下を向きすぎないように調整
-            directionX = Mathf.Atan2(positionY, Mathf.Sqrt(positionX * positionX + positionZ * positionZ)) * Mathf.Rad2Deg;
+            directionX = cameraAngle;
         }
         else
         {
             directionX = 45f;
         }
-        directionY = -90f - Mathf.Atan2(positionZ, positionX) * Mathf.Rad2Deg;
+
+
+        directionY = -90f - Mathf.Atan2(positionZ, positionX) * Mathf.Rad2Deg;//横回転、中心を見るように移動
         
-        directionZ = 0f;
+        directionZ = 0f;//斜めになることはない。ギミックで斜めにする=みづらいペナルティを与えたっていいかも
     }
 }

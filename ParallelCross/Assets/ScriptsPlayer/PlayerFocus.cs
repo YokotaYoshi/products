@@ -14,6 +14,7 @@ public class PlayerFocus : MonoBehaviour
     float axisV = 0.0f;
     float positionX = 0.0f;
     float positionY = 0.0f;
+    float offset = 0.5f;
     GameObject player;//プレイヤー
     PlayerController playerCnt;//プレイヤーコントローラー
     
@@ -44,29 +45,30 @@ public class PlayerFocus : MonoBehaviour
         //直前の入力を保存
         if (axisH == 1.0f)
         {
-            positionX = 1.0f;
+            positionX = offset;
             positionY = 0.0f;
         }
         else if (axisH == -1.0f)
         {
-            positionX = -1.0f;
+            positionX = -offset;
             positionY = 0.0f;
         }
         else if (axisV == 1.0f)
         {
             positionX = 0.0f;
-            positionY = 1.0f;
+            positionY = offset;
         }
         else if (axisV == -1.0f)
         {
             positionX = 0.0f;
-            positionY = -1.0f;
+            positionY = offset;
         }
         //座標はプレイヤーの見ている方向
         //接触判定を出すため振動させる
         time += Time.deltaTime;
         delta = amptitude * Mathf.Sin(time * Mathf.PI);
-        transform.position = new Vector2(player.transform.position.x + positionX / 2 + delta, player.transform.position.y + positionY / 2); 
+
+        transform.position = new Vector2(player.transform.position.x + positionX + delta, player.transform.position.y + positionY); 
         //Debug.Log(transform.position);
         
     }

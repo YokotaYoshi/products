@@ -461,12 +461,26 @@ public class PlayerController : MonoBehaviour
 
 
     //--------------------被弾モーション--------------------
-
     IEnumerator Attacked(Vector2 direction)
     {
+        //ヒットストップいれたい
         isAttacked = false;
-        StartCoroutine(Invincible());//無敵時間
         isCoroutineWorking = true;//入力を受け付けない
+
+        float hitStopTime = 0.1f;
+        Time.timeScale = 0f;
+        while (true)
+        {
+            hitStopTime -= Time.unscaledDeltaTime;
+            yield return null;
+            if (hitStopTime < 0f)
+            {
+                Time.timeScale = 1f;
+                break;
+            }
+        }
+        StartCoroutine(Invincible());//無敵時間
+        
         cameraCnt.Vib();
         float time = 0f;
         float waitingTime = 0.3f;
@@ -485,7 +499,7 @@ public class PlayerController : MonoBehaviour
         Vector2 targetGrid = new Vector2(Mathf.Round(transform.position.x + direction.x), Mathf.Round(transform.position.y + direction.y));
         while (true)
         {
-            point = -10f * (time - waitingTime) * (time - waitingTime) + 1f;
+            point = -10f * (time - waitingTime) * (time - waitingTime) + 1f;//二次関数的に減速
 
             transform.position = Vector2.Lerp(hitPosition, targetGrid, point);
 
@@ -590,7 +604,7 @@ public class PlayerController : MonoBehaviour
         }
         
         //人に話しかけたり、ものを調べた場合は攻撃しない
-        Vector3 attackPosition = new Vector3(transform.position.x, transform.position.y + 0.5f);
+        Vector3 attackPosition = new Vector3(transform.position.x, transform.position.y + 0.5f);//プレイヤーの腰あたりの位置
         //攻撃
         switch (currentDirection)
         {

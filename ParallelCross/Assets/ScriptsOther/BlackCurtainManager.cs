@@ -26,7 +26,8 @@ public class BlackCurtainManager : MonoBehaviour
     public float fadeInTime = 0.2f;//暗闇が完全に晴れるまでの時間
 
     public float fadeOutTime = 0.3f;//暗転時間
-    public float goalBrightness = 0f;
+    public float goalBrightness = 0f;//フェードイン時に最終的にこの明るさになる
+    public float flashTime = 0.5f;//フラッシュ時間
     public GameObject flash;
 
     Image image;
@@ -180,7 +181,7 @@ public class BlackCurtainManager : MonoBehaviour
         //明るいタイミングで一瞬暗くする
         brightness = Brightness.Middle;
         image.color = new Color(0f, 0f, 0f, 1f);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(flashTime);
         brightness = Brightness.Bright;
         image.color = new Color(0f, 0f, 0f, 0f);
     }
@@ -191,7 +192,7 @@ public class BlackCurtainManager : MonoBehaviour
         //明るいタイミングで一瞬白くする
         brightness = Brightness.Middle;
         image.color = new Color(1f, 1f, 1f, 1f);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(flashTime);
         brightness = Brightness.Dark;
         image.color = new Color(0f, 0f, 0f, 0f);
     }
@@ -201,7 +202,7 @@ public class BlackCurtainManager : MonoBehaviour
         //暗いタイミングで一瞬明るくする
         brightness = Brightness.Middle;
         image.color = new Color(0f, 0f, 0f, 0f);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(flashTime);
         brightness = Brightness.Dark;
         image.color = new Color(0f, 0f, 0f, 1f);
     }

@@ -5,29 +5,51 @@ using UnityEngine.SceneManagement;
 
 public class SpotLightController : MonoBehaviour
 {
-    float rotationY = 0f;
-    public float rotateSpeed = 60f;
+    public float rotationY0;//初期回転角
+    float rotationY;
+    public float rotateSpeed = 60f;//角速度
     GameObject player;
     Vector3 rayCastDirection;
     Vector3 playerDirection;
     public bool isGameOver = false;
     public PlayerController playerCnt;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        rotationY = rotationY0;
+        transform.rotation = Quaternion.Euler(0f, rotationY0, 0f);
 
+        if (rotationY0 != 0)
+        {
+            Debug.Log(rotationY0);
+            Debug.Log(rotationY);
+            Debug.Log(transform.rotation.eulerAngles.y);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         rotationY += rotateSpeed * Time.deltaTime;
-        if (rotationY >= 360f)
+        if (rotationY > 360f)
         {
             rotationY = 0f;
         }
+        else if (rotationY < 0f)
+        {
+            rotationY = 360f;
+        }
         transform.rotation = Quaternion.Euler(0f, rotationY, 0f);
+
+        
+
+        if (rotationY0 != 0)
+        {
+            Debug.Log(rotationY);
+            Debug.Log(transform.rotation.eulerAngles.y);
+        }
 
         //ここからRayCast飛ばす。回転速度を一致させる。上下の角度はボールに合わせる
         playerDirection = new Vector3(PlayerDistance(), player.transform.position.y - transform.position.y, 0f);
@@ -43,12 +65,10 @@ public class SpotLightController : MonoBehaviour
             if (name == "Player")
             {
                 Debug.Log(name);
-            }
-
-            if (!playerCnt.isGoal && name == "Player")
-            {
-                isGameOver = true;//プレイヤーにヒットしたらゲームオーバー
-                //Time.timeScale = 0;
+                if (!playerCnt.isGoal)
+                {
+                    isGameOver = true;//プレイヤーにヒットしたらゲームオーバー
+                }
             }
         }
     }

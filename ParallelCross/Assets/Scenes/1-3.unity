@@ -392,7 +392,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 482736835635340394, guid: 0e01a216f57f4a5408784506e40154bc, type: 3}
       propertyPath: m_Radius
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3238424111625896767, guid: 0e01a216f57f4a5408784506e40154bc, type: 3}
       propertyPath: walkSpeed
@@ -473,13 +473,29 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8608506806624387366, guid: 0e01a216f57f4a5408784506e40154bc, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 555982438}
   m_SourcePrefab: {fileID: 100100000, guid: 0e01a216f57f4a5408784506e40154bc, type: 3}
 --- !u!1 &555982430 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8608506806624387366, guid: 0e01a216f57f4a5408784506e40154bc, type: 3}
   m_PrefabInstance: {fileID: 555982429}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &555982438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555982430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 907edc30afbf26b43808ff62c7f6e154, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nearestGrid: {x: 0, y: 0}
 --- !u!1001 &677051120
 PrefabInstance:
   m_ObjectHideFlags: 0

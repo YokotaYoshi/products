@@ -24,5 +24,13 @@ public class HomeManager : MonoBehaviour
         {
             SceneManager.LoadScene("Scene3");
         }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            SceneManager.LoadScene("Scene4");
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            SceneManager.LoadScene("Scene5");
+        }
     }
 }
