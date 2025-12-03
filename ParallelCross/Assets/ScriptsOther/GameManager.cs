@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     
     public GameObject menuPanel;
     public GameObject enemy;
-    public float enemySpawnTime = 1f;
+    //public float enemySpawnTime = 1f;
     public GameObject choicesPanel;
     public GameObject imagePanel;
     public GameObject imagePanelImage;
@@ -347,7 +347,7 @@ public class GameManager : MonoBehaviour
             yield return null;
             if (gameState == GameState.Pause) yield break;
             else time += Time.deltaTime;
-            if (time > enemySpawnTime) break;
+            if (time > Data.timeWaitEnemy) break;
         }
         Vector2 appearPos = new Vector2(Data.loadPosX, Data.loadPosY);
         Instantiate(enemy, appearPos, Quaternion.identity);
