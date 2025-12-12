@@ -62,6 +62,7 @@ public class SearchPlayer : MonoBehaviour
             {
                 point = 2;
             }
+            //1が見えるいちなら2、2が見える位置なら3、という風にしたい
         }
 
         //見える位置でも遠すぎる場合は論外
