@@ -1,7 +1,5 @@
 実行ファイル
 Windows版:output_Windows
-macOS版:output_macOS.app
-web版:output_webGL
 
 UnityPlay版URL:https://play.unity.com/en/games/b81c714e-e9bd-4520-b0ca-6cb8db3d3357/parallelcross
 

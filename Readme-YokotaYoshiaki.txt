@@ -1,3 +1,0 @@
-UniSideGame, UniTopGameはSTUDIO SHIN著『たのしい2Dゲームの作り方第2版　Unityではじめるゲーム開発入門』を参考によしが制作した物です。
-Soukobanは全素材、全プログラム、全シーンの基本構造、stage1～stage7, その他数ステージの設計をよしが担当しました。
-AlloyLaboratoryは現在制作中のゲームです。現状個人開発となっています。
