@@ -53,12 +53,8 @@ public class EnemyGuardianController : MonoBehaviour
         Ray ray = new Ray(currentPosition, playerDirection);
         Debug.DrawRay(ray.origin, ray.direction * playerDirection.magnitude, Color.red, 0.5f);
 
-        /*
-        int excludedLayer = LayerMask.NameToLayer("Enemy");
-        int excludedMask = 1 << excludedLayer;
-        int invertedMask = ~excludedMask;//~:ビット反転で除外レイヤー以外を対象にする
-        */
-        int invertedMask = LayerMask.GetMask("Default");
+        
+        int Mask = LayerMask.GetMask("Default");
 
         time += Time.deltaTime;
 
@@ -69,7 +65,7 @@ public class EnemyGuardianController : MonoBehaviour
             {
                 time = 0f;
                 //1秒ごとに位置チェック
-                hit = Physics2D.Raycast(currentPosition, playerDirection, distance, invertedMask);
+                hit = Physics2D.Raycast(currentPosition, playerDirection, distance, Mask);
             }
             if (hit.collider != null)
             {
@@ -87,7 +83,7 @@ public class EnemyGuardianController : MonoBehaviour
         }
         else
         {
-            hit = Physics2D.Raycast(currentPosition, playerDirection, distance, invertedMask);
+            hit = Physics2D.Raycast(currentPosition, playerDirection, distance, Mask);
             if (hit.collider != null)
             {
                 if (hit.collider.gameObject.tag == "Player")

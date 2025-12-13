@@ -255,6 +255,8 @@ public class GameManager : MonoBehaviour
         PlayerLevelDown();
         //データをいじる
         Data.itemDataNum = new int[] { 7, 0, 0, 0, 0, 0 };
+        Data.loadPosX = 0f;
+        Data.loadPosY = 0f;
         PlayerController.hp = 3;
         SceneManager.LoadScene("GameOver");
 

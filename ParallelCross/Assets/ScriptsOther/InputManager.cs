@@ -9,6 +9,7 @@ public enum InputType
 public class InputManager : MonoBehaviour
 {
     public static InputType inputType = InputType.Null;
+    public static Direction inputDirection = Direction.N;
     public GameObject InputPanel;
     public bool isUION = false;//ボタンがあるとき、左クリックでActionに変わらないように
 
@@ -62,6 +63,28 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.V) || Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.N) || Input.GetKeyDown(KeyCode.M) || Input.GetMouseButtonDown(1))
         {
             inputType = InputType.Back;
+        }
+
+
+        if (Input.GetAxisRaw("Horizontal") == 1f)
+        {
+            inputDirection = Direction.Right;
+        } 
+        else if (Input.GetAxisRaw("Horizontal") == -1f)
+        {
+            inputDirection = Direction.Left;
+        }
+        else if (Input.GetAxisRaw("Vertical") == 1f) 
+        {
+            inputDirection = Direction.Up;
+        }
+        else if (Input.GetAxisRaw("Vertical") == -1f) 
+        {
+            inputDirection = Direction.Down;
+        }
+        else
+        {
+            inputDirection = Direction.N;
         }
     }
 

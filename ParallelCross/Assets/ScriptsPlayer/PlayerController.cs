@@ -7,19 +7,24 @@ using UnityEngine.Rendering.Universal;//URPを使うのに必要
 
 public class PlayerController : MonoBehaviour
 {
+    public bool debugMode = false;
     //操作キャラクターの動きに関する部分を主に担当する
+
     
 
     //----------------通常の動き関係----------------
     private Rigidbody2D rb2d;
-    public float walkSpeed = 5.0f;//歩きスピード
-    public float dashSpeed = 10.0f;//ダッシュスピード
+    public float walkSpeedCustom = 5f;//歩きスピード
+    float walkSpeed;
+    public float dashSpeedCustom = 10f;//ダッシュスピード
+    float dashSpeed;
+
     public static float speed;//移動速度
-    float axisH = 0.0f;//左右入力離散値
-    float axisV = 0.0f;//上下入力離散値
+    float axisH = 0f;//左右入力離散値
+    float axisV = 0f;//上下入力離散値
     Vector2 inputVector;//入力方向
-    float preAxisH = 0.0f;//axisHの一時保存
-    float preAxisV = 0.0f;//axisVの一時保存
+    float preAxisH = 0f;//axisHの一時保存
+    float preAxisV = 0f;//axisVの一時保存
 
     public bool isMoving = false;//移動中かどうか
     public bool isCoroutineWorking = false;//コルーチン中かどうか
@@ -85,22 +90,22 @@ public class PlayerController : MonoBehaviour
         switch (startPos)
         {
             case Direction.Right:
-                transform.position = new Vector2(Data.loadPosX + 1.0f, Data.loadPosY);
+                transform.position = new Vector2(Data.loadPosX + 1f, Data.loadPosY);
                 currentDirection = Direction.Right;
 
                 break;
             case Direction.Left:
-                transform.position = new Vector2(Data.loadPosX - 1.0f, Data.loadPosY);
+                transform.position = new Vector2(Data.loadPosX - 1f, Data.loadPosY);
                 currentDirection = Direction.Left;
 
                 break;
             case Direction.Up:
-                transform.position = new Vector2(Data.loadPosX, Data.loadPosY + 1.0f);
+                transform.position = new Vector2(Data.loadPosX, Data.loadPosY + 1f);
                 currentDirection = Direction.Up;
 
                 break;
             case Direction.Down:
-                transform.position = new Vector2(Data.loadPosX, Data.loadPosY - 1.0f);
+                transform.position = new Vector2(Data.loadPosX, Data.loadPosY - 1f);
                 currentDirection = Direction.Down;
 
                 break;
@@ -171,25 +176,30 @@ public class PlayerController : MonoBehaviour
         switch (Data.difficulty)//難易度に応じて速度変更、攻撃の隙も変更
         {
             case Difficulty.VeryHard:
-                dashSpeed = 10.0f;
-                walkSpeed = 5.0f;
+                dashSpeed = 10f;
+                walkSpeed = 5f;
                 attackTimeWhole = 0.7f;
                 break;
             case Difficulty.Hard:
-                dashSpeed = 8.0f;
-                walkSpeed = 5.0f;
+                dashSpeed = 8f;
+                walkSpeed = 5f;
                 attackTimeWhole = 0.7f;
                 break;
             case Difficulty.Normal:
-                dashSpeed = 8.0f;
-                walkSpeed = 5.0f;
+                dashSpeed = 8f;
+                walkSpeed = 5f;
                 attackTimeWhole = 0.7f;
                 break;
             case Difficulty.Easy:
-                dashSpeed = 7.0f;
-                walkSpeed = 4.0f;
+                dashSpeed = 7f;
+                walkSpeed = 4f;
                 attackTimeWhole = 0.5f;
                 break;
+        }
+        if (debugMode)
+        {
+            dashSpeed = dashSpeedCustom;
+            walkSpeed = walkSpeedCustom;
         }
 
         //if (Input.GetAxisRaw("Vertical") != 0f) Debug.Log("あ");
@@ -446,7 +456,7 @@ public class PlayerController : MonoBehaviour
                     break;
             }
 
-            isGoal = 0.01f * speed;
+            isGoal = Time.deltaTime * speed;
 
             yield return null;
         }

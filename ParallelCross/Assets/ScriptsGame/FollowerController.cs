@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class FollowerController : MonoBehaviour
 {
+    public bool debugMode = false;
     Rigidbody2D rb2d;
     Rigidbody2D playerRb2d;//プレイヤーのRigidbody2D
     GameObject player;//プレイヤー
@@ -15,8 +16,8 @@ public class FollowerController : MonoBehaviour
     bool isMoving = false;//動いているかどうか
     bool isCoroutineWorking = false;//コルーチン中かどうか
     bool isFollowing = true;//追従しているかどうか
-    Vector2 targetDirection;//自動移動時のゴールの方向
-    Vector2 targetPosition;//移動先
+    //Vector2 targetDirection;//自動移動時のゴールの方向
+    //Vector2 targetPosition;//移動先
     
     float distance;//プレイヤーとの距離
 
@@ -43,10 +44,17 @@ public class FollowerController : MonoBehaviour
 
         transform.position = new Vector2(Data.loadPosX, Data.loadPosY);
         nearestGrid = new Vector2(Data.loadPosX, Data.loadPosY);
-        Debug.Log(transform.position);
+        //Debug.Log(transform.position);
 
         //おさらばした後シーンを移動した場合出現しない
-        if (Data.charaDataNum[1] == 0) Destroy(gameObject);
+        if (!debugMode)
+        {
+            if (Data.charaDataNum[1] == 0) 
+            {
+                Destroy(gameObject);
+            }
+        }
+        
 
         //プレイヤーと離れていた場合について
     }
@@ -55,7 +63,7 @@ public class FollowerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //Debug.Log(Time.deltaTime);
 
         CheckPlayerPosition();
 
@@ -102,38 +110,57 @@ public class FollowerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        //Debug.Log(Time.deltaTime);
         if (!isFollowing) return;//追従しないなら静止
-        if (isMoving && !isCoroutineWorking)
+        if (isCoroutineWorking) return;//コルーチン優先
+        if (isMoving)
         {
-            //コルーチン開始していなかったら開始
-            if (playerDirection == moveDirection)
+            //コルーチン開始していない場合
+            if (playerDirection == InputManager.inputDirection)
             {
+                //プレイヤーと同じ方向
                 if (playerDirection == Direction.Right)
                 {
                     rb2d.linearVelocity = new Vector2(speed, 0f);
+                    if (playerCnt.isCollisionRight)
+                    {
+                        ResetPosition();
+                    }
                 }
                 else if (playerDirection == Direction.Left)
                 {
                     rb2d.linearVelocity = new Vector2(-speed, 0f);
+                    if (playerCnt.isCollisionLeft)
+                    {
+                        ResetPosition();
+                    }
                 }
                 else if (playerDirection == Direction.Up)
                 {
                     rb2d.linearVelocity = new Vector2(0f, speed);
+                    if (playerCnt.isCollisionUp)
+                    {
+                        ResetPosition();
+                    }
                 }
-                else
+                else if (playerDirection == Direction.Down)
                 {
                     rb2d.linearVelocity = new Vector2(0f, -speed);
+                    if (playerCnt.isCollisionDown)
+                    {
+                        ResetPosition();
+                    }
                 }
             }
             else
             {
                 StartCoroutine(Follow());
             }
-            
         }
-
-        if (!isMoving)
+        else
         {
+            //プレイヤーが静止した瞬間にストップ
+            StopAllCoroutines();
             transform.position = nearestGrid;
             rb2d.linearVelocity = Vector2.zero;
         }
@@ -148,6 +175,7 @@ public class FollowerController : MonoBehaviour
         player.transform.position.y - transform.position.y);
         distance = playerPosition.magnitude;
 
+        //プレイヤーの方向は
         if (playerPosition.y > playerPosition.x && playerPosition.y > -playerPosition.x)
             playerDirection = Direction.Up;
         else if (playerPosition.y < playerPosition.x && playerPosition.y < -playerPosition.x)
@@ -158,6 +186,12 @@ public class FollowerController : MonoBehaviour
             playerDirection = Direction.Left;
     }
 
+    public void ResetPosition()
+    {
+        //近くの格子点で静止する
+        transform.position = nearestGrid;
+        rb2d.linearVelocity = Vector2.zero;
+    }
     IEnumerator Follow()
     {
         //動いているフラグ立て
@@ -165,9 +199,9 @@ public class FollowerController : MonoBehaviour
         float isGoal = 0.1f;//ゴールまでの距離がこれ以下だったらゴールとする
 
         //ゴールはプレイヤーの座標に最も近い格子点
-        targetPosition = new Vector2(Mathf.Round(player.transform.position.x), Mathf.Round(player.transform.position.y));
+        Vector2 targetPosition = new Vector2(Mathf.Round(player.transform.position.x), Mathf.Round(player.transform.position.y));
         //ゴールの方向の正規ベクトル
-        targetDirection = new Vector2(targetPosition.x - transform.position.x, targetPosition.y - transform.position.y).normalized;
+        Vector2 targetDirection = new Vector2(targetPosition.x - transform.position.x, targetPosition.y - transform.position.y).normalized;
 
         //まず格子点に
         //transform.position = nearestGrid;
@@ -205,7 +239,7 @@ public class FollowerController : MonoBehaviour
                 yield break;
             }
 
-            isGoal = 0.01f * speed;
+            isGoal = Time.deltaTime * speed;
 
             yield return null;
         }
@@ -216,7 +250,7 @@ public class FollowerController : MonoBehaviour
         //速度をゼロに
         //rb2d.linearVelocity = Vector2.zero;
         //座標を格子点に
-        //transform.position = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
+        transform.position = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
     }
     
     public IEnumerator MoveIndependently()

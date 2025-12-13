@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2003234960891846178}
   - component: {fileID: 1853293251769847081}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LightCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,7 +258,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2504569696350223495}
   - component: {fileID: 2617572365330939568}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LightAngled
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -426,7 +426,7 @@ GameObject:
   - component: {fileID: 4311582809431162689}
   - component: {fileID: 8031549226986598317}
   - component: {fileID: 2005271539226458843}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: PlayerFocus
   m_TagString: PlayerFocus
   m_Icon: {fileID: 0}
@@ -938,8 +938,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 040f19feff2ed0c419ee3378a1d78de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 5
-  dashSpeed: 10
+  debugMode: 0
+  walkSpeedCustom: 5
+  dashSpeedCustom: 10
   isMoving: 0
   isCoroutineWorking: 0
   moveDirection: 4

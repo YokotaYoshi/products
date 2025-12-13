@@ -102,7 +102,7 @@ public class ExecuteFungus : MonoBehaviour
 
         if (other.gameObject.tag == "Player" && !executeOnClick)
         {
-            flowchart.ExecuteBlock(blockName);
+            //flowchart.ExecuteBlock(blockName);
         }
     }
 

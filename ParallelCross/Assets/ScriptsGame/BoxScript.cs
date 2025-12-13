@@ -216,7 +216,7 @@ public class BoxScript : MonoBehaviour
                     break;
             }
 
-            isGoal = 0.01f * speed;
+            isGoal = Time.deltaTime * speed;
 
             yield return null;
         }

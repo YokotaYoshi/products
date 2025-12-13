@@ -114,13 +114,6 @@ public class EnemyChaseController : MonoBehaviour
         Ray ray = new Ray(transform.position, playerDirection);
 
         
-
-        /*
-        Debug.DrawRay(ray.origin, ray.direction * playerDirection.magnitude, Color.red, 0.5f);
-        int excludedLayer = LayerMask.NameToLayer("Enemy");
-        int excludedMask = 1 << excludedLayer;
-        int invertedMask = ~excludedMask;//~:ビット反転で除外レイヤー以外を対象にする
-        */
         int Mask = LayerMask.GetMask("Default");
 
         hit = Physics2D.Raycast(transform.position, playerDirection, distance, Mask);
@@ -190,8 +183,11 @@ public class EnemyChaseController : MonoBehaviour
     {
         //見える場所にプレイヤーがいるならプレイヤーに
         //いない場合は見える場所にいるSearchPlayerのなかでpointが最も小さいもの
+        //pointが同じ場合はdistanceが最も小さいもの
         int minPoint = 99;
         int searchPoint;
+        float minDistance = 99f;
+        float searchPointDistance;
         int searchPointNum = 0;
         if (hit.collider != null)
         {
@@ -210,17 +206,10 @@ public class EnemyChaseController : MonoBehaviour
                 {
                     for (int i = 0; i < searchPoints.Length; ++i)
                     {
-                        Vector2 searchPointDirection = new Vector2(searchPoints[i].transform.position.x - transform.position.x, searchPoints[i].transform.position.y - transform.position.y);//ここから見た捜索点の座標
+                        Vector2 searchPointDirection = new Vector3(searchPoints[i].transform.position.x - transform.position.x, searchPoints[i].transform.position.y - transform.position.y, 0f);//ここから見た捜索点の座標
 
-                        
-                        //int excludedLayer = LayerMask.NameToLayer("IgnoreRayCast");//レイヤーのインデックス取得
-                        //int excludedMask = 1 << excludedLayer;//左に1ビットシフト。2倍にしている。なぜ
-                        
-                        int excludedMask = LayerMask.GetMask("Ignore Raycast");
-                        
-                        int invertedMask = ~excludedMask;//~:ビット反転で除外レイヤー以外を対象にする
-                        
-                        hitSP = Physics2D.Raycast(transform.position, searchPointDirection, searchPointDirection.magnitude, invertedMask);
+                    
+                        hitSP = Physics2D.Raycast(transform.position, searchPointDirection, searchPointDirection.magnitude);
                         
 
                         if (hitSP.collider != null)
@@ -232,14 +221,19 @@ public class EnemyChaseController : MonoBehaviour
                             {
 
                                 searchPoint = searchPoints[i].GetComponent<SearchPlayer>().point;
+                                searchPointDistance = searchPoints[i].GetComponent<SearchPlayer>().distance;
                                 minPoint = Mathf.Min(minPoint, searchPoint);
                                 Debug.Log(i);
                                 //Debug.Log(searchPoint);
                                 if (minPoint == searchPoint)
                                 {
-                                    //iをほぞん
-                                    searchPointNum = i;
-                                    
+                                    //距離を比較
+                                    minDistance = Mathf.Min(minDistance, searchPointDistance);
+                                    if (minDistance == searchPointDistance)
+                                    {
+                                        //iをほぞん
+                                        searchPointNum = i;
+                                    }
                                 }
                             }
                         }
@@ -398,7 +392,7 @@ public class EnemyChaseController : MonoBehaviour
             //ゴールまでの距離を更新
             gap = new Vector2(targetGrid.x - transform.position.x, targetGrid.y - transform.position.y).magnitude;
 
-            isGoal = 0.01f * speed;
+            isGoal = Time.deltaTime * speed;
 
             time += Time.deltaTime;
 
