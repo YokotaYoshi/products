@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Goal
+  - SpotLight
   layers:
   - Default
   - TransparentFX

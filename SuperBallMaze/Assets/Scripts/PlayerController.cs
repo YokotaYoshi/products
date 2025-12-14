@@ -19,22 +19,31 @@ public class PlayerController : MonoBehaviour
     public bool isGoal = false;
     public bool isHomeScene = false;
     bool isMovable = true;
-    public SpotLightController spotLightCnt;
+    GameObject[] SpotLights;
+    SpotLightController[] spotLightCnt;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        SpotLights = GameObject.FindGameObjectsWithTag("SpotLight");
+        spotLightCnt = new SpotLightController[SpotLights.Length];
+        for (int i = 0; i < SpotLights.Length; ++i)
+        {
+            spotLightCnt[i] = SpotLights[i].GetComponent<SpotLightController>();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isHomeScene && !spotLightCnt.isGameOver && !isGoal)
+        for (int i = 0; i < SpotLights.Length; ++i)
         {
-            //操作できる
-            isMovable = true;
+            if (spotLightCnt[i].isGameOver)
+            {
+                isMovable = false;
+            }
         }
-        else
+        if (isHomeScene || isGoal)
         {
             //操作できない
             isMovable = false;
@@ -53,24 +62,51 @@ public class PlayerController : MonoBehaviour
         distance = Mathf.Sqrt(transform.position.x * transform.position.x +
         transform.position.z * transform.position.z);
 
-        axisX = Input.GetAxis("Horizontal");
-        axisY = rb.linearVelocity.y;
-        
-        if (distance < 0.9f)
+        //axisX = Input.GetAxis("Horizontal");
+        if (Input.GetKey(KeyCode.D))
         {
-            //真ん中に近づきすぎるとそれ以上前にいけないように
-            axisZ = (Input.GetAxis("Vertical") - 1.0f) / 2f;
-
+            axisX = 1f;
         }
-        else if (distance > 19f)
+        else if (Input.GetKey(KeyCode.A))
         {
-            //円盤ステージから落ちないように
-            axisZ = (Input.GetAxis("Vertical") + 1.0f) / 2f;
+            axisX = -1f;
         }
         else
         {
-            axisZ = Input.GetAxis("Vertical");
+            axisX = 0f;
         }
+        
+        axisY = rb.linearVelocity.y;
+        
+        if (Input.GetKey(KeyCode.W))
+        {
+            if (distance < 0.9f)
+            {
+                //真ん中に近づきすぎるとそれ以上前にいけないように
+                axisZ = 0f;
+            }
+            else
+            {
+                axisZ = 1f;
+            }
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            if (distance > 19f)
+            {
+                //円盤ステージから落ちないように
+                axisZ = 0f;
+            }
+            else
+            {
+                axisZ = -1f;
+            }
+        }
+        else
+        {
+            axisZ = 0f;
+        }
+        
         
         theta = Mathf.Atan2(transform.position.z, transform.position.x);
         
@@ -114,14 +150,18 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        for (int i = 0; i < SpotLights.Length; ++i)
+        {
+            if (spotLightCnt[i].isGameOver)
+            {
+                return;
+            }
+        }
         if (other.gameObject.tag == "Goal")
         {
             Debug.Log("Goal");
-            if (!spotLightCnt.isGameOver)
-            {
-                isGoal = true;
-            }
             
+            isGoal = true;
         }
     }
 }

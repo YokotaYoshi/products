@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 141271898}
   m_Layer: 0
   m_Name: Spot Light (2)
-  m_TagString: Untagged
+  m_TagString: SpotLight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -885,7 +885,7 @@ GameObject:
   - component: {fileID: 609065227}
   m_Layer: 0
   m_Name: Spot Light (1)
-  m_TagString: Untagged
+  m_TagString: SpotLight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1791,7 +1791,7 @@ GameObject:
   - component: {fileID: 1682932685}
   m_Layer: 0
   m_Name: Spot Light
-  m_TagString: Untagged
+  m_TagString: SpotLight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

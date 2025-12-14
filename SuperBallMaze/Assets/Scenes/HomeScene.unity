@@ -676,7 +676,7 @@ GameObject:
   - component: {fileID: 848432214}
   m_Layer: 0
   m_Name: Spot Light (1)
-  m_TagString: Untagged
+  m_TagString: SpotLight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -693,7 +693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7452cd574a05a654d878e81ddeadb04d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationY: 0
+  rotationY0: 0
   rotateSpeed: -90
   isGameOver: 0
   playerCnt: {fileID: 1371990966}
@@ -1305,7 +1305,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGoal: 0
   isHomeScene: 1
-  spotLightCnt: {fileID: 1682932685}
 --- !u!1 &1682923458
 GameObject:
   m_ObjectHideFlags: 0
@@ -1399,7 +1398,7 @@ GameObject:
   - component: {fileID: 1682932685}
   m_Layer: 0
   m_Name: Spot Light
-  m_TagString: Untagged
+  m_TagString: SpotLight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1519,7 +1518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7452cd574a05a654d878e81ddeadb04d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationY: 0
+  rotationY0: 0
   rotateSpeed: 90
   isGameOver: 0
   playerCnt: {fileID: 1371990966}

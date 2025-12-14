@@ -47,8 +47,8 @@ public class SpotLightController : MonoBehaviour
 
         if (rotationY0 != 0)
         {
-            Debug.Log(rotationY);
-            Debug.Log(transform.rotation.eulerAngles.y);
+            //Debug.Log(rotationY);
+            //Debug.Log(transform.rotation.eulerAngles.y);
         }
 
         //ここからRayCast飛ばす。回転速度を一致させる。上下の角度はボールに合わせる
