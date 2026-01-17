@@ -77,6 +77,7 @@ public class InputPanelManager : MonoBehaviour
 
     void Success()
     {
+        text = "";
         flowchart.SetBooleanVariable("event", false);
         if (eventProgressMainSet != 0)
             flowchart.SetIntegerVariable("eventProgressMain", eventProgressMainSet);
