@@ -1270,6 +1270,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flowchart: {fileID: 5128167487383370804}
   blockName: upstair
+  blockNames: []
+  keyItems: 
   executeOnClick: 0
   choices: []
   addChoice: 
@@ -86330,7 +86332,7 @@ MonoBehaviour:
     width: 1114
     height: 859
   selectedBlocks:
-  - {fileID: 5128167487383370871}
+  - {fileID: 5128167487383370847}
   selectedCommands: []
   variables:
   - {fileID: 470528181653962044}

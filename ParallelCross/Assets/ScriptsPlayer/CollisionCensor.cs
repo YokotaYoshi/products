@@ -9,12 +9,14 @@ public class CollisionCensor : MonoBehaviour
     PlayerController playerCnt;
     BoxScript boxCnt;
     BoxScript otherBoxCnt;
+    EnemyChaseController enemyCnt;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         playerCnt = GetComponentInParent<PlayerController>();
         boxCnt = GetComponentInParent<BoxScript>();
+        enemyCnt = GetComponentInParent<EnemyChaseController>();
     }
 
     // Update is called once per frame
@@ -43,6 +45,8 @@ public class CollisionCensor : MonoBehaviour
                     case Direction.Left:
                         playerCnt.isCollisionLeft = true;
                         break;
+                    default:
+                        break;
                 }
             }
             if (boxCnt != null)
@@ -60,6 +64,28 @@ public class CollisionCensor : MonoBehaviour
                         break;
                     case Direction.Left:
                         boxCnt.isCollisionLeft = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if (enemyCnt != null)
+            {
+                switch (collisionDirection)
+                {
+                    case Direction.Up:
+                        enemyCnt.isCollisionUp = true;
+                        break;
+                    case Direction.Down:
+                        enemyCnt.isCollisionDown = true;
+                        break;
+                    case Direction.Right:
+                        enemyCnt.isCollisionRight = true;
+                        break;
+                    case Direction.Left:
+                        enemyCnt.isCollisionLeft = true;
+                        break;
+                    default:
                         break;
                 }
             }
@@ -84,8 +110,11 @@ public class CollisionCensor : MonoBehaviour
                     case Direction.Left:
                         boxCnt.isCollisionLeft = true;
                         break;
+                    default:
+                        break;
                 }
             }
+
             if (playerCnt != null)
             {
                 switch (collisionDirection)
@@ -114,6 +143,29 @@ public class CollisionCensor : MonoBehaviour
                             playerCnt.isCollisionLeft = true;
                         }
                         break;
+                    default:
+                        break;
+                }
+            }
+
+            if (enemyCnt != null)
+            {
+                switch (collisionDirection)
+                {
+                    case Direction.Up:
+                        enemyCnt.isCollisionUp = true;
+                        break;
+                    case Direction.Down:
+                        enemyCnt.isCollisionDown = true;
+                        break;
+                    case Direction.Right:
+                        enemyCnt.isCollisionRight = true;
+                        break;
+                    case Direction.Left:
+                        enemyCnt.isCollisionLeft = true;
+                        break;
+                    default:
+                        break;
                 }
             }
         }
@@ -135,6 +187,28 @@ public class CollisionCensor : MonoBehaviour
                         break;
                     case Direction.Left:
                         playerCnt.isCollisionLeft = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if (enemyCnt != null)
+            {
+                switch (collisionDirection)
+                {
+                    case Direction.Up:
+                        enemyCnt.isCollisionUp = true;
+                        break;
+                    case Direction.Down:
+                        enemyCnt.isCollisionDown = true;
+                        break;
+                    case Direction.Right:
+                        enemyCnt.isCollisionRight = true;
+                        break;
+                    case Direction.Left:
+                        enemyCnt.isCollisionLeft = true;
+                        break;
+                    default:
                         break;
                 }
             }
@@ -161,6 +235,8 @@ public class CollisionCensor : MonoBehaviour
                     case Direction.Left:
                         playerCnt.isCollisionLeft = false;
                         break;
+                    default:
+                        break;
                 }
             }
             if (boxCnt != null)
@@ -178,6 +254,28 @@ public class CollisionCensor : MonoBehaviour
                         break;
                     case Direction.Left:
                         boxCnt.isCollisionLeft = false;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if (enemyCnt != null)
+            {
+                switch (collisionDirection)
+                {
+                    case Direction.Up:
+                        enemyCnt.isCollisionUp = false;
+                        break;
+                    case Direction.Down:
+                        enemyCnt.isCollisionDown = false;
+                        break;
+                    case Direction.Right:
+                        enemyCnt.isCollisionRight = false;
+                        break;
+                    case Direction.Left:
+                        enemyCnt.isCollisionLeft = false;
+                        break;
+                    default:
                         break;
                 }
             }

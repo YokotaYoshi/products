@@ -93,7 +93,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flowchart: {fileID: 0}
   blockName: hole
-  executeOnClick: 0
+  blockNames: []
+  keyItems: 
+  executeOnClick: 1
   choices: []
   addChoice: 
   question: 

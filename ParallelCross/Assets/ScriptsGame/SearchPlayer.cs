@@ -21,11 +21,14 @@ public class SearchPlayer : MonoBehaviour
     CircleCollider2D cCollider;
     bool isActive = true;
     float inactiveTime = 0f;
+    GameObject enemy;
+    Vector2 enemyDirection;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        enemy = GameObject.FindGameObjectWithTag("Enemy");
         Mask = LayerMask.GetMask("Default");//Defaultレイヤーのみ
         searchPoints = GameObject.FindGameObjectsWithTag("SearchPoint");
         //自分も含まれる
@@ -50,6 +53,17 @@ public class SearchPlayer : MonoBehaviour
     {
         playerDirection = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);//ここから見たプレイヤーの位置
 
+        if (enemy != null)
+        {
+            enemyDirection = new Vector2(enemy.transform.position.x - transform.position.x, enemy.transform.position.y - transform.position.y);
+
+            if(enemyDirection.magnitude <= 0.1f)
+            {
+                isActive = false;
+            }
+        }
+        
+
         distance = Mathf.Abs(playerDirection.x) + Mathf.Abs(playerDirection.y);//斜めの位置にあるものの評価低めにする
 
         //Ray ray = new Ray(transform.position, playerDirection);
@@ -72,7 +86,7 @@ public class SearchPlayer : MonoBehaviour
                 int minPoint = 10;
                 for (int i = 0; i < searchPoints.Length; ++i)
                 {
-                    Debug.Log(i);
+                    //Debug.Log(i);
                     if (i != myNumber) 
                     {
                         
@@ -91,14 +105,6 @@ public class SearchPlayer : MonoBehaviour
             //1が見えるいちなら2、2が見える位置なら3、という風にしたい
         }
 
-        
-
-        //見える位置でも遠すぎる場合は論外
-        /*
-        if (distance > 8f) point = 3;
-        if (distance > 11f) point = 4;
-        if (distance > 15f) point = 5;
-        */
 
         if (point == 2)
         {
@@ -110,6 +116,7 @@ public class SearchPlayer : MonoBehaviour
         //コライダーOnOff
         if (isActive)
         {
+            //敵はこの点から離れた
             if (inactiveTime > 0f)
             {
                 inactiveTime -= Time.deltaTime;
@@ -121,6 +128,7 @@ public class SearchPlayer : MonoBehaviour
         }
         else
         {
+            //敵はこの点の近くにいる
             cCollider.enabled = false;
             inactiveTime = 1f;
         }
@@ -154,16 +162,20 @@ public class SearchPlayer : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        /*
         if (other.gameObject.tag == "Enemy")
         {
             isActive = false;
         }
+        */
     }
     void OnTriggerExit2D(Collider2D other)
     {
+        
         if (other.gameObject.tag == "Enemy")
         {
             isActive = true;
         }
+        
     }
 }

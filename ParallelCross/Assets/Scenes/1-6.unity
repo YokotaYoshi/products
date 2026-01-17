@@ -12546,6 +12546,10 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3677477172831742877, guid: fcd12ef4d8e12664996e16a5a0d80d76, type: 3}
+      propertyPath: itemSelf
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3677477172831742877, guid: fcd12ef4d8e12664996e16a5a0d80d76, type: 3}
       propertyPath: eventProgressSubBase
       value: 5
       objectReference: {fileID: 0}
@@ -13346,8 +13350,10 @@ MonoBehaviour:
     y: -340
     width: 1114
     height: 859
-  selectedBlocks: []
-  selectedCommands: []
+  selectedBlocks:
+  - {fileID: 5128167487383370838}
+  selectedCommands:
+  - {fileID: 5128167487383370839}
   variables:
   - {fileID: 470528181653962044}
   - {fileID: 2828508056818846539}
@@ -13402,8 +13408,8 @@ MonoBehaviour:
   description: 
   eventHandler: {fileID: 0}
   commandList:
-  - {fileID: 5128167487383370839}
   - {fileID: 5128167487383370841}
+  - {fileID: 5128167487383370839}
   - {fileID: 5128167487383370866}
   - {fileID: 5128167487383370842}
   suppressAllAutoSelections: 0
@@ -14830,7 +14836,7 @@ MonoBehaviour:
         gameObjectVal: {fileID: 0}
       integerData:
         integerRef: {fileID: 0}
-        integerVal: 5
+        integerVal: 1
       materialData:
         materialRef: {fileID: 0}
         materialVal: {fileID: 0}

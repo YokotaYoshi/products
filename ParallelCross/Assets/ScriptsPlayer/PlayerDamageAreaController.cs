@@ -33,7 +33,7 @@ public class PlayerDamageAreaController : MonoBehaviour
                 //敵に接触した時の処理
                 PlayerController.hp -= 1;
                 playerCnt.isAttacked = true;
-                playerCnt.blownDirection = new Vector2(transform.position.x - other.transform.position.x, transform.position.y - other.transform.position.y).normalized;
+                playerCnt.blownDirection = new Vector2(transform.position.x - other.transform.position.x, transform.position.y - other.transform.position.y).normalized;//吹っ飛ばされる方向の正規ベクトル
             }
             if (other.gameObject.tag == "Damage2")
             {

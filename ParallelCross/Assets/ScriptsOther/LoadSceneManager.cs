@@ -12,12 +12,10 @@ public class LoadSceneManager : MonoBehaviour
     public float loadPosY;//ロード先のY座標
     public Direction startPos;//ロード先の追従者
     public float loadTime = 0.5f;//ロードするまでの時間。頻繁にロードする場面では短めに設定するべし
-    float enemySpawnTime = 0.5f;//敵出現までの最短時間
     GameObject player;
     PlayerController playerCnt;
     GameObject playerFocus;
     PlayerFocus playerFocusCS;
-    GameObject enemy;
     
 
 
@@ -35,7 +33,6 @@ public class LoadSceneManager : MonoBehaviour
             playerFocusCS = playerFocus.GetComponent<PlayerFocus>();
         }
 
-        enemy = GameObject.FindGameObjectWithTag("Enemy");
 
         //暗転用のスクリプトを取得
         blackCurtain = GameObject.FindGameObjectWithTag("BlackCurtain");
@@ -50,7 +47,6 @@ public class LoadSceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(eventOnStart);
 
     }
 
@@ -69,13 +65,6 @@ public class LoadSceneManager : MonoBehaviour
         Data.loadPosX = loadPosX;
         Data.loadPosY = loadPosY;
         PlayerController.startPos = startPos;
-
-        if (enemy != null)
-        {
-            //敵がいたら敵からの距離に応じて移動先で敵が現れるまでの時間を計測
-            Data.timeWaitEnemy = new Vector2(transform.position.x - enemy.transform.position.x, transform.position.y - enemy.transform.position.y).magnitude / 10f + enemySpawnTime;
-        }
-
         SceneManager.LoadScene(sceneName);
     }
     

@@ -8,6 +8,10 @@ public class ExecuteFungus : MonoBehaviour
     public Flowchart flowchart;//InspectorからFlowchartを割り当てる
 
     public string blockName;//実行したいブロック名
+    public string[] blockNames;//所持アイテムに応じて実行するブロックを変更
+    public ItemName[] keyItems;//ブロックを変更するためのアイテム
+    //複数のキーアイテムがある場合は？
+    //分岐させたいブロックが3つ以上ある場合は？
     public bool executeOnClick = true;//決定で実行するか、触れただけで実行するか
 
     //-------------選択肢-----------------
@@ -34,6 +38,23 @@ public class ExecuteFungus : MonoBehaviour
     void Update()
     {
         //Debug.Log(isExecutable);
+
+        //所持しているアイテムに応じて呼び出すブロックを変更できるようにしたい
+        if (blockNames != null && blockNames.Length >= 1)
+        {
+            //分岐がある場合
+            for (int i = 0; i < blockNames.Length; ++i)
+            {
+                for (int j = 0; j < Data.items; ++j)
+                {
+                    //所持アイテムを探索してキーアイテムに一致するかどうか
+                    if (Data.itemDataNum[j] == (int)keyItems[i])
+                    {
+                        blockName = blockNames[i];
+                    }
+                }
+            }
+        }
         
         if (isExecutable && InputManager.inputType == InputType.Action)
         {
@@ -55,17 +76,6 @@ public class ExecuteFungus : MonoBehaviour
                     //ボタンの小オブジェクトのテキストを編集
                     //Debug.Log(choices[i]);
                     //一回Dataクラスに渡す
-                    Debug.Log(i);
-                    //Debug.Log(ChoicesPanelManager.choices[i]);//null
-
-                    /*
-                    if (ChoicesPanelManager.choices[i] != null)
-                    {
-                        Debug.Log(ChoicesPanelManager.choices[i].GetComponentInChildren<Text>().text);
-                        ChoicesPanelManager.choices[i].GetComponentInChildren<Text>().text = choices[i];
-                        ChoicesPanelManager.blockNames[i] = choices[i];
-                    }
-                    */
                     
                     Data.choices[i] = choices[i];
                 }
@@ -88,6 +98,7 @@ public class ExecuteFungus : MonoBehaviour
 
     void OnTriggerEnter2D(UnityEngine.Collider2D other)//UnityEngineをつけないとFungusのと間違える
     {
+        Debug.Log(other.gameObject.tag);
         if (other.gameObject.tag == "PlayerFocus")
         {
             if (executeOnClick)
@@ -96,6 +107,7 @@ public class ExecuteFungus : MonoBehaviour
             }
             else
             {
+                Debug.Log(blockName);
                 flowchart.ExecuteBlock(blockName);//引数はblockの名前
             }
         }

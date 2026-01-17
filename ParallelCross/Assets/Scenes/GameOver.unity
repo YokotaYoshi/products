@@ -561,7 +561,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 491720009289861157, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
       insertIndex: 2
-      addedObject: {fileID: 897876134}
+      addedObject: {fileID: 897876137}
     - targetCorrespondingSourceObject: {fileID: 491720009289861157, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
       insertIndex: 3
       addedObject: {fileID: 897876133}
@@ -1018,7 +1018,7 @@ MonoBehaviour:
   reward: 0
   eventProgressMainSet: 0
   eventProgressSubSet: 0
---- !u!114 &897876134
+--- !u!114 &897876137
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1027,10 +1027,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 897876129}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba04aa791d8bf3e44a0593e94325558b, type: 3}
+  m_Script: {fileID: 11500000, guid: 800736dd273118c43b6f6ebbec1e9186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -5
+  up: 1
+  down: 1
+  right: 1
+  left: 1
+  collisionStart: 1
+  collisionEnd: 1
+  sprite0: {fileID: 0}
+  sprite1: {fileID: 0}
+  eventProgressMainBase: 0
+  eventProgressSubBase: 0
+  willDestroy: 0
+  willCreate: 0
+  createObject: {fileID: 0}
+  animateTime: 0.3
+  keyItem: 0
+  customMove: 1
+  speedX: 3
+  limitRight: 10
+  limitLeft: -10
+  speedY: 1
+  limitUp: 5
+  limitDown: -5
 --- !u!1 &952317094
 GameObject:
   m_ObjectHideFlags: 0
@@ -1147,19 +1168,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!114 &1021758048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1021758039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba04aa791d8bf3e44a0593e94325558b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
 --- !u!114 &1021758052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1183,6 +1191,40 @@ MonoBehaviour:
   reward: 0
   eventProgressMainSet: 0
   eventProgressSubSet: 0
+--- !u!114 &1021758056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021758039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 800736dd273118c43b6f6ebbec1e9186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  up: 1
+  down: 1
+  right: 1
+  left: 1
+  collisionStart: 1
+  collisionEnd: 1
+  sprite0: {fileID: 0}
+  sprite1: {fileID: 0}
+  eventProgressMainBase: 0
+  eventProgressSubBase: 0
+  willDestroy: 0
+  willCreate: 0
+  createObject: {fileID: 0}
+  animateTime: 0.3
+  keyItem: 0
+  customMove: 1
+  speedX: 3
+  limitRight: 10
+  limitLeft: -10
+  speedY: 0
+  limitUp: 5
+  limitDown: -5
 --- !u!1 &1074547448
 GameObject:
   m_ObjectHideFlags: 0
@@ -1327,7 +1369,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 491720009289861157, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
       insertIndex: 2
-      addedObject: {fileID: 1021758048}
+      addedObject: {fileID: 1021758056}
     - targetCorrespondingSourceObject: {fileID: 491720009289861157, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
       insertIndex: 3
       addedObject: {fileID: 1021758052}
@@ -52795,7 +52837,7 @@ MonoBehaviour:
   reward: 0
   eventProgressMainSet: 0
   eventProgressSubSet: 0
---- !u!114 &1917151783
+--- !u!114 &1917151786
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -52804,10 +52846,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 1917151778}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba04aa791d8bf3e44a0593e94325558b, type: 3}
+  m_Script: {fileID: 11500000, guid: 800736dd273118c43b6f6ebbec1e9186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -2
+  up: 1
+  down: 1
+  right: 1
+  left: 1
+  collisionStart: 1
+  collisionEnd: 1
+  sprite0: {fileID: 0}
+  sprite1: {fileID: 0}
+  eventProgressMainBase: 0
+  eventProgressSubBase: 0
+  willDestroy: 0
+  willCreate: 0
+  createObject: {fileID: 0}
+  animateTime: 0.3
+  keyItem: 0
+  customMove: 1
+  speedX: 6
+  limitRight: 10
+  limitLeft: -10
+  speedY: -1
+  limitUp: 5
+  limitDown: -5
 --- !u!1001 &1949279844
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52873,7 +52936,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 491720009289861157, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
       insertIndex: 2
-      addedObject: {fileID: 1917151783}
+      addedObject: {fileID: 1917151786}
     - targetCorrespondingSourceObject: {fileID: 491720009289861157, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
       insertIndex: 3
       addedObject: {fileID: 1917151782}

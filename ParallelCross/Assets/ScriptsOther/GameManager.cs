@@ -25,8 +25,6 @@ public class GameManager : MonoBehaviour
     public Image hp2;
     public Image hp3;
 
-    //----------------------セーブデータパネル
-    //public GameObject saveDatasPanel;
     //--------------------その他-------------------------
 
     GameObject player;//プレイヤー
@@ -103,10 +101,11 @@ public class GameManager : MonoBehaviour
         }
 
         inputManager = GetComponent<InputManager>();
-        
+        /*
         Debug.Log(Data.playerLevel);
         Debug.Log(Data.difficulty);//現在の難易度確認
         Debug.Log(gameState);
+        */
     }
 
     // Update is called once per frame
@@ -343,13 +342,12 @@ public class GameManager : MonoBehaviour
     IEnumerator AppearEnemy()
     {
         float time = 0f;
-        Debug.Log(Data.timeWaitEnemy);
         while (true)
         {
             yield return null;
             if (gameState == GameState.Pause) yield break;
             else time += Time.deltaTime;
-            if (time > Data.timeWaitEnemy) break;
+            if (time > 1f) break;//1秒で敵生成
         }
         Vector2 appearPos = new Vector2(Data.loadPosX, Data.loadPosY);
         Instantiate(enemy, appearPos, Quaternion.identity);
