@@ -79,7 +79,9 @@ public class BlockScript : MonoBehaviour
         //アイテムなら取得した瞬間に削除
         for (int i = 0; i < Data.items; ++i)
         {
-            if (Data.itemDataNum[i] == (int)itemSelf)
+            if (itemSelf == ItemName.Null)
+            {}
+            else if (Data.itemDataNum[i] == (int)itemSelf)
             {
                 Destroy(gameObject);
             }

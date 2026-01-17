@@ -344,67 +344,6 @@ PrefabInstance:
       addedObject: {fileID: 354816535}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a69b378297872cb4c82ca737a42611af, type: 3}
---- !u!1001 &295129562
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3973452173898227300, guid: 9321433ae8ee78240add42d229ad66b8, type: 3}
-      propertyPath: m_Name
-      value: Stage
-      objectReference: {fileID: 0}
-    - target: {fileID: 4095262648564343204, guid: 9321433ae8ee78240add42d229ad66b8, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4095262648564343204, guid: 9321433ae8ee78240add42d229ad66b8, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4095262648564343204, guid: 9321433ae8ee78240add42d229ad66b8, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4095262648564343204, guid: 9321433ae8ee78240add42d229ad66b8, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4095262648564343204, guid: 9321433ae8ee78240add42d229ad66b8, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4095262648564343204, guid: 9321433ae8ee78240add42d229ad66b8, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4095262648564343204, guid: 9321433ae8ee78240add42d229ad66b8, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4095262648564343204, guid: 9321433ae8ee78240add42d229ad66b8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4095262648564343204, guid: 9321433ae8ee78240add42d229ad66b8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4095262648564343204, guid: 9321433ae8ee78240add42d229ad66b8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7390885507828941683, guid: 9321433ae8ee78240add42d229ad66b8, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 1777276904}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 9321433ae8ee78240add42d229ad66b8, type: 3}
 --- !u!1 &354816534
 GameObject:
   m_ObjectHideFlags: 0
@@ -1009,6 +948,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flowchart: {fileID: 5128167487383370804}
   blockName: LoadHome
+  blockNames: []
+  keyItems: 
   executeOnClick: 0
   choices: []
   addChoice: 
@@ -1030,10 +971,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 800736dd273118c43b6f6ebbec1e9186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  up: 1
-  down: 1
-  right: 1
-  left: 1
   collisionStart: 1
   collisionEnd: 1
   sprite0: {fileID: 0}
@@ -1045,13 +982,15 @@ MonoBehaviour:
   createObject: {fileID: 0}
   animateTime: 0.3
   keyItem: 0
+  itemSelf: 0
   customMove: 1
+  loop: 1
   speedX: 3
-  limitRight: 10
-  limitLeft: -10
-  speedY: 1
-  limitUp: 5
-  limitDown: -5
+  limitRight: 15
+  limitLeft: -15
+  speedY: 0
+  limitUp: 10
+  limitDown: -10
 --- !u!1 &952317094
 GameObject:
   m_ObjectHideFlags: 0
@@ -1182,6 +1121,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flowchart: {fileID: 5128167487383370804}
   blockName: LoadHome
+  blockNames: []
+  keyItems: 
   executeOnClick: 0
   choices: []
   addChoice: 
@@ -1203,10 +1144,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 800736dd273118c43b6f6ebbec1e9186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  up: 1
-  down: 1
-  right: 1
-  left: 1
   collisionStart: 1
   collisionEnd: 1
   sprite0: {fileID: 0}
@@ -1218,13 +1155,15 @@ MonoBehaviour:
   createObject: {fileID: 0}
   animateTime: 0.3
   keyItem: 0
+  itemSelf: 0
   customMove: 1
-  speedX: 3
-  limitRight: 10
-  limitLeft: -10
-  speedY: 0
-  limitUp: 5
-  limitDown: -5
+  loop: 1
+  speedX: -3
+  limitRight: 15
+  limitLeft: -15
+  speedY: 1
+  limitUp: 10
+  limitDown: -10
 --- !u!1 &1074547448
 GameObject:
   m_ObjectHideFlags: 0
@@ -52828,6 +52767,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flowchart: {fileID: 5128167487383370804}
   blockName: LoadHome
+  blockNames: []
+  keyItems: 
   executeOnClick: 0
   choices: []
   addChoice: 
@@ -52849,10 +52790,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 800736dd273118c43b6f6ebbec1e9186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  up: 1
-  down: 1
-  right: 1
-  left: 1
   collisionStart: 1
   collisionEnd: 1
   sprite0: {fileID: 0}
@@ -52864,13 +52801,15 @@ MonoBehaviour:
   createObject: {fileID: 0}
   animateTime: 0.3
   keyItem: 0
+  itemSelf: 0
   customMove: 1
-  speedX: 6
-  limitRight: 10
-  limitLeft: -10
-  speedY: -1
-  limitUp: 5
-  limitDown: -5
+  loop: 1
+  speedX: 4
+  limitRight: 15
+  limitLeft: -15
+  speedY: 3
+  limitUp: 10
+  limitDown: -10
 --- !u!1001 &1949279844
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52889,7 +52828,7 @@ PrefabInstance:
       objectReference: {fileID: 916090261725292327, guid: 6457a26a87e1def4cb7420499317e42b, type: 3}
     - target: {fileID: 6940826776056657247, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6940826776056657247, guid: fc89ab4c85a721d42b44df8da6073a43, type: 3}
       propertyPath: m_LocalPosition.y
@@ -53393,7 +53332,6 @@ SceneRoots:
   - {fileID: 2125555999}
   - {fileID: 1127943452}
   - {fileID: 221606744}
-  - {fileID: 295129562}
   - {fileID: 2076122743}
   - {fileID: 1249533506}
   - {fileID: 555982429}
