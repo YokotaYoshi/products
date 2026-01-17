@@ -1034,8 +1034,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9100000, guid: 62f4a862fb08ac146a1c2b6e96440986, type: 2}
     - target: {fileID: 3238424111625896767, guid: 0e01a216f57f4a5408784506e40154bc, type: 3}
+      propertyPath: maxHp
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238424111625896767, guid: 0e01a216f57f4a5408784506e40154bc, type: 3}
       propertyPath: startPosX
-      value: 9
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 3238424111625896767, guid: 0e01a216f57f4a5408784506e40154bc, type: 3}
       propertyPath: startPosY
@@ -1093,6 +1097,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 2032972958061289525, guid: 2d065694e5f152d4fbdb251e52466199, type: 3}
+    - target: {fileID: 5084089309603670888, guid: 0e01a216f57f4a5408784506e40154bc, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6613874085486810215, guid: 0e01a216f57f4a5408784506e40154bc, type: 3}
       propertyPath: m_Controller
       value: 
@@ -53839,9 +53847,8 @@ MonoBehaviour:
     width: 1114
     height: 859
   selectedBlocks:
-  - {fileID: 5128167487383370820}
-  selectedCommands:
-  - {fileID: 5128167487383370861}
+  - {fileID: 5128167487383370877}
+  selectedCommands: []
   variables:
   - {fileID: 470528181653962044}
   - {fileID: 2828508056818846539}

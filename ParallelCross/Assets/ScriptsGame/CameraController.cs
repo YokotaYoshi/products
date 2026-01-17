@@ -160,11 +160,8 @@ public class CameraController : MonoBehaviour
     {
 
         //被弾した時とかに呼び出す
-        //X方向とY方向にわけて画面を振動させる
-
         //強制スクロールかどうかで座標を設定
 
-        //Vector2 startPosition = transform.position;
         float basePositionX = transform.position.x;
         float basePositionY = transform.position.y;
         float cameraPositionX = transform.position.x;

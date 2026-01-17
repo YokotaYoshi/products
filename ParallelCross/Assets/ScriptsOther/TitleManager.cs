@@ -61,31 +61,13 @@ public class TitleManager : MonoBehaviour
         {
             menuPanel.SetActive(true);
         }
-        
-        /*
-        else if (InputManager.inputType == InputType.Back)
-        {
-            if (buttonNum / 20 == 1) CloseSaveDatasPanel();
-            else if (buttonNum / 20 == 2) CloseOptionPanel();
-        }
-
-        if (Data.dashWhilePush)
-        {
-            buttonOption1.GetComponentInChildren<Text>().text = "シフトを押しているときダッシュする";
-        }
-        else
-        {
-            buttonOption1.GetComponentInChildren<Text>().text = "シフトを押しているとき歩く";
-        }
-        */
     }
 
     void SwitchButtonNum()
     {
-        //ブランチ上部
         //0:ゲーム開始
-        //20~:ロード
-        //40~:オプション
+        //20:続きから
+        //40:ゲーム終了
         if (buttonNum % 20 == 0)
         {
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) buttonNum -= 20;
@@ -101,20 +83,6 @@ public class TitleManager : MonoBehaviour
             }
             buttonFocused.GetComponent<Image>().color = focusColor;
         }
-        /*
-        else
-        {
-            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) buttonNum -= 1;
-            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) buttonNum += 1;
-            if (buttonNum >= 60) buttonNum = 0;
-            if (buttonNum <= -1) buttonNum = 40;
-        }
-
-        if (InputManager.inputType == InputType.Back)
-        {
-            buttonNum = (buttonNum / 20) * 20;
-        }
-        */
     }
 
     public void GameStart()

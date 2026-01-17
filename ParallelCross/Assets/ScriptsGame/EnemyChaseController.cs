@@ -25,7 +25,6 @@ public class EnemyChaseController : MonoBehaviour
     public float speedEasy;
     float speed;//追跡速度
     Rigidbody2D rb2d;//Rigidbody2D;
-    CircleCollider2D enemyCollider;//CircleCollider2D;
 
     
 
@@ -45,17 +44,16 @@ public class EnemyChaseController : MonoBehaviour
     float distance = 1f;
 
     //-------------何かに衝突した時に使う--------------
-    public bool isBlocked = false;//壁衝突フラグ。プレイヤーの方向にいけるかどうか
-
-    public float down = 0.0f;//ブロックを避けるための下方向移動量
-    public float right = 0.0f;//ブロックを避けるための右方向移動量
-    public float up = 0.0f;//ブロックを避けるための上方向移動量
-    public float left = 0.0f;//ブロックを避けるための左方向移動量
+    
+    public bool isCollisionUp;
+    public bool isCollisionDown;
+    public bool isCollisionRight;
+    public bool isCollisionLeft;
 
     public GameObject damageArea;//攻撃判定
+    public GameObject collision;//接触判定
     public float stanTimeBase = 1f;//攻撃されたときにひるむ時間
     float stanTime;
-    GridMove gridMove;
     Vector2 nearestGrid;
     //レイキャスト
     RaycastHit2D hit;
@@ -71,7 +69,7 @@ public class EnemyChaseController : MonoBehaviour
         searchPoints = GameObject.FindGameObjectsWithTag("SearchPoint");
         //playerCnt = player.GetComponent<PlayerController>();//プレイヤーコントローラーを取得
         rb2d = GetComponent<Rigidbody2D>();//Rigidbody2Dを取得
-        enemyCollider = GetComponent<CircleCollider2D>();//CircleCollider2Dを取得
+        
 
         if (GameManager.gameState == GameState.Run && isFirstAppearance) Destroy(gameObject);
     }
@@ -104,16 +102,13 @@ public class EnemyChaseController : MonoBehaviour
 
 
 
-        nearestGrid = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
-        playerGrid = new Vector2(Mathf.Round(player.transform.position.x), Mathf.Round(player.transform.position.y));
+        nearestGrid = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));//近くの格子点
+        playerGrid = new Vector2(Mathf.Round(player.transform.position.x), Mathf.Round(player.transform.position.y));//プレイヤーの近くの格子点
         playerDirection = new Vector2(player.transform.position.x - transform.position.x,
-        player.transform.position.y - transform.position.y);
+        player.transform.position.y - transform.position.y);//プレイヤーの方向
 
         float distance = Vector2.Distance(transform.position, player.transform.position);
 
-        Ray ray = new Ray(transform.position, playerDirection);
-
-        
         int Mask = LayerMask.GetMask("Default");
 
         hit = Physics2D.Raycast(transform.position, playerDirection, distance, Mask);
@@ -193,7 +188,7 @@ public class EnemyChaseController : MonoBehaviour
         {
             if (hit.collider.gameObject.tag == "Player")
             {
-                moveGrid = playerGrid;
+                moveGrid = playerGrid;//プレイヤーを視認できる位置なら追いかける
             }
             else
             {
@@ -223,7 +218,7 @@ public class EnemyChaseController : MonoBehaviour
                                 searchPoint = searchPoints[i].GetComponent<SearchPlayer>().point;
                                 searchPointDistance = searchPoints[i].GetComponent<SearchPlayer>().distance;
                                 minPoint = Mathf.Min(minPoint, searchPoint);
-                                Debug.Log(i);
+                                //Debug.Log(i);
                                 //Debug.Log(searchPoint);
                                 if (minPoint == searchPoint)
                                 {
@@ -257,36 +252,59 @@ public class EnemyChaseController : MonoBehaviour
         //自分から見たプレイヤーの角度
         playerDirectionDegree = Mathf.Atan2(moveGridDirection.y, moveGridDirection.x) * Mathf.Rad2Deg;
         //Debug.Log(playerDirectionDegree);
+        distance = 1f;
 
-        //目の前を防がれていない場合
-        if (!isBlocked)
+        if (playerDirectionDegree >= -50 && playerDirectionDegree < 50)
         {
-            //実際に動く方向を決定
-            distance = 1f;//とりあえず1マス動く
-            if (playerDirectionDegree >= -50 && playerDirectionDegree < 50)
+            //動く方向が右のほう
+            if (!isCollisionRight)
             {
-                //プレイヤーが右のほうにいる
                 moveDirection = Direction.Right;
             }
-            else if (playerDirectionDegree >= 50 && playerDirectionDegree < 130)
+            else
             {
-                //プレイヤーが上のほうにいる
+                moveDirection = Direction.N;
+            }
+        }
+        else if (playerDirectionDegree >= 50 && playerDirectionDegree < 130)
+        {
+            //動く方向が上のほう
+            if (!isCollisionUp)
+            {
                 moveDirection = Direction.Up;
             }
-            else if (playerDirectionDegree >= -130 && playerDirectionDegree < -50)
+            else
             {
-                //プレイヤーが下のほうにいる
+                moveDirection = Direction.N;
+            }
+        }
+        else if (playerDirectionDegree >= -130 && playerDirectionDegree < -50)
+        {
+            //動く方向が下のほう
+            if (!isCollisionDown)
+            {
                 moveDirection = Direction.Down;
             }
             else
             {
-                //プレイヤーが左のほうにいる
-                moveDirection = Direction.Left;
+                moveDirection = Direction.N;
             }
         }
         else
         {
-            //Debug.Log("障害物を避ける");
+            //動く方向が左のほう
+            if (!isCollisionLeft)
+            {
+                moveDirection = Direction.Left;
+            }
+            else
+            {
+                moveDirection = Direction.N;
+            }
+        }
+
+        if (moveDirection == Direction.N)
+        {
             //2番目にプレイヤーとの距離を縮められる方向に動く
             if ((playerDirectionDegree >= -90 && playerDirectionDegree < -50) ||
             (playerDirectionDegree >= 50 && playerDirectionDegree < 90))
@@ -294,7 +312,7 @@ public class EnemyChaseController : MonoBehaviour
                 //プレイヤーが右のほうにいる
                 //右に移動
                 moveDirection = Direction.Right;
-                distance = right;
+                
             }
             else if ((playerDirectionDegree >= 130 && playerDirectionDegree <= 180) ||
             (playerDirectionDegree >= 0 && playerDirectionDegree < 50))
@@ -304,7 +322,7 @@ public class EnemyChaseController : MonoBehaviour
                 //Debug.Log("上");
 
                 moveDirection = Direction.Up;
-                distance = up;
+                
             }
             else if ((playerDirectionDegree >= -50 && playerDirectionDegree < 0) ||
             (playerDirectionDegree >= -180 && playerDirectionDegree < -130))
@@ -313,18 +331,16 @@ public class EnemyChaseController : MonoBehaviour
                 //下に移動
 
                 moveDirection = Direction.Down;
-                distance = down;
+                
             }
             else
             {
                 //プレイヤーが左のほうにいる
 
                 moveDirection = Direction.Left;
-                distance = left;
+                
             }
-
         }
-            
 
         if (PlayerController.hp <= 0)
         {
@@ -425,7 +441,9 @@ public class EnemyChaseController : MonoBehaviour
         //当たり判定を削除
         if (enemyState == EnemyState.Stay) yield break;
         enemyState = EnemyState.Stay;
+        
 
+        
         if (damageArea != null)
         {
             damageArea.GetComponent<CircleCollider2D>().enabled = false;//攻撃判定停止
@@ -479,6 +497,11 @@ public class EnemyChaseController : MonoBehaviour
         transform.position = targetGrid;
         rb2d.linearVelocity = Vector2.zero;//停止
 
+        if (collision != null)
+        {
+            collision.GetComponent<CircleCollider2D>().enabled = false;//プレイヤーが通り抜けられるように
+        }
+
         //数フレーム待機した後、当たり判定を復活させ追跡を再開する。
         while (time < wait)
         {
@@ -492,8 +515,10 @@ public class EnemyChaseController : MonoBehaviour
         {
             damageArea.GetComponent<CircleCollider2D>().enabled = true;//攻撃判定復活
         }
+        if (collision != null)
+        {
+            collision.GetComponent<CircleCollider2D>().enabled = true;//通り抜けられるように
+        }
         
-        //GetComponent<CircleCollider2D>().enabled = true;
-        enemyCollider.enabled = true;//当たり判定復活
     }
 }

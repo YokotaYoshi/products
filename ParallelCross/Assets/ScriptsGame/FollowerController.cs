@@ -16,9 +16,6 @@ public class FollowerController : MonoBehaviour
     bool isMoving = false;//動いているかどうか
     bool isCoroutineWorking = false;//コルーチン中かどうか
     bool isFollowing = true;//追従しているかどうか
-    //Vector2 targetDirection;//自動移動時のゴールの方向
-    //Vector2 targetPosition;//移動先
-    
     float distance;//プレイヤーとの距離
 
     float speed = 5.0f;//移動速度

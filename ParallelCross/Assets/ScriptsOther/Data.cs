@@ -91,8 +91,8 @@ public static class Data
     public static int[] charaDataNum = {1, 0, 0};
     public static string[] charaRino = { "リノ", "charaImageRino1" };//0
     public static string[] charaKurumi = { "クルミ", "charaImageMikoru1" };//1
-    public static string[] charaRinoF = { "リノ", null };
-    public static string[] charaKarin = { "カリン", null};
+    public static string[] charaRinoF = { "リノ", "charaImageRinoF1" };
+    public static string[] charaKarin = { "カリン", "charaImageKarin1"};
     public static string[] charaNull = { null, null };
     public static string[][] charaDataAll;
     public static Sprite charaImage0;
@@ -101,8 +101,6 @@ public static class Data
     //---------------ロード先の座標を保存---------------
     public static float loadPosX;
     public static float loadPosY;
-    //---------------敵に追いかけられているとき-----------
-    public static float timeWaitEnemy;
 
     //--------------イベントの進捗に関するデータ---------------
     public static int eventProgressMain;
@@ -201,15 +199,16 @@ public static class Data
     {
         if (charaName == CharaName.Null) return;
         //charaDataの最後にcharaを追加
-        //Debug.Log(chara);
+        //Debug.Log(charaName);
 
         for (int i = 0; i < charas; ++i)
         {
-            if ((int)charaName == charaDataNum[i]) return;//アイテムの重複は許さない
+            if ((int)charaName == charaDataNum[i]) return;//重複は許さない
         }
         
         charaDataNum[charas] = (int)charaName;
         charas += 1;
+        Debug.Log(charaDataNum[1]);
         LoadMember();
     }
     public static void MemberSub(CharaName charaName)

@@ -5,12 +5,7 @@ using UnityEngine;
 public class BlockScript : MonoBehaviour
 {
     //オブジェクトの見た目とかをコントロールする
-    //以下このブロック群をよけるのに必要な移動量
-    public float up = 1.0f;
-    public float down = 1.0f;
-    public float right = 1.0f;
-    public float left = 1.0f;
-
+    
     //スプライト切り替えや生成破壊も担当  
 
     //eventProgressの値に応じてスプライトを切り替える
@@ -22,7 +17,6 @@ public class BlockScript : MonoBehaviour
     public Sprite sprite0;
 
     public Sprite sprite1;
-    //public Sprite sprite1Sub;
     //eventProgressMainSubがこれ以上ならスプライト切り替えるか削除
     //両方ゼロなら切りかえないオブジェクト
     public int eventProgressMainBase = 0;
@@ -35,10 +29,24 @@ public class BlockScript : MonoBehaviour
     GameObject player;
     Vector2 playerPosition;
     AnimationManager animManager;
-    public ItemName keyItem;
+    public ItemName keyItem = ItemName.Null;//このオブジェクトになにかしら影響を与えるアイテム
+    public ItemName itemSelf = ItemName.Null;//このオブジェクト自体の要素
 
     //eventProgressがBase以上だったら固定
     //それ以下の場合は一時的に変更することもありうる
+
+    //Inspectorから指定して動かせるように
+    public bool customMove = false;//動かすかどうか
+    public bool loop = false;//終端で消すかどうか
+    float posX;
+    float posY;
+    public float speedX = 3f;
+    public float limitRight = 5f;
+    public float limitLeft = -5f;
+
+    public float speedY = 0f;
+    public float limitUp = 5f;
+    public float limitDown = -5f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -68,6 +76,14 @@ public class BlockScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //アイテムなら取得した瞬間に削除
+        for (int i = 0; i < Data.items; ++i)
+        {
+            if (Data.itemDataNum[i] == (int)itemSelf)
+            {
+                Destroy(gameObject);
+            }
+        }
         
         if (eventProgressMainBase != 0 && eventProgressSubBase != 0)
         {
@@ -128,12 +144,57 @@ public class BlockScript : MonoBehaviour
                 animManager.moveDirection = Direction.Down;
             }
         }
+
+        if (customMove)
+        {
+            posX = transform.position.x;
+            posY = transform.position.y;
+            posX += speedX * Time.deltaTime;
+            posY += speedY * Time.deltaTime;
+
+            if (posX > limitRight)
+            {
+                Debug.Log("左端へ");
+                posX = limitLeft;
+                if (!loop)
+                {
+                    Destroy(gameObject);
+                }
+            }
+            else if (posX < limitLeft)
+            {
+                Debug.Log("右端へ");
+                posX = limitRight;
+                if (!loop)
+                {
+                    Destroy(gameObject);
+                }
+            }
+            if (posY > limitUp)
+            {
+                posY = limitDown;
+                if (!loop)
+                {
+                    Destroy(gameObject);
+                }
+            }
+            else if (posY < limitDown)
+            {
+                posY = limitUp;
+                if (!loop)
+                {
+                    Destroy(gameObject);
+                }
+            }
+
+            transform.position = new Vector2(posX, posY);
+        }
     }
 
     public IEnumerator ChangeTemporarily()
     {
         //一時的にスプライト変更
-        float time = 0.0f;
+        float time = 0f;
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = sprite1;
 
@@ -202,5 +263,15 @@ public class BlockScript : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+    }
+
+    public void StopX()
+    {
+        speedX = 0f;
+    }
+
+    public void StopY()
+    {
+        speedY = 0f;
     }
 }

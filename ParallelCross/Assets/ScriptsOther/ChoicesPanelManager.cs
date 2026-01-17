@@ -31,14 +31,6 @@ public class ChoicesPanelManager : MonoBehaviour
         blockNames = new string[] { "", "", "", "" };
     }
 
-    void OnEnable()
-    {
-        //choices = new GameObject[] { choice0, choice1, choice2, choice3 };
-        //Debug.Log(choice0);
-        //Debug.Log(choices[0]);
-        //blockNames = new string[] { "", "", "", "" };
-    }
-
     // Update is called once per frame
     void Update()
     {

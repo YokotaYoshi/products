@@ -434,6 +434,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flowchart: {fileID: 5128167487383370804}
   blockName: door
+  blockNames: []
+  keyItems: 
   executeOnClick: 1
   choices: []
   addChoice: 
@@ -52573,8 +52575,7 @@ MonoBehaviour:
     y: -340
     width: 1114
     height: 859
-  selectedBlocks:
-  - {fileID: 5128167487383370806}
+  selectedBlocks: []
   selectedCommands: []
   variables:
   - {fileID: 470528181653962044}

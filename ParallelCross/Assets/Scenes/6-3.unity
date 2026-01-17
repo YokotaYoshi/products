@@ -963,7 +963,7 @@ GameObject:
   m_Component:
   - component: {fileID: 204713817}
   - component: {fileID: 204713816}
-  - component: {fileID: 204713815}
+  - component: {fileID: 204713818}
   m_Layer: 0
   m_Name: ground1_0 (3)
   m_TagString: Untagged
@@ -971,24 +971,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &204713815
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 204713814}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e958cab2405efe74a90a119ca746d344, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speedX: 3
-  limitRight: 7
-  limitLeft: -12
-  speedY: 0
-  limitUp: 5
-  limitDown: -5
 --- !u!212 &204713816
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1073,6 +1055,41 @@ Transform:
   - {fileID: 743649325}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &204713818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204713814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 800736dd273118c43b6f6ebbec1e9186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  up: 1
+  down: 1
+  right: 1
+  left: 1
+  collisionStart: 1
+  collisionEnd: 1
+  sprite0: {fileID: 0}
+  sprite1: {fileID: 0}
+  eventProgressMainBase: 0
+  eventProgressSubBase: 0
+  willDestroy: 0
+  willCreate: 0
+  createObject: {fileID: 0}
+  animateTime: 0.3
+  keyItem: 0
+  customMove: 1
+  loop: 1
+  speedX: 3
+  limitRight: 7
+  limitLeft: -12
+  speedY: 0
+  limitUp: 5
+  limitDown: -5
 --- !u!1001 &221606744
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3772,7 +3789,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1158244930}
   - component: {fileID: 1158244929}
-  - component: {fileID: 1158244928}
+  - component: {fileID: 1158244931}
   m_Layer: 0
   m_Name: ground1_0 (2)
   m_TagString: Untagged
@@ -3780,24 +3797,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1158244928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1158244927}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e958cab2405efe74a90a119ca746d344, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speedX: 3
-  limitRight: 7
-  limitLeft: -12
-  speedY: 0
-  limitUp: 5
-  limitDown: -5
 --- !u!212 &1158244929
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3882,6 +3881,41 @@ Transform:
   - {fileID: 1381222459}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1158244931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158244927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 800736dd273118c43b6f6ebbec1e9186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  up: 1
+  down: 1
+  right: 1
+  left: 1
+  collisionStart: 1
+  collisionEnd: 1
+  sprite0: {fileID: 0}
+  sprite1: {fileID: 0}
+  eventProgressMainBase: 0
+  eventProgressSubBase: 0
+  willDestroy: 0
+  willCreate: 0
+  createObject: {fileID: 0}
+  animateTime: 0.3
+  keyItem: 0
+  customMove: 1
+  loop: 1
+  speedX: 3
+  limitRight: 7
+  limitLeft: -12
+  speedY: 0
+  limitUp: 5
+  limitDown: -5
 --- !u!213 &1161680728
 Sprite:
   m_ObjectHideFlags: 0
@@ -55518,9 +55552,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1438205159}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e958cab2405efe74a90a119ca746d344, type: 3}
+  m_Script: {fileID: 11500000, guid: 800736dd273118c43b6f6ebbec1e9186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  up: 1
+  down: 1
+  right: 1
+  left: 1
+  collisionStart: 1
+  collisionEnd: 1
+  sprite0: {fileID: 0}
+  sprite1: {fileID: 0}
+  eventProgressMainBase: 0
+  eventProgressSubBase: 0
+  willDestroy: 0
+  willCreate: 0
+  createObject: {fileID: 0}
+  animateTime: 0.3
+  keyItem: 0
+  customMove: 1
+  loop: 1
   speedX: 3
   limitRight: 7
   limitLeft: -12
@@ -57371,7 +57422,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2146380095}
   - component: {fileID: 2146380094}
-  - component: {fileID: 2146380093}
+  - component: {fileID: 2146380096}
   m_Layer: 0
   m_Name: ground1_0 (1)
   m_TagString: Untagged
@@ -57379,24 +57430,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2146380093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2146380092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e958cab2405efe74a90a119ca746d344, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speedX: 3
-  limitRight: 7
-  limitLeft: -12
-  speedY: 0
-  limitUp: 5
-  limitDown: -5
 --- !u!212 &2146380094
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -57481,6 +57514,41 @@ Transform:
   - {fileID: 585851067}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2146380096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146380092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 800736dd273118c43b6f6ebbec1e9186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  up: 1
+  down: 1
+  right: 1
+  left: 1
+  collisionStart: 1
+  collisionEnd: 1
+  sprite0: {fileID: 0}
+  sprite1: {fileID: 0}
+  eventProgressMainBase: 0
+  eventProgressSubBase: 0
+  willDestroy: 0
+  willCreate: 0
+  createObject: {fileID: 0}
+  animateTime: 0.3
+  keyItem: 0
+  customMove: 1
+  loop: 1
+  speedX: 3
+  limitRight: 7
+  limitLeft: -12
+  speedY: 0
+  limitUp: 5
+  limitDown: -5
 --- !u!114 &470528181653962044
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -57599,10 +57667,8 @@ MonoBehaviour:
     y: -340
     width: 1114
     height: 859
-  selectedBlocks:
-  - {fileID: 5128167487383370820}
-  selectedCommands:
-  - {fileID: 5128167487383370853}
+  selectedBlocks: []
+  selectedCommands: []
   variables:
   - {fileID: 470528181653962044}
   - {fileID: 2828508056818846539}
@@ -58552,7 +58618,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 0}
 --- !u!114 &5128167487383370873
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -58579,7 +58645,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 0}
 --- !u!114 &5128167487383370874
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

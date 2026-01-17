@@ -8,7 +8,7 @@ public class DataEdit : MonoBehaviour
     public CharaName charaName;
     public ItemName itemName;
 
-    bool isEditable = false;
+    //bool isEditable = false;
 
     //public bool executeOnStart = false;//シーン読み込み時点でデータをいじるか
 
@@ -21,30 +21,7 @@ public class DataEdit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isEditable && Input.GetKeyDown(KeyCode.Return))
-        {
-            EditData();
-        }
     }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "PlayerFocus")
-        {
-            //Dataクラスの数字をいじれる。
-            isEditable = true;
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "PlayerFocus")
-        {
-            //Dataクラスの数字をいじれる。
-            isEditable = false;
-        }
-    }
-
     public void EditData()
     {
         if (dataType == DataType.Member)
@@ -60,6 +37,31 @@ public class DataEdit : MonoBehaviour
     public void SubData()
     {
         //Debug.Log("キャラとおわかれ");
+        if (dataType == DataType.Member)
+        {
+            Data.MemberSub(charaName);
+        }
+        else if (dataType == DataType.Item)
+        {
+            Data.ItemSub(itemName);
+        }
+    }
+
+    public void DataAdd()
+    {
+        //何かしらのデータを追加
+        if (dataType == DataType.Member)
+        {
+            Data.MemberAdd(charaName);
+        }
+        else if (dataType == DataType.Item)
+        {
+            Data.ItemAdd(itemName);
+        }
+    }
+    public void DataSub()
+    {
+        //何かしらデータを削除
         if (dataType == DataType.Member)
         {
             Data.MemberSub(charaName);

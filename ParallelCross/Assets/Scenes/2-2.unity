@@ -51627,11 +51627,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!1 &1457834692 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8608506806624387366, guid: 0e01a216f57f4a5408784506e40154bc, type: 3}
-  m_PrefabInstance: {fileID: 555982429}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1462350796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52306,10 +52301,8 @@ GameObject:
   - component: {fileID: 5128167487383370811}
   - component: {fileID: 5128167487383370814}
   - component: {fileID: 5128167487383370813}
-  - component: {fileID: 5128167487383370821}
   - component: {fileID: 5128167487383370820}
   - component: {fileID: 5128167487383370817}
-  - component: {fileID: 5128167487383370815}
   - component: {fileID: 5128167487383370822}
   - component: {fileID: 5128167487383370823}
   - component: {fileID: 5128167487383370824}
@@ -52391,10 +52384,8 @@ MonoBehaviour:
     y: -340
     width: 1114
     height: 859
-  selectedBlocks:
-  - {fileID: 5128167487383370807}
-  selectedCommands:
-  - {fileID: 5128167487383370825}
+  selectedBlocks: []
+  selectedCommands: []
   variables:
   - {fileID: 470528181653962044}
   - {fileID: 2828508056818846539}
@@ -52605,7 +52596,6 @@ MonoBehaviour:
   - {fileID: 5128167487383370814}
   - {fileID: 5128167487383370839}
   - {fileID: 5128167487383370835}
-  - {fileID: 5128167487383370821}
   - {fileID: 5128167487383370806}
   - {fileID: 5128167487383370812}
   - {fileID: 5128167487383370834}
@@ -52625,7 +52615,6 @@ MonoBehaviour:
   - {fileID: 5128167487383370844}
   - {fileID: 5128167487383370845}
   - {fileID: 5128167487383370817}
-  - {fileID: 5128167487383370815}
   - {fileID: 5128167487383370826}
   - {fileID: 5128167487383370827}
   - {fileID: 5128167487383370825}
@@ -53082,23 +53071,6 @@ MonoBehaviour:
   vector3Data:
     vector3Ref: {fileID: 0}
     vector3Val: {x: 0, y: 0, z: 0}
---- !u!114 &5128167487383370815
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2296575535541983027}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17a200dbd67304446a3019434503338a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemId: 14
-  indentLevel: 1
-  targetObject: {fileID: 1457834692}
-  methodName: Freeze
-  delay: 0
 --- !u!114 &5128167487383370817
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -53144,23 +53116,6 @@ MonoBehaviour:
     floatRef: {fileID: 0}
     floatVal: 0.2
   durationOLD: 0
---- !u!114 &5128167487383370821
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2296575535541983027}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17a200dbd67304446a3019434503338a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemId: 8
-  indentLevel: 1
-  targetObject: {fileID: 1457834692}
-  methodName: Freeze
-  delay: 0
 --- !u!114 &5128167487383370822
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -53508,7 +53463,7 @@ MonoBehaviour:
     floatVal: 0
 --- !u!114 &5128167487383370841
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -53526,7 +53481,7 @@ MonoBehaviour:
   durationOLD: 0
 --- !u!114 &5128167487383370842
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -53552,7 +53507,7 @@ MonoBehaviour:
     floatVal: 0
 --- !u!114 &5128167487383370843
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -53578,7 +53533,7 @@ MonoBehaviour:
     floatVal: 0
 --- !u!114 &5128167487383370844
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -53604,7 +53559,7 @@ MonoBehaviour:
     floatVal: 0
 --- !u!114 &5128167487383370845
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

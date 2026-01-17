@@ -11108,7 +11108,7 @@ MonoBehaviour:
     width: 1114
     height: 859
   selectedBlocks:
-  - {fileID: 5128167487383370810}
+  - {fileID: 5128167487383370807}
   selectedCommands: []
   variables:
   - {fileID: 470528181653962044}
@@ -12839,7 +12839,7 @@ MonoBehaviour:
   waitForFrames: 1
 --- !u!114 &5128167487383370855
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

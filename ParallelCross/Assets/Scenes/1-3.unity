@@ -28802,6 +28802,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flowchart: {fileID: 5128167487383370804}
   blockName: hint
+  blockNames: []
+  keyItems: 
   executeOnClick: 1
   choices: []
   addChoice: 
@@ -28986,7 +28988,8 @@ MonoBehaviour:
     height: 859
   selectedBlocks:
   - {fileID: 5128167487383370846}
-  selectedCommands: []
+  selectedCommands:
+  - {fileID: 5128167487383370852}
   variables:
   - {fileID: 470528181653962044}
   - {fileID: 2828508056818846539}
@@ -31183,7 +31186,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 0}
 --- !u!114 &5128167487383370868
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -31426,7 +31429,7 @@ MonoBehaviour:
     vector3Val: {x: 0, y: 0, z: 0}
 --- !u!114 &5128167487383370869
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

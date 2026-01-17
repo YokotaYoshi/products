@@ -61,7 +61,7 @@ public class PlayerFocus : MonoBehaviour
         else if (axisV == -1.0f)
         {
             positionX = 0.0f;
-            positionY = offset;
+            positionY = -offset;
         }
         //座標はプレイヤーの見ている方向
         //接触判定を出すため振動させる

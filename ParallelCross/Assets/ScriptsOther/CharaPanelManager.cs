@@ -9,12 +9,13 @@ public class CharaPanelManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Data.LoadMember();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        Data.LoadMember();
         charaImage0.sprite = Data.charaImage0;
         charaImage1.sprite = Data.charaImage1;
         charaImage2.sprite = Data.charaImage2;

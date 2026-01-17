@@ -20,8 +20,8 @@ public class PlayerController : MonoBehaviour
     float dashSpeed;
 
     public static float speed;//移動速度
-    float axisH = 0f;//左右入力離散値
-    float axisV = 0f;//上下入力離散値
+    float axisH = 0f;//左右入力
+    float axisV = 0f;//上下入力
     Vector2 inputVector;//入力方向
     float preAxisH = 0f;//axisHの一時保存
     float preAxisV = 0f;//axisVの一時保存
@@ -67,7 +67,6 @@ public class PlayerController : MonoBehaviour
     bool resetPosition = false;//ノックバック中に別のオブジェクトに衝突
     public Vector2 blownDirection;//吹っ飛ばされる方向
     Vector2 nearestGrid;
-    bool isFreezing = false;
     
 
 
@@ -113,6 +112,8 @@ public class PlayerController : MonoBehaviour
                 transform.position = new Vector2(startPosX, startPosY);
                 currentDirection = Direction.N;
                 break;
+            default:
+                break;
         }
         
         if (lightObj != null)
@@ -131,6 +132,8 @@ public class PlayerController : MonoBehaviour
                     break;
                 case Direction.Left:
                     lightObj.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+                    break;
+                default:
                     break;
             }
         }
@@ -167,7 +170,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //操作を受け付けない状態
-        if (GameManager.gameState == GameState.Pause || isFreezing)//ゲーム全体がとまる、プレイヤーだけとまる
+        if (GameManager.gameState == GameState.Pause)//ゲーム全体がとまる
         {
             speed = 0f;
             return;
@@ -194,6 +197,8 @@ public class PlayerController : MonoBehaviour
                 dashSpeed = 7f;
                 walkSpeed = 4f;
                 attackTimeWhole = 0.5f;
+                break;
+            default:
                 break;
         }
         if (debugMode)
@@ -380,7 +385,7 @@ public class PlayerController : MonoBehaviour
         if (isInvincible)
         {
             //無敵時間に
-            //吹っ飛ばされているときになにかにぶつかったら最も近い格子点へ
+            //吹っ飛ばされているときに、ダメージ元でないなにかにぶつかったら最も近い格子点へ
             if (collision.gameObject.tag.Length < 6)
             {
                 ResetPosition();
@@ -473,6 +478,7 @@ public class PlayerController : MonoBehaviour
     //--------------------被弾モーション--------------------
     IEnumerator Attacked(Vector2 direction)
     {
+        Vector2 resetGrid = nearestGrid;//めり込み防止
         //ヒットストップいれたい
         isAttacked = false;
         isCoroutineWorking = true;//入力を受け付けない
@@ -522,9 +528,9 @@ public class PlayerController : MonoBehaviour
             }
             if (resetPosition)
             {
+                transform.position = resetGrid;
                 resetPosition = false;
-                break;
-                
+                yield break;
             }
             
             yield return null;
@@ -582,7 +588,7 @@ public class PlayerController : MonoBehaviour
     //-------------------やられモーション---------------------------
     IEnumerator Dead()
     {
-        //アニメーションを流す
+        //アニメーションを流す？
         //入力を拒否する
         float time = 0.0f;
         rb2d.linearVelocity = Vector2.zero;//いったんその場で停止
@@ -591,6 +597,7 @@ public class PlayerController : MonoBehaviour
             time += Time.deltaTime;
             yield return null;
             if (time >= 1.0f) break;
+            //あとはGameManagerで処理
         }
 
     }
@@ -651,11 +658,6 @@ public class PlayerController : MonoBehaviour
     public void TurnLights()
     {
         lightsOn = !lightsOn;
-    }
-
-    public void Freeze()
-    {
-        isFreezing = !isFreezing;
     }
     
 }
