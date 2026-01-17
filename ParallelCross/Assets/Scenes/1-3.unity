@@ -495,7 +495,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 907edc30afbf26b43808ff62c7f6e154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nearestGrid: {x: 0, y: 0}
 --- !u!1001 &677051120
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28986,10 +28985,8 @@ MonoBehaviour:
     y: -340
     width: 1114
     height: 859
-  selectedBlocks:
-  - {fileID: 5128167487383370846}
-  selectedCommands:
-  - {fileID: 5128167487383370852}
+  selectedBlocks: []
+  selectedCommands: []
   variables:
   - {fileID: 470528181653962044}
   - {fileID: 2828508056818846539}

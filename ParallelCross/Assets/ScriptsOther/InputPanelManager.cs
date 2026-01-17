@@ -11,7 +11,6 @@ public class InputPanelManager : MonoBehaviour
     public static Sprite sprite;
 
     public static string text = "";
-    string newText = "";
     public GameObject textDisplay;
     public GameObject textQuestion;
     public GameObject hintImage;
@@ -28,32 +27,22 @@ public class InputPanelManager : MonoBehaviour
 
     }
 
-    void OnEnable()
-    {
-        text = "";
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
         //キーボードとボタン両方に対応
-        //アルファベットに対応完了
-        //ひらがなに対応させることできないかな？
+        //アルファベットに対応
         textDis.text = text.ToUpper();
         hintImage.GetComponent<Image>().sprite = sprite;
         //Debug.Log(text.Length);
         //if (text == ans) Debug.Log("あってる");
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
-            Debug.Log("一文字削除");
-            newText = "";
-            for (int i = 0; i < text.Length - 1; i++)
+            if (text.Length > 0)
             {
-                newText = string.Concat(newText, text[i]);
+                text = text.Substring(0, text.Length -1);
             }
-            text = newText;
-            //text = text.Substring(0, text.Length -1)
             return;
         }
         if (InputManager.inputType == InputType.Action)
@@ -72,8 +61,7 @@ public class InputPanelManager : MonoBehaviour
 
         }
         if (text.Length >= 10) return;//とりあえず10文字まで
-        text = string.Concat(text, Input.inputString);
-
+        text = string.Format("{0}{1}", text, Input.inputString);
 
         textQuestion.GetComponent<Text>().text = question;
 
@@ -81,6 +69,7 @@ public class InputPanelManager : MonoBehaviour
 
     void Close()
     {
+        text = "";
         flowchart.SetBooleanVariable("event", false);
         GameManager.gameState = GameState.Playing;
         gameObject.SetActive(false);

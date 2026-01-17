@@ -18,6 +18,5 @@ public class EnemyNormal : Enemy
     public override IEnumerator Attack()//攻撃だけ変更する。overrideをつける
     {
         yield return null;
-        base.Attack();
     }
 }
